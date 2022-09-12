@@ -20,10 +20,10 @@ const Layout = (props) => {
                     </div>
                     <ul className="navbar-nav me-auto">
                         <li className="nav-item">
-                            <a href="" className="nav-link">Home</a>
+                            <a href="/" className="nav-link">Home</a>
                         </li>
                         <li className="nav-item">
-                            <a href="" className="nav-link">Sell</a>
+                            <a href="/my" className="nav-link">Sell</a>
                         </li>
                         <li className="nav-item ">
                             <a href="" className="nav-link">Orders</a>
