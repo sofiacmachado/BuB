@@ -1,0 +1,31 @@
+.intro-section {
+    width: 100%;
+    min-height: 800px;
+    background-size: cover;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-family: 'Trirong', serif;
+    color: #795454;
+  }
+
+  a {
+    text-decoration: none;
+    color: #795454;
+  }
+  
+  .slogan-text {
+    margin-top: 300px;
+  }
+
+  .slogan-text > h1 {
+    text-shadow: 1px 1px 0 #7a7a7a94;
+    font-weight: 600;
+    font-size: 50px;
+  }
+
+  .slogan-text > p {
+    text-shadow: 1px 1px 0 #7a7a7a67;
+    font-weight: 300;
+    font-size: 28px;
+  }
