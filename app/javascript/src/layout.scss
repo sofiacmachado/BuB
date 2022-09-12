@@ -5,6 +5,11 @@ header {
   position: absolute;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .navbar > ul {
   width: 100%;
   justify-content: right;
