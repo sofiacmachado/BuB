@@ -20,31 +20,31 @@ const Layout = (props) => {
                     </div>
                     <ul className="navbar-nav me-auto">
                         <li className="nav-item">
-                            <a href="/" className="nav-link">Home</a>
+                            <a href="/" className="nav--link">Home</a>
                         </li>
                         <li className="nav-item">
-                            <a href="/my" className="nav-link">Sell</a>
+                            <a href="/mybooks" className="nav--link">Sell</a>
                         </li>
                         <li className="nav-item ">
-                            <a href="" className="nav-link">Orders</a>
+                            <a href="" className="nav--link">Orders</a>
                         </li>
                         <li className="nav-item dropdown">
-                                <a href="" className="nav-link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                     Buy <i class="fa fa-caret-down"></i>
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li className="dropdown-item"><a href="" className="nav-link">Browse by Title/Author</a></li>
-                                    <li className="dropdown-item"><a href="" className="nav-link">Browse by Genre</a></li>
+                                    <li className="dropdown-item"><a href="" className="nav--link">Browse by Title/Author</a></li>
+                                    <li className="dropdown-item"><a href="" className="nav--link">Browse by Genre</a></li>
                                 </ul>
                         </li>
                         <li className="nav-item ">
-                            <a href="" className="nav-link">FAQS</a>
+                            <a href="" className="nav--link">FAQS</a>
                         </li>
                         <li className="nav-item ">
-                            <a href="" className="nav-link">About</a>
+                            <a href="" className="nav--link">About</a>
                         </li>
                         <li className="nav-item log-in">
-                            <a href="" className="nav-link">Login</a>
+                            <a href="" className="nav--link">Login</a>
                         </li>
                     </ul>
                 </nav>
