@@ -45,7 +45,7 @@ class Mybooks extends React.Component {
                         <div className="col-10 mybooks-title">
                             <h4 className="mb-1">My Books</h4>
                             <p className="text-secondary mb-3">
-                                Find guests for your properties all around the world
+                                Sell your stories to someone who will read them
                             </p>
                         </div>
                         <div className="col-2">
@@ -65,7 +65,7 @@ class Mybooks extends React.Component {
                                     style={{ backgroundImage: `url(${bookCover})` }}
                                 />
                                     </a>
-                                </div>
+                            </div>
                                 <div className="col-6 col-lg-2 mb-4">
                                         <p className="text-uppercase mb-2 text-secondary">
                                         <small>
@@ -76,7 +76,7 @@ class Mybooks extends React.Component {
                                         <p className="mb-1">
                                         <small>Genre</small>
                                         </p>
-                                        <p>Price: <span>8$</span></p>
+                                        <p className="text-uppercase mb-4 text-secondary">Price: <span>8$</span></p>
                                 </div>
                                 <div className="col-6 col-lg-4 mb-4 d-grid">
                                         <p className="text-uppercase mb-0 text-secondary">
@@ -86,7 +86,7 @@ class Mybooks extends React.Component {
                                             Book Description
                                         </p>
                                         <a href="#" className="btn btn-edit d-flex mt-3">
-                                            Edit book
+                                            See book
                                         </a>
                                 </div>
                                 <div className="col-6 col-lg-4 mb-4 for-sale-container">
@@ -95,6 +95,7 @@ class Mybooks extends React.Component {
                                         </p>
                                 </div>
                             </div>
+                        <hr />
                     </div>
             </Layout>
         )
