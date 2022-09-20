@@ -18,7 +18,7 @@ const Layout = (props) => {
         <header>
             <div className="container navbar-container">
                 <nav className="navbar navbar-expand-lg">
-                    <div class="container-fluid">
+                    <div className="container-fluid">
                         <a className="site-logo">
                             <img src={logo}></img>
                         </a>
@@ -37,7 +37,7 @@ const Layout = (props) => {
                             </li>
                             <li className="nav-item dropdown">
                                     <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Buy <i class="fa fa-caret-down"></i>
+                                        Buy <i className="fa fa-caret-down"></i>
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <li className="dropdown-item"><a href="" className="nav--link">Browse by Title/Author</a></li>
@@ -51,7 +51,7 @@ const Layout = (props) => {
                                 <a href="/about" className="nav--link">About</a>
                             </li>
                             <li className="nav-item log-in">
-                                <a href="" className="nav--link">Login</a>
+                                <a href="/login" className="nav--link">Login</a>
                             </li>
                         </ul>
                     </div>
