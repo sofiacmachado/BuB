@@ -6,5 +6,8 @@ Rails.application.routes.draw do
   get '/book/:id' => 'static_pages#book'
   get '/about' => 'static_pages#about'
   get '/faqs' => 'static_pages#faqs'
+  get '/login' => 'static_pages#login'
+  get '/authenticated' => 'sessions#authenticated'
+  get '/browse' => 'static_pages#browse'
 
 end

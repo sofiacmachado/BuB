@@ -74,6 +74,7 @@ class Book extends React.Component {
   }
 
     render () {
+      
         return (
             <Layout>
               <div className="container mybooks-container">
