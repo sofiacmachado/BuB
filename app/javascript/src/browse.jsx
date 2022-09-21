@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from './layout';
 import './browse.scss';
-import SearchBar from "./Components/SearchBar";
+import SearchBar from "./components/SearchBar";
 import BookData from "./Data.json";
 
 class Browse extends React.Component {
