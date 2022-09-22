@@ -20,7 +20,8 @@ input:focus {
   outline: none;
 }
 .searchIcon svg {
-  font-size: 35px;
+  font-size: 25px;
+  color: #416165;
 }
 
 .dataResult {
@@ -28,7 +29,7 @@ input:focus {
   width: 300px;
   height: 200px;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(172, 172, 172, 0.35) 0px 5px 15px;
   overflow: hidden;
   overflow-y: auto;
 }
@@ -42,7 +43,7 @@ input:focus {
   height: 50px;
   display: flex;
   align-items: center;
-  color: black;
+  color: #416165;
 }
 
 .dataItem p {
