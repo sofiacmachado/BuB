@@ -104,25 +104,24 @@ class Browse extends React.Component {
         </div>
 
       <div className="container lastbooks-container">
+          <hr />
+        <div className="see-all">
+          <h2>Latest Uploaded Books</h2>
+          <a><h3>See all</h3></a>
+        </div>
 
+        <div key={book.id} className="col-6 col-lg-4 mb-4 d-inline-flex lastbooks">
         {book.map((book) => {
           return(
-          <div className="row">
-            <div key={book.id} className="col-6 col-lg-4 mb-4 property">
-              <a href={`/book/${book.id}`} className="text-body text-decoration-none">
+              <a href={`/book/${book.id}`} className="latestbook text-body text-decoration-none">
                 <div className="book-image mb-1 rounded" style={{ backgroundImage: `url(${book.image_url})` }} />
                 <p className="text-uppercase mb-0 text-secondary"><small><b>{book.author}</b></small></p>
                 <h6 className="mb-0">{book.title}</h6>
-                <p className="mb-0"><small>${book.price} $</small></p>
+                <p className="mb-0"><small>${book.price}</small></p>
               </a>
-            </div>
-        </div>)
-        })}
-        <div className="text-center">
-              <button
-                className="btn btn-light mb-4"
-              >load more</button>
-            </div>
+            )
+          })}
+          </div>
       </div>
       </Layout>
     )

@@ -4,7 +4,26 @@ header {
   
   .mybooks-container {
     padding-top: 150px;
-    min-height: 800px;
+    min-height: 400px;
+  }
+
+  h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #416165;
+    background-color: inherit;
+    font-weight: 400;
+    font-size: 18px;
+    font-family: 'Nunito Sans', sans-serif;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    color: #fa824c;
+    background-color: inherit;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Nunito Sans', sans-serif;
   }
   
   h4 {
@@ -40,8 +59,23 @@ header {
   }
 
   .book-image {
-    padding-top: 300px;
-    background-size: contain;
+    padding-top: 200px;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: left;
+    background-position: center;
   }
+
+.lastbooks {
+  margin-right: 30px;
+  max-width: 300px;
+}
+
+.latestbook {
+  margin-right: 30px;
+}
+
+.see-all {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

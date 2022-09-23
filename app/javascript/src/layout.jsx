@@ -17,7 +17,7 @@ const Layout = (props) => {
         <React.Fragment>
         <header>
             <div className="container navbar-container">
-                <nav className="navbar navbar-expand-lg">
+                <nav className="navbar navbar-expand-sm">
                     <div className="container-fluid">
                         <a className="site-logo">
                             <img src={logo}></img>
@@ -40,7 +40,7 @@ const Layout = (props) => {
                                         Buy <i className="fa fa-caret-down"></i>
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li className="dropdown-item"><a href="" className="nav--link">Browse by Title/Author</a></li>
+                                        <li className="dropdown-item"><a href="/browse" className="nav--link">Browse by Title/Author</a></li>
                                         <li className="dropdown-item"><a href="" className="nav--link">Browse by Genre</a></li>
                                     </ul>
                             </li>
@@ -60,13 +60,13 @@ const Layout = (props) => {
         </header>
         {props.children}
       <footer>
-        <div className="container">
+        <div className="container footer">
             <div className="social-links">
                 <p>Follow Us</p>
-                <a><img src={fb_logo}></img></a>
-                <a><img src={insta_logo}></img></a>
-                <a><img src={twitter_logo}></img></a>
-                <a><img src={youtube_logo}></img></a>
+                <a className="src_social"><img src={fb_logo}></img></a>
+                <a className="src_social"><img src={insta_logo}></img></a>
+                <a className="src_social"><img src={twitter_logo}></img></a>
+                <a className="src_social"><img src={youtube_logo}></img></a>
             </div>
             <p className="contact-footer">Email us at beforeusedbooks@gmail.com</p>
             <p className="copy">©2022 Before Used Books</p>
