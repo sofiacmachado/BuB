@@ -27,3 +27,19 @@
     font-weight: 300;
     font-size: 28px;
   }
+
+@media only screen and (max-width: 320px) {
+  .slogan-text {
+    padding-top: 100px;
+  }
+  .slogan-text > h1 {
+    font-size: 40px;
+  }
+
+  .slogan-text > p {
+    font-size: 18px;
+  }
+  .intro-section {
+    min-height: 400px;
+  }
+}

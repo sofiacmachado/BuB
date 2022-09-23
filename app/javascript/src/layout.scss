@@ -17,10 +17,19 @@ ul {
   text-decoration: none;
   color: #416165;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   font-family: 'Nunito Sans', sans-serif;
   text-transform: uppercase;
   margin-left: 10px;
+}
+
+.dropdown-item > a {
+  margin-left: 0;
+  font-size: 12px;
+}
+
+.dropdown-item > nav--link {
+  margin-left: 0;
 }
 
 .navbar-collapse {
@@ -41,7 +50,7 @@ ul {
   color: #416165;
   background-color: inherit;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   font-family: 'Nunito Sans', sans-serif;
   text-transform: uppercase;
 }
@@ -50,12 +59,24 @@ ul {
   text-decoration: underline;
 }
 
+.dropdown-menu {
+  font-size: 14px;
+  color: #2b2b2b;
+  background-color: rgba(255, 255, 255, 0.774);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+}
+
+.dropdown-item > a:hover {
+  text-decoration: none;
+  color: #fa824c;
+}
 
 .dropdown-menu li {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
-  text-align: left;
+  text-align: center;
 }
 
 .dropdown-menu li:hover {
@@ -66,20 +87,13 @@ ul {
   display: block;
 }
 
-/* .log-in, .log-out {
-}
-
-.log-in {
-}
-.log-out {
-} */
 
 footer {
   background-color: #416165;
   height: 200px;
   color: #FFEFD6;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Nunito Sans', sans-serif;
   text-transform: uppercase;
 }
@@ -88,7 +102,7 @@ footer {
   padding-top: 50px;
   color: #FFEFD6;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Nunito Sans', sans-serif;
   text-transform: uppercase;
 }
@@ -109,4 +123,44 @@ footer {
 .copy {
   text-align: right;
   font-size: 14px;
+}
+
+.navbar-toggler-icon {
+  border: 0.5 solid rgb(250,130,76);
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(250,130,76)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.navbar-toggler:focus {
+  text-decoration: none;
+  outline: 0;
+  border: 0.4px;
+  box-shadow: 0 0 0 0.25rem rgba(255, 202, 178, 0.5);
+}
+
+@media only screen and (max-width: 576px) {
+
+  .copy {
+    font-size: 8px;
+    margin-bottom: 0;
+  }
+  .social-links, footer {
+    padding-top: 5px;
+    font-size: 10px;
+  }
+  .src_social > img {
+    width: 20px;
+  }
+  footer {
+    height: 100px;
+  }
+  .social-links > p {
+    margin-top: 0 !important;
+    margin-bottom: 0;
+  }
+  .navbar-collapse {
+    background-color: rgba(255, 250, 241, 0.89);
+    border-radius: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
