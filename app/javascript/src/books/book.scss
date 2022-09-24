@@ -75,3 +75,12 @@ header {
     font-weight: 600;
     font-size: 24px;
   }
+
+  @media only screen and (max-width: 992px) {
+    .third-column {      
+      width: 100%;
+    }
+    .mybooks-container {
+      padding-top: 80px; 
+    }
+  }

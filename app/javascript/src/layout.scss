@@ -1,5 +1,5 @@
 header {
-  width:100%;
+  width: 100%;
   margin-bottom: 0;
   z-index: 1;
   position: absolute;
@@ -23,12 +23,12 @@ ul {
   margin-left: 10px;
 }
 
-.dropdown-item > a {
+.dropdown-item>a {
   margin-left: 0;
   font-size: 12px;
 }
 
-.dropdown-item > nav--link {
+.dropdown-item>nav--link {
   margin-left: 0;
 }
 
@@ -55,7 +55,8 @@ ul {
   text-transform: uppercase;
 }
 
-.navbar a:hover, .dropdown:hover .dropbtn {
+.navbar a:hover,
+.dropdown:hover .dropbtn {
   text-decoration: underline;
 }
 
@@ -67,7 +68,7 @@ ul {
   border-radius: 15px;
 }
 
-.dropdown-item > a:hover {
+.dropdown-item>a:hover {
   text-decoration: none;
   color: #fa824c;
 }
@@ -107,12 +108,12 @@ footer {
   text-transform: uppercase;
 }
 
-.social-links > p {
+.social-links>p {
   margin-top: 5px;
   margin-bottom: 0;
 }
 
-.social-links > a {
+.social-links>a {
   margin-right: 5px;
 }
 
@@ -126,7 +127,7 @@ footer {
 }
 
 .navbar-toggler-icon {
-  border: 0.5 solid rgb(250,130,76);
+  border: 0.5 solid rgb(250, 130, 76);
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(250,130,76)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
@@ -143,20 +144,26 @@ footer {
     font-size: 8px;
     margin-bottom: 0;
   }
-  .social-links, footer {
+
+  .social-links,
+  footer {
     padding-top: 5px;
     font-size: 10px;
   }
-  .src_social > img {
+
+  .src_social>img {
     width: 20px;
   }
+
   footer {
     height: 100px;
   }
-  .social-links > p {
+
+  .social-links>p {
     margin-top: 0 !important;
     margin-bottom: 0;
   }
+
   .navbar-collapse {
     background-color: rgba(255, 250, 241, 0.89);
     border-radius: 15px;

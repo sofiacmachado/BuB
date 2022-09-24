@@ -97,7 +97,7 @@ class Browse extends React.Component {
                   <h4 className="mb-1">Search</h4>
                   <div className="col-12 my-4 ">
                     <SearchBar 
-                    placeholder="Enter a Book Name..." data={BookData}/>
+                    placeholder="Enter a Book Title..." data={BookData}/>
                   </div>
                 </div>
             </div>

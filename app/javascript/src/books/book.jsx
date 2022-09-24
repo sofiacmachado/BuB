@@ -227,7 +227,7 @@ class Book extends React.Component {
                         style={{ backgroundImage: `url(${this.state.image_url})` }}
                         />
                       </div>
-                        <div className="col-6 col-lg-2 mb-4">
+                        <div className="col-6 col-lg-2 mb-4 mt-4">
                           <h6 className="mb-2 text-uppercase">"{this.state.title}"</h6>
                           <p className="text-uppercase mb-1 text-secondary">
                             <small>
@@ -252,7 +252,7 @@ class Book extends React.Component {
                             </small>
                           </p>
                         </div>
-                        <div className="col-6 col-lg-4 mb-4 d-grid">
+                        <div className="col-6 col-lg-4 mb-4 d-grid third-column">
                           <p className=" mb-0 text-secondary">
                             <b className='text-uppercase'>{this.state.condition}</b>
                           </p>
