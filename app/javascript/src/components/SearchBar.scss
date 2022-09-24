@@ -60,3 +60,16 @@ a:hover {
 #clearBtn {
   cursor: pointer;
 }
+
+@media only screen and (max-width: 576px) {
+  .searchInputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .data-result {
+    width: 200px;
+  }
+}

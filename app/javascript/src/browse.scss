@@ -51,10 +51,10 @@ header {
   }
   
   
-  @media only screen and (max-width: 320px) {
+  @media only screen and (max-width: 576px) {
     .mybooks-container {
       padding-top: 80px;
-      min-height: 300px;
+      min-height: 200px;
     }
   }
 
