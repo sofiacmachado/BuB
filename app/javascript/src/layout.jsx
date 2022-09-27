@@ -40,8 +40,8 @@ const Layout = (props) => {
                                         Buy <i className="fa fa-caret-down"></i>
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li className="dropdown-item"><a href="/browse" className="nav--link">Browse by Title/Author</a></li>
-                                        <li className="dropdown-item"><a href="" className="nav--link">Browse by Genre</a></li>
+                                        <li className="dropdown-item"><a href="/browse" className="nav--link">Browse by Title</a></li>
+                                        <li className="dropdown-item"><a href="" className="nav--link">Browse by Author</a></li>
                                     </ul>
                             </li>
                             <li className="nav-item ">
