@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   get '/login' => 'static_pages#login'
   get '/authenticated' => 'sessions#authenticated'
   get '/browse' => 'static_pages#browse'
+  get '/mybooks/add' => 'static_pages#add'
 
 end
