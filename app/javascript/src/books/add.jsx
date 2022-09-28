@@ -1,195 +1,144 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from '@src/layout';
+import Layout from '../layout';
+import './add.scss';
 
 class Add extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state =   {
+            title: '',
+            author: '',
+            description: '',
+            isbn: '',
+            condition: '',
+            user_description: '',
+            genre: '',
+            price: '',
+            rating: '',
+            image_url: '',
+            user: '',
+            loading: true,
+            authenticated: false,
+            editing: false,
+            }
+          }
 
-    render() {
-        const { bookings, loading } = this.state;
-        return (
-          <Layout>
-            <div className="container pt-4">
-              <h4 className="mb-1">Add a new property</h4>
-              <p className="text-secondary mb-3">
-                Please tell us more about your place
-              </p>
-              <form onSubmit={this.submitProperty}>
-                <div className="form-row">
-                  <div className="form-group col-12">
-                    <label htmlFor="inputTitle">Title</label>
+  render() {
+    return (
+      <Layout>
+        <div className="container mybooks-container mb-4">
+          <h4 className="mb-4">Add a new book</h4>
+          <form onSubmit={this.submitBook}>
+            <div className="row">
+                <div className="form-group d-grid col-md-6">
+                    <label className="label-text" htmlFor="inputTitle">Book Title</label>
                     <input
-                      type="text"
-                      className="form-control"
-                      id="inputTitle"
-                      placeholder="Beautiful colonial-era townhouse in Georgetown"
-                      value={this.state.title}
-                      onChange={this.handleTitleChange}
-                      maxLength="70"
+                    type="text"
+                    className="form-control"
+                    id="inputTitle"
+                    placeholder="ex: Black Tulip"
+                    maxLength="70"
                     />
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputType">Type of Accommodation</label>
-                    <select
-                      id="inputType"
-                      className="form-control"
-                      onChange={this.handlePropertyTypeChange}
-                      value={this.state.property_type}
-                    >
-                      <option></option> 
-                      <option>Shared Room In Apartment</option>
-                      <option>Private Room In Apartment</option>
-                      <option>Whole Apartment</option>
-                    </select>
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputPrice">Price per night (in $)</label>
+                    
+                    <label className="label-text" htmlFor="inputAuthor">Author's Name</label>
                     <input
-                      type="number"
-                      className="form-control"
-                      id="inputPrice"
-                      placeholder="62"
-                      onChange={this.handlePriceChange}
-                      value={this.state.price_per_night}
+                    type="text"
+                    className="form-control"
+                    id="inputAuthor"
+                    placeholder="ex: Alexandre Dumas"
+                    maxLength="70"
                     />
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="form-group col-md-3">
-                    <label htmlFor="inputBedroom">Bedrooms</label>
+
+                     <label className="label-text" htmlFor="inputGenre">Genre</label>
                     <select
-                      id="inputBedroom"
-                      className="form-control"
-                      onChange={this.handleBedroomChange}
-                      value={this.state.bedrooms}
-                      type="number"
+                    id="inputGenre"
+                    className="form-control"
                     >
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
+                    <option hidden className='light'>Select an Option</option> 
+                    <option>Classic</option>
+                    <option>Fantasy</option>
+                    <option>Drama</option>
+                    <option>Poetry</option>
+                    <option>Non-Fiction</option>
                     </select>
-                  </div>
-                  <div className="form-group col-md-3">
-                    <label htmlFor="inputBed">Beds</label>
-                    <select
-                      id="inputBed"
-                      className="form-control"
-                      onChange={this.handleBedChange}
-                      value={this.state.beds}
-                      type="number"
-                    >
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                    </select>
-                  </div>
-                  <div className="form-group col-md-3">
-                    <label htmlFor="inputBath">Baths</label>
-                    <select
-                      id="inputBath"
-                      className="form-control"
-                      onChange={this.handleBathChange}
-                      value={this.state.baths}
-                      type="number"
-                    >
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                    </select>
-                  </div>
-                  <div className="form-group col-md-3">
-                    <label htmlFor="inputMaxGuests">Max guests</label>
-                    <select
-                      id="inputMaxGuests"
-                      className="form-control"
-                      onChange={this.handleMaxGuestChange}
-                      value={this.state.max_guests}
-                      type="number"
-                    >
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputCity">City</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputCity"
-                      placeholder="New York City"
-                      onChange={this.handleCityChange}
-                      value={this.state.city}
-                      maxLength="200"
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputCountry">Country</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputCountry"
-                      placeholder="US"
-                      onChange={this.handleCountryChange}
-                      value={this.state.country}
-                      maxLength="200"
-                    />
-                  </div>
-                  <div className="form-group col-md-12">
-                    <label htmlFor="inputDescription">Description</label>
+
+                    <label className="label-text" htmlFor="inputIsbn">ISBN</label>
+                        <input
+                        type="number"
+                        className="form-control"
+                        id="inputIsbn"
+                        placeholder="ex: 9789725647417"
+                        />
+
+                    <label className="label-text" htmlFor="inputDescription">Description</label>
                     <textarea
-                      type="text"
-                      className="form-control"
-                      rows="10"
-                      id="inputDescription"
-                      placeholder="A wonderful room in an apartment that is conveniently placed near New York City's best sights..."
-                      onChange={this.handleDescriptionChange}
-                      value={this.state.description}
-                      maxLength="2000"
+                    type="text"
+                    className="form-control"
+                    rows="6"
+                    id="inputDescription"
+                    placeholder="ex: A wonderful room in an apartment that is conveniently placed near New York City's best sights..."
+                    maxLength="2000"
                     />
-                  </div>
+                    
                 </div>
-                <div className="form-group">
-                  <label htmlFor="addPhoto">Add property photo</label>
-                  <input
+                <div className="form-group d-grid col-md-6">
+                    <label className="label-text" htmlFor="inputPrice">Price</label>
+                    <input
+                    type="number"
+                    className="form-control"
+                    id="inputPrice"
+                    placeholder="ex: 9 $"
+                    />
+
+                    <label className="label-text" htmlFor="inputBookCondition">Book's Condition</label>
+                    <select
+                    id="inputBookCondition"
+                    className="form-control"
+                    type="text"
+                    >
+                    <option hidden className='light'>Select an Option</option> 
+                    <option>New</option>
+                    <option>Used (like new)</option>
+                    <option>Used (good)</option>
+                    <option>Used (fair)</option>
+                    <option>Refurbished</option>
+                    </select>
+
+                    <label className="label-text" htmlFor="inputConditionDescription">Detailed Condition</label>
+                    <textarea
+                    type="text"
+                    className="form-control"
+                    rows="2"
+                    id="inputConditionDescription"
+                    placeholder="ex: Read once, corners are a little bent"
+                    maxLength="200"
+                    />
+                    
+                    
+                <label className="addPhoto mt-3 mb-2" htmlFor="addPhoto">Add book photo</label>
+                <input
                     type="file"
-                    className="form-control-file"
+                    className="form-control form-control-file"
                     id="addPhoto"
                     accept="image/*"
-                  />
+                    />
                 </div>
-                <button type="submit" className="btn btn-primary">
-                  Submit new property
+                <button type="submit" className="btn btn-add">
+                Submit new book
                 </button>
-              </form>
-            </div>
-          </Layout>
-        );
-      }
-    }
+                </div>
+          </form>
+        </div>
+      </Layout>
+    );
+  }
+}
 
-    ReactDOM.render(
-      <React.StrictMode>
-        <Add />
-      </React.StrictMode>,
-      document.body.appendChild(document.createElement("div"))
-      );
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Add />
+  </React.StrictMode>,
+  document.body.appendChild(document.createElement("div"))
+  );

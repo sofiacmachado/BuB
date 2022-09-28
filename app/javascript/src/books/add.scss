@@ -1,0 +1,98 @@
+header {
+    background-color: #f6f4d2;
+  }
+  
+  .book-image {
+      padding-top: 300px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: left;
+    }
+  
+  .mybooks-container {
+    padding-top: 150px;
+    
+  }
+
+  h4 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    font-family: 'Trirong', serif;
+    color: #fa824c;
+}
+  
+ form {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+  }
+  
+  .label-text {
+    margin-left: 15px;
+    font-size: 18px;
+  }
+
+  a {
+    text-decoration: none !important;
+  }
+  
+  .btn-add {
+    background-color: #fa824c !important;
+    color:#f6f4d2 !important;
+  
+  }
+  
+  @media only screen and (max-width: 992px) {
+    .third-column {      
+      width: 100%;
+    }
+    .mybooks-container {
+      padding-top: 80px; 
+    }
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .form-control {
+    margin-bottom: 8px;
+  }
+
+  #inputIsbn::-webkit-outer-spin-button,
+  #inputIsbn::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#inputIsbn[type=number] {
+    -moz-appearance: textfield;
+  }
+
+
+.addPhoto {
+    background-color: beige;
+    border: 0;
+    border-radius: 25px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: gray;
+   height: 200px;
+}
+
+.light {
+    color: gray;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.form-control {
+    background-color: beige;
+    border: 0;
+    border-radius: 25px;
+    padding: 10px;
+}
