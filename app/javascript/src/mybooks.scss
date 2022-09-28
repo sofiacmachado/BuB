@@ -16,7 +16,7 @@ header {
 
 .mybooks-title {
   font-family: 'Trirong', serif;
-  color: #795454;
+  color: #fa824c;
 }
 
 h4 {
@@ -57,4 +57,18 @@ a {
   font-size: 20px;
   background-color: #f6f4d2;
   color:#fa824c;
+}
+
+.condition {
+  font-size: 14px;
+}
+
+.latestbook:hover {
+  cursor: default;
+}
+
+.price-tag {
+  color: #fa824c;
+  font-weight: 600;
+  font-size: 24px;
 }

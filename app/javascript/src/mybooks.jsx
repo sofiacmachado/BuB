@@ -6,7 +6,7 @@ import bookCover from '/app/assets/images/book_cover.jpg';
 
 const book = [
     {
-      title: 'Notes from Underground',
+      title: 'Anna Karenina',
       author: "Leo Tolstoy",
       isbn: '9780140449174',
       description: "Anna Karenina seems to have everything - beauty, wealth, popularity and an adored son. But she feels that her life is empty until the moment she encounters the impetuous officer Count Vronsky. Their subsequent affair scandalizes society and family alike and soon brings jealously and bitterness in its wake. Contrasting with this tale of love and self-destruction is the vividly observed story of Levin, a man striving to find contentment and a meaning to his life - and also a self-portrait of Tolstoy himself.",
@@ -15,11 +15,11 @@ const book = [
       genre: 'classic',
       price: 4,
       rating: 4.08/5,
-      image_url: 'https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg',
+      image_url: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg',
       user: 1
     },
     {
-      title: 'Anna Karenina',
+      title: 'Notes from Underground',
       author: "Fyodor Dostoevsky",
       isbn: '9780679734529',
       description: "Notes from Underground is a novella written in 1864 by Fyodor Dostoevsky, and is considered by many to be one of the first existentialist novels. The novella presents itself as an excerpt from the rambling memoirs of a bitter, isolated, unnamed narrator, who is a retired civil servant living in St. Petersburg.",
@@ -28,7 +28,7 @@ const book = [
       genre: 'classic',
       price: 8,
       rating: 4.2/5,
-      image_url: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg',
+      image_url: 'https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg',
       user: 1
     }
   ]
@@ -119,7 +119,7 @@ class Mybooks extends React.Component {
             <Layout>
                 <div className="container mybooks-container">
                     <div className="row">
-                        <div className="col-10 mybooks-title">
+                        <div className="col-4 mybooks-title">
                             <h4 className="mb-1">My Books</h4>
                             <p className="text-secondary mb-3">
                                 Sell your stories to someone who will read them
@@ -134,7 +134,7 @@ class Mybooks extends React.Component {
                     <div key={book.id} className="row mt-4 mb-4">
                         {book.map((book) => {
                             return(
-                                <div className="row">
+                                /* <div className="row">
                                 <div className="col col-lg-2 mb-4">
                                     <a
                                         href='#'
@@ -175,7 +175,71 @@ class Mybooks extends React.Component {
                                                 See book
                                             </a>
                                     </div>
-                                </div>
+                                </div> */
+                                <a href={`/book/${book.id}`} className="latestbook text-body text-decoration-none">
+                                    <div className="row mt-4 mb-4">
+                                    <div className="col col-lg-2 mb-4">
+                                        <div
+                                        className="book-image mb-3"
+                                        style={{ backgroundImage: `url(${book.image_url})` }}
+                                        />
+                                    </div>
+                                        <div className="col-6 col-lg-2 mb-4">
+                                        <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
+                                        <p className="text-uppercase mb-1 text-secondary">
+                                            <small>
+                                            <b>{book.author}</b>
+                                            </small>
+                                        </p>
+                                        <p className="text-uppercase mb-4 text-secondary">
+                                            <small>
+                                            <b>{book.genre}</b>
+                                            </small>
+                                        </p>
+                                        <p className="text-uppercase mb-4 text-secondary">
+                                            <small>
+                                            <b>ISBN: {book.isbn}</b>
+                                            </small>
+                                        </p>
+                                        <p className="text-uppercase mb-4 price-tag-title">
+                                            Price: <span className='price-tag'>{book.price}$</span></p>
+                                        <p>
+                                        </p>
+                                        </div>
+                                        <div className="col-8 col-lg-6 mb-4 third-column">
+                                        <small className="text-secondary">Book's condition:</small>
+                                        <p className="text-secondary condition">
+                                            {book.condition}
+                                        </p>
+                                        <small className="text-secondary">Detailed Condition:</small>
+                                        <p className="text-secondary condition">
+                                            {book.user_description}
+                                        </p>
+                                        <p className="mb-0 text-secondary">
+                                            {book.description}
+                                        </p>
+                                        </div>
+                                        <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
+                                            <p className="for-sale rounded">
+                                                {/* who's selling */}
+                                                For Sale
+                                            </p>
+                                        {this.state.authenticated.user == book.user.id ? (
+                                            <button
+                                            className="btn btn-edit  mt-3"
+                                            //  onClick={((e) => e, this.editMode)}
+                                            >
+                                            Edit book
+                                            </button>
+                                        ) : null}
+                                    </div>
+                                        {/* <div className="col-6 col-lg-4 mb-4 for-sale-container">
+                                            <p className="for-sale rounded">
+                                                For Sale
+                                            </p>
+                                        </div>  */}
+                                    </div>
+                                </a>
                             )})}
                     </div>
                     <hr />
