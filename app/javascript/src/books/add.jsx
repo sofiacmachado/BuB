@@ -77,7 +77,7 @@ class Add extends React.Component {
                     className="form-control"
                     rows="6"
                     id="inputDescription"
-                    placeholder="ex: A wonderful room in an apartment that is conveniently placed near New York City's best sights..."
+                    placeholder="ex: Cornelius von Baerle, a respectable tulip-grower, lives only to cultivate the elusive black tulip and win a magnificent prize for its creation. But after his powerful godfat..."
                     maxLength="2000"
                     />
                     
