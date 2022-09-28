@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from './layout';
 import './browse.scss';
-import SearchBar from "./components/SearchBar";
+import SearchBar from "./searchBar/SearchBar";
 import BookData from "./Data.json";
 
 const book = [
@@ -79,7 +79,6 @@ class Browse extends React.Component {
         loading: true,
         authenticated: false,
         editing: false,
-
       });
       //fetch
       data = true;
@@ -96,8 +95,9 @@ class Browse extends React.Component {
                 <div className="col-8 mb-4 mybooks-title">
                   <h4 className="mb-1">Search</h4>
                   <div className="col-12 my-4 ">
-                    <SearchBar 
-                    placeholder="Enter a Book Title..." data={BookData}/>
+                   {this.browseAuthor ? <SearchBar key="{browse}"
+                    placeholder="Enter a Book Author..." data={BookData}/> : <SearchBar key="{browse1}"
+                    placeholder="Enter a Book Title..." data={BookData}/>}
                   </div>
                 </div>
             </div>
