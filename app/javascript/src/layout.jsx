@@ -6,9 +6,8 @@ import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
 
-
 const Layout = (props) => {
-
+    
     const [browseAuthor, setBrowseAuthor] = useState(true);
     const handleBrowseAuthor = () => setBrowseAuthor(true);
     const handleBrowseTitle = () => setBrowseAuthor(false);
@@ -42,8 +41,8 @@ const Layout = (props) => {
                                         Buy <i className="fa fa-caret-down"></i>
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li className="dropdown-item"><a href="/browse" onClick={handleBrowseTitle} className="nav--link">Browse by Title</a></li>
-                                        <li className="dropdown-item"><a href="/browse" onClick={handleBrowseAuthor} className="nav--link">Browse by Author</a></li>
+                                        <li className="dropdown-item"><a href="/browse_title" onClick={handleBrowseTitle} className="nav--link">Browse by Title</a></li>
+                                        <li className="dropdown-item"><a href="/browse_author" onClick={handleBrowseAuthor} className="nav--link">Browse by Author</a></li>
                                     </ul>
                             </li>
                             <li className="nav-item ">

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { setBrowseAuthor } from "../layout";
 import "/home/sofia_cmachado/BuB/app/javascript/src/searchBar/SearchBar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from '@mui/icons-material/Close';
 
 
-function SearchBar({ placeholder, data, setBrowseAuthor }) {
+function SearchBarAuthor({ placeholder, data }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
 
@@ -50,7 +49,7 @@ function SearchBar({ placeholder, data, setBrowseAuthor }) {
           {filteredData.slice(0, 15).map((value, key) => {
             return (
               <a className="dataItem" href={value.link} target="_blank">
-                {this.browseAuthor ? <p>{value.author} </p> : <p>{value.title} </p>}
+                <p>{value.author} </p>
               </a>
             );
           })}
@@ -60,4 +59,4 @@ function SearchBar({ placeholder, data, setBrowseAuthor }) {
   );
 }
 
-export default SearchBar;
+export default SearchBarAuthor;

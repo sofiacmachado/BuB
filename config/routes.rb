@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/faqs' => 'static_pages#faqs'
   get '/login' => 'static_pages#login'
   get '/authenticated' => 'sessions#authenticated'
-  get '/browse' => 'static_pages#browse'
+  get '/browse_author' => 'static_pages#browse_author'
+  get '/browse_title' => 'static_pages#browse_title'
 
 end
