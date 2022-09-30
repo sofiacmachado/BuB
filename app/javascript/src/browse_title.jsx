@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './layout';
+import Layout, {browseAuthor} from './layout';
 import './browse.scss';
-import SearchBar from "./searchBar/SearchBar";
+import SearchBar from "./searchBar/SearchBarTitle";
 import BookData from "./Data.json";
 
 const book = [
@@ -34,7 +34,7 @@ const book = [
   }
 ]
 
-class Browse extends React.Component {
+class BrowseTitle extends React.Component {
 
     constructor(props) {
       super(props);
@@ -95,9 +95,8 @@ class Browse extends React.Component {
                 <div className="col-8 mb-4 mybooks-title">
                   <h4 className="mb-1">Search</h4>
                   <div className="col-12 my-4 ">
-                   {this.browseAuthor ? <SearchBar key="{browse}"
-                    placeholder="Enter a Book Author..." data={BookData}/> : <SearchBar key="{browse1}"
-                    placeholder="Enter a Book Title..." data={BookData}/>}
+                   <SearchBar
+                    placeholder='Enter a Book Title' data={BookData}/>
                   </div>
                 </div>
             </div>
@@ -130,7 +129,7 @@ class Browse extends React.Component {
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Browse />,
+    <BrowseTitle />,
     document.body.appendChild(document.createElement('div')),
   )
 })
