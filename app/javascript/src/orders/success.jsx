@@ -1,7 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { Layout } from "../layout";
-import { handleErrors, safeCredentials } from "@utils/fetchHelper";
 
 import "./success.scss";
 
@@ -42,6 +40,7 @@ const BOOKSTORE = [
         constructor(props) {
               super(props);
               this.state =   {
+                id: '',
                 title: '',
                 author: '',
                 description: '',
@@ -53,9 +52,9 @@ const BOOKSTORE = [
                 rating: '',
                 image_url: '',
                 user: '',
-                loading: true,
+                paid: false,
+                loading: false,
                 authenticated: false,
-                editing: false,
                 }
               }
       
@@ -67,7 +66,7 @@ const BOOKSTORE = [
       
               this.setState({
                 loading: false,
-      
+                id: data.book.id,
                 author: data.book.author,
                 title: data.book.title,
                 description: data.book.description,
@@ -79,16 +78,17 @@ const BOOKSTORE = [
                 rating: data.book.rating,
                 image_url: data.book.image_url,
                 user: data.book.user,
+                paid: false,
                 loading: true,
                 authenticated: false,
-                editing: false,
       
               });
               //fetch
               data = true;
               this.setState({
                 authenticated: data,
-                loading: true,
+                loading: false,
+                paid: false,
               });
         }
 
@@ -101,60 +101,83 @@ const BOOKSTORE = [
 
     return (
       <Layout>
-        <div className="container pt-4">
-          <div className="row">
-            <div className="col-12 my-4">
-              <div className="card-body border rounded px-4">
-                <h1 className="card-title text-center mb-3">
-                  You're order is confirmed
-                </h1>
-                <h2 className="card-title text-center mb-3">
-                  {this.state.title}
-                </h>
-                <div className="row">
-                  <div
-                    className="col-6 property-image border rounded mb-3"
+        <div className="container mybooks-container">
+                    <div className="row">
+                        <div className="col-4 mybooks-title">
+                            <h4 className="mb-1">You're order is confirmed!</h4>
+                        </div>
+                    </div>
+            <div className="row mt-4 mb-4">
+                <div className="col col-lg-2 mb-4">
+                    <div
+                    className="book-image mb-3"
                     style={{ backgroundImage: `url(${this.state.image_url})` }}
-                  />
-                  <div className="col-6">
-                    <h5 className="mb-1">{this.state.author}</h5>
-                    <p className="card-text text-uppercase mb-2 text-secondary">
-                      <small>Sold by: {this.state.user}</small>
-                      <br />
-                      <small>Price: {this.state.price}</small>
-                    </p>
-                   
-                    <p className="card-text mt-2 mb-4 text-justify">
-                      {property.description}
-                    </p>
-                    <h2 className="mt-4">
-                      Payment Status:{" "}
-                      {booking.paid === true ? (
-                        <span className="ms-2 text-success">Paid</span>
-                      ) : (
-                        <span className="ms-2 text-danger">Unpaid</span>
-                      )}
-                    </h2>
-                    <h2>Amount: $ {charges[0].amount}</h2>
-                    {booking.paid === true ? (
-                      <a href="#" className="btn btn-success d-none disabled pay-btn">
-                        Pay now
-                      </a>
-                    ) : (
-                      <a
-                        href=""
-                        onClick={(e) => this.initiateStripeCheckout(e, id)}
-                        className="btn btn-primary text-white pay-btn"
-                      >
-                        Pay now
-                      </a>
-                    )}
-                  </div>
+                    />
                 </div>
-              </div>
+                    <div className="col-6 col-lg-2 mb-4">
+                    <h6 className="mb-2 text-uppercase">"{this.state.title}"</h6>
+                    <p className="text-uppercase mb-1 text-secondary">
+                        <small>
+                        <b>{this.state.author}</b>
+                        </small>
+                    </p>
+                    <p className="text-uppercase mb-4 text-secondary">
+                        <small>
+                        <b>{this.state.genre}</b>
+                        </small>
+                    </p>
+                    <p className="text-uppercase mb-4 text-secondary">
+                        <small>
+                        <b>ISBN: {this.state.isbn}</b>
+                        </small>
+                    </p>
+                    <p className="text-uppercase mb-4 text-secondary">
+                        <small>
+                        <b>Seller: {this.state.user}</b>
+                        </small>
+                    </p>
+                    </div>
+                    <div className="col-8 col-lg-6 mb-4 third-column">
+                    <small className="text-secondary">Book's condition:</small>
+                    <p className="text-secondary condition">
+                        {this.state.condition}
+                    </p>
+                    <small className="text-secondary">Detailed Condition:</small>
+                    <p className="text-secondary condition">
+                        {this.state.user_description}
+                    </p>
+                    <p className="mb-0 text-secondary">
+                        {this.state.description}
+                    </p>
+                    </div>
+                    <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
+                        <p className="for-sale rounded">
+                        <p className="text-uppercase d-flex justify-content-center mt-4">
+                        Amount: 
+                        </p>
+                        <span className='price-tag d-flex justify-content-center mb-4'>{this.state.price}$</span>
+                            Payment Status:{" "}
+                            {this.state.paid === true ? (
+                                <span className="ms-2 mb-4 text-success d-flex justify-content-center">Paid</span>
+                            ) : (
+                                <span className="ms-2  mb-4 text-danger d-flex justify-content-center">Unpaid</span>
+                            )}
+                            {this.state.paid === true ? (
+                            <a href="#" className="btn btn-success  mb-2 d-none disabled pay-btn">
+                                Pay now
+                            </a>
+                            ) : (
+                            <a
+                                href=""
+                                className="btn btn-add mb-4 text-white pay-btn"
+                            >
+                                Pay now
+                            </a>
+                            )}
+                        </p>
+                </div>
+                </div>
             </div>
-          </div>
-        </div>
       </Layout>
     );
   }
