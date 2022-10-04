@@ -1,50 +1,70 @@
-.property-image {
-    height: 250px;
-    background-size: cover;
-    background-position: center;
-    @media (min-width: 768px) {
-      height: 400px;
-    }
-  }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    font-weight: 600;
+  header {
+    background-color: #f6f4d2;
   }
   
-  h2 {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  h3 {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1.2rem; 
-    font-weight: 300;
+  .book-image {
+      padding-top: 300px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: left;
+    }
+  
+  .mybooks-container {
+    padding-top: 150px;
     
   }
-
-  h5 {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
+  
+  .mybooks-title {
+    font-family: 'Trirong', serif;
+    color: #fa824c;
   }
   
-  b {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 200;
+  h4 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
   }
-
-  .pay-btn {
-    width: 100%;
-  }
-
+  
   p {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+  }
+  
+  a {
+    text-decoration: none !important;
+  }
+  
+  .btn-add {
+    background-color: #fa824c;
+    color:#f6f4d2 !important;
+  
+  }
+
+  
+  .for-sale-container {
+    align-items: center;
+  }
+  
+  .for-sale { 
+    margin: 0;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    min-height: 60%;
+    font-size: 20px;
+    background-color: #f6f4d2;
+    color: #416165;
+  }
+  
+  .condition {
+    font-size: 14px;
+  }
+  
+  .latestbook:hover {
+    cursor: default;
+  }
+  
+  .price-tag {
+    color: #fa824c;
+    font-weight: 600;
+    font-size: 24px;
   }

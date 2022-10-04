@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   get '/authenticated' => 'sessions#authenticated'
   get '/browse_author' => 'static_pages#browse_author'
   get '/browse_title' => 'static_pages#browse_title'
+  get '/orders/:id/success' => 'static_pages#success'
 
 end
