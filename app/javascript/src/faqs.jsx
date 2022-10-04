@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './layout';
+import { Layout } from './layout';
 import './faqs.scss';
 
 class Faqs extends React.Component {

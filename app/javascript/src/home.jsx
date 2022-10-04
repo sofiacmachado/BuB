@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './layout';
+import { Layout } from './layout';
 import './home.scss';
 import heroBackground from "/app/assets/images/hero_background.png";
 

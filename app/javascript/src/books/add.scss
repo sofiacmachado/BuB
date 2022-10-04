@@ -34,12 +34,44 @@ header {
   a {
     text-decoration: none !important;
   }
-  
+
   .btn-add {
     background-color: #fa824c !important;
     color:#f6f4d2 !important;
-  
-  }
+    display: inline-block;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fa824c;
+      z-index: -2;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: darken(#fa824c, 15%);
+      transition: all .3s;
+      z-index: -1;
+    }
+    &:hover {
+      color: #fff;
+      &:before {
+        width: 100%;
+      }
+    }
+  } 
+
   
   @media only screen and (max-width: 992px) {
     .third-column {      
@@ -79,7 +111,17 @@ header {
     justify-content: center;
     cursor: pointer;
     color: gray;
-   height: 200px;
+    height: 200px;
+}
+
+
+.addPhoto:hover {
+  color: #416165;
+  font-size: 18px;
+  transition: color .1s ease-out, font-size .1s ease-out;
+  -moz-transition: color .1s ease-out, font-size .1s ease-out;
+  -webkit-transition: color .1s ease-out, font-size .1s ease-out;
+  -o-transition: color .1s ease-out, font-size .1s ease-out;
 }
 
 .light {

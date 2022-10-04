@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from './layout';
+import { Layout } from './layout';
 import ReactDOM from 'react-dom';
 import './mybooks.scss'
 import bookCover from '/app/assets/images/book_cover.jpg';
@@ -233,11 +233,6 @@ class Mybooks extends React.Component {
                                             </button>
                                         ) : null}
                                     </div>
-                                        {/* <div className="col-6 col-lg-4 mb-4 for-sale-container">
-                                            <p className="for-sale rounded">
-                                                For Sale
-                                            </p>
-                                        </div>  */}
                                     </div>
                                 </a>
                             )})}

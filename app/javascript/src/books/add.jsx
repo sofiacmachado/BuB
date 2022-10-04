@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from '../layout';
+import { Layout } from '../layout';
 import './add.scss';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 class Add extends React.Component {
     constructor(props) {
@@ -116,7 +117,11 @@ class Add extends React.Component {
                     />
                     
                     
-                <label className="addPhoto mt-3 mb-2" htmlFor="addPhoto">Add book photo</label>
+                <label className="addPhoto mt-3 mb-2" htmlFor="addPhoto">
+                  <span className="addPhotoText">Add book photo
+                  <AddToPhotosIcon />
+                  </span>
+                </label>
                 <input
                     type="file"
                     className="form-control form-control-file"

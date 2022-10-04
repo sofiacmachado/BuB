@@ -23,6 +23,7 @@ ul {
   margin-left: 10px;
 }
 
+
 .dropdown-item>a {
   margin-left: 0;
   font-size: 12px;
@@ -57,7 +58,8 @@ ul {
 
 .navbar a:hover,
 .dropdown:hover .dropbtn {
-  text-decoration: underline;
+  text-decoration: none;
+  color: #fa824c;
 }
 
 .dropdown-menu {
