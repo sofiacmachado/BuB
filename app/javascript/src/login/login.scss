@@ -26,9 +26,17 @@ header {
   }
   
   .btn-login {
-    background-color: #fa824c !important;
+    background-color: #fa824c;
     color:#f6f4d2 !important;
-  
+  }
+
+    
+  .btn-login:hover {
+    background-color: #ff5b0f;
+    transition: background-color .1s ease-in-out;
+    -moz-transition: background-color .1s ease-out;
+    -webkit-transition: background-color .1s ease-out;
+    -o-transition: background-color .1s ease-out;
   }
   
   input[type=text] {

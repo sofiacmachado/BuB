@@ -41,17 +41,25 @@ header {
   }
   
   .btn-edit {
-    background-color: #416165 !important;
+    background-color: #416165 ;
     color:#f6f4d2 !important;
-    justify-self: left;
+    justify-self: center;
     align-self: end;
     height: fit-content;
   }
+
+  
+  .btn-edit:hover {
+    background-color: #5c8e92;
+    transition: background-color .1s ease-in-out;
+    -moz-transition: background-color .1s ease-out;
+    -webkit-transition: background-color .1s ease-out;
+    -o-transition: background-color .1s ease-out;
+  }
   
   .for-sale-container {
-    display: flex;
     align-items: center;
-    justify-content: center;
+    
   }
   
   .for-sale { 
@@ -64,6 +72,10 @@ header {
     font-size: 20px;
     background-color: #f6f4d2;
     color:#fa824c;
+  }
+  
+  .condition {
+    font-size: 14px;
   }
 
   .price-tag-title {

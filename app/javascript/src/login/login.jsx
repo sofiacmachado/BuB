@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../layout';
+import { Layout } from '../layout';
 import LoginWidget from './loginWidget';
 import SignupWidget from './signupWidget';
 import './login.scss'

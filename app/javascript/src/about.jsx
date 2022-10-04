@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './layout';
+import { Layout } from './layout';
 import './about.scss';
 
 class About extends React.Component {

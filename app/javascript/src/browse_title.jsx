@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Layout, {browseAuthor} from './layout';
 import './browse.scss';
+import { Layout } from './layout';
 import SearchBar from "./searchBar/SearchBarTitle";
 import BookData from "./Data.json";
 
