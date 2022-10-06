@@ -283,7 +283,7 @@ class Book extends React.Component {
                         <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
                             <button
                             className="btn btn-edit mt-3">
-                            <ShoppingCartIcon/>
+                            <ShoppingCartIcon/> Add to Cart
                             </button>
                         {this.state.authenticated.user == this.state.user ? (
                           <div>
