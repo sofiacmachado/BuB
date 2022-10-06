@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout } from "../layout";
-
+import CheckIcon from '@mui/icons-material/Check';
 import "./success.scss";
 
 
@@ -88,7 +88,7 @@ const BOOKSTORE = [
               this.setState({
                 authenticated: data,
                 loading: false,
-                paid: false,
+                paid: true,
               });
         }
 
@@ -158,12 +158,12 @@ const BOOKSTORE = [
                         <span className='price-tag d-flex justify-content-center mb-4'>{this.state.price}$</span>
                             Payment Status:{" "}
                             {this.state.paid === true ? (
-                                <span className="ms-2 mb-4 text-success d-flex justify-content-center">Paid</span>
+                                <span className="mb-4 text-success d-flex justify-content-center">Paid <CheckIcon/></span>
                             ) : (
-                                <span className="ms-2  mb-4 text-danger d-flex justify-content-center">Unpaid</span>
+                                <span className="mb-4 text-danger d-flex justify-content-center">Unpaid</span>
                             )}
                             {this.state.paid === true ? (
-                            <a href="#" className="btn btn-success  mb-2 d-none disabled pay-btn">
+                            <a href="#" className="btn btn-success mb-2 d-none disabled pay-btn">
                                 Pay now
                             </a>
                             ) : (

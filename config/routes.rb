@@ -11,5 +11,8 @@ Rails.application.routes.draw do
   get '/browse_author' => 'static_pages#browse_author'
   get '/browse_title' => 'static_pages#browse_title'
   get '/orders/:id/success' => 'static_pages#success'
+  get '/sells' => 'static_pages#sells'
+  get '/orders' => 'static_pages#orders'
+  get '/cart' => 'static_pages#cart'
 
 end

@@ -202,9 +202,8 @@ class Mybooks extends React.Component {
                                             </small>
                                         </p>
                                         <p className="text-uppercase mb-4 price-tag-title">
-                                            Price: <span className='price-tag'>{book.price}$</span></p>
-                                        <p>
-                                        </p>
+                                            Price: <span className='price-tag'>{book.price}$</span>
+                                            </p>
                                         </div>
                                         <div className="col-8 col-lg-6 mb-4 third-column">
                                         <small className="text-secondary">Book's condition:</small>
