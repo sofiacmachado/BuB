@@ -5,25 +5,6 @@ import './add.scss';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 class Add extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state =   {
-            title: '',
-            author: '',
-            description: '',
-            isbn: '',
-            condition: '',
-            user_description: '',
-            genre: '',
-            price: '',
-            rating: '',
-            image_url: '',
-            user: '',
-            loading: true,
-            authenticated: false,
-            editing: false,
-            }
-          }
 
   render() {
     return (
@@ -142,8 +123,6 @@ class Add extends React.Component {
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Add />
-  </React.StrictMode>,
+    <Add />,
   document.body.appendChild(document.createElement("div"))
   );
