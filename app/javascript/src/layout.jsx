@@ -118,7 +118,12 @@ export class Layout extends React.Component {
                                                     Account <i className="fa fa-caret-down"></i>
                                                 </a>
                                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <li className="dropdown-item"><a href="/cart" className="nav--link">Cart <button></button></a></li>
+                                                    <li className="dropdown-item"><a href="/cart" className="nav--link">Cart{' '}
+                                                    {this.countCartItems ? (
+                                                        <button className="cart-indicator">{this.countCartItems}</button>
+                                                    ) : (
+                                                        ''
+                                                    )}</a></li>
                                                     <li className="dropdown-item"><a href="/orders" className="nav--link">Orders</a></li>
                                                     <li className="dropdown-item"><a href="/sells" className="nav--link">Sells</a></li>
                                                     <li className="dropdown-item"><a href="/mybooks" className="nav--link">Your Books</a></li>
