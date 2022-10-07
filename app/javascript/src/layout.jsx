@@ -24,10 +24,8 @@ export class Layout extends React.Component {
         this.handleBrowseTitle = this.handleBrowseTitle.bind(this);
         this.handleNavCollapse = this.handleNavCollapse.bind(this);
         this.checkNavCollapse = this.checkNavCollapse.bind(this);
-        
       }
-
-
+      
       componentDidMount() {
         // fetch
         let data = {

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import './cart.scss';
 
+
 const cartItems = [
     {
       title: 'Anna Karenina',
@@ -88,6 +89,7 @@ class Cart extends React.Component {
 
     render() {
 
+        const  book  = data; 
        // const { cartItems } = this.state;
        const totalPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.price, 0);
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { Layout } from './layout';
 import ReactDOM from 'react-dom';
 import './mybooks.scss'
-import bookCover from '/app/assets/images/book_cover.jpg';
 import data from "./data.js";
 
 
@@ -30,7 +29,7 @@ class Mybooks extends React.Component {
       }
 
     render() {
-        const  book  = data; 
+        const book = data; 
 
         const { authenticated } = this.state;
 
