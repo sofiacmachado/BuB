@@ -76,48 +76,6 @@ class Mybooks extends React.Component {
                     <div key={book.id} className="row mt-4 mb-4">
                         {book.map((book) => {
                             return(
-                                /* <div className="row">
-                                <div className="col col-lg-2 mb-4">
-                                    <a
-                                        href='#'
-                                        className=""
-                                    >
-                                    <div
-                                        className="book-image rounded"
-                                        style={{ backgroundImage: `url(${bookCover})` }}
-                                    />
-                                        </a>
-                                </div>
-                                    <div className="col-6 col-lg-2 mb-4 d-grid align-items-center">
-                                            <p className="text-uppercase mb-2 text-secondary">
-                                            <small>
-                                                <b>Book's Author</b>
-                                            </small>
-                                            </p>
-                                            <h6 className="mb-2">Book Title</h6>
-                                            <p className="mb-1">
-                                            <small>Genre</small>
-                                            </p>
-                                            <p className="text-uppercase mb-4 text-secondary">Price: <span>8$</span></p>
-                                    </div>
-                                    <div className="col-6 col-lg-4 mb-4 d-grid align-items-center">
-                                            <p className="text-uppercase mb-0 text-secondary">
-                                                Book Condition
-                                            </p>
-                                            <p className="text-uppercase mb-0 text-secondary">
-                                                Book Description
-                                            </p>
-                                            
-                                    </div>
-                                    <div className="col-6 col-lg-4 mb-4 d-grid for-sale-container">
-                                            <p className="for-sale rounded">
-                                                For Sale
-                                            </p>
-                                            <a href="#" className="btn btn-edit mt-3">
-                                                See book
-                                            </a>
-                                    </div>
-                                </div> */
                                 <a href={`/book/${book.id}`} className="latestbook text-body text-decoration-none">
                                     <div className="row mt-4 mb-4">
                                     <div className="col col-lg-2 mb-4">
