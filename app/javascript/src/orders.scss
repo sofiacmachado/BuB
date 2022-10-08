@@ -1,6 +1,70 @@
-.property-image {
-    min-height: 15vh;
-    max-height: 15vh;
-    background-size: cover;
-    background-position: center;
+header {
+  background-color: #f6f4d2;
+}
+
+.book-image {
+    padding-top: 300px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left;
   }
+
+.mybooks-container {
+  padding-top: 150px;
+  
+}
+
+.mybooks-title {
+  font-family: 'Trirong', serif;
+  color: #fa824c;
+}
+
+h4 {
+  font-size: 28px !important;
+  font-weight: 600 !important;
+}
+
+p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.btn-add {
+  background-color: #fa824c;
+  color:#f6f4d2 !important;
+
+}
+
+
+.for-sale-container {
+  align-items: center;
+}
+
+.for-sale { 
+  margin: 0;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  min-height: 60%;
+  font-size: 20px;
+  background-color: #f6f4d2;
+  color: #416165;
+}
+
+.condition {
+  font-size: 14px;
+}
+
+.latestbook:hover {
+  cursor: default;
+}
+
+.price-tag {
+  color: #fa824c;
+  font-weight: 600;
+  font-size: 24px;
+}

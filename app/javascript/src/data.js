@@ -11,7 +11,9 @@ const data = [
       "price": 4,
       "rating": 4.08,
       "image_url": "https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg",
-      "user": 1
+      "user": 1,
+      "buyer": 'Tom',
+      "order_status": 'shipping'
     },
     {
       "id": 2,
@@ -25,7 +27,9 @@ const data = [
       "price": 8,
       "rating": 4.2,
       "image_url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg",
-      "user": 1
+      "user": 1,
+      "buyer": 'Sam',
+      "order_status": 'delievering'
     },
   ]
 
