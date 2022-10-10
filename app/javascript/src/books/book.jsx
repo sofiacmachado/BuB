@@ -1,31 +1,52 @@
 import React from 'react';
-import { Layout } from '../layout';
+import  { onAdd, Layout } from '../layout';
 import ReactDOM from 'react-dom';
 import './book.scss';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import data from "../data.js";
+import { getCartFromServer, addToCart } from "../cart_api.js";
 
 class Book extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.onAddToCart = this.onAddToCart.bind(this);
+    this.state = {
+      loading: false,
+      authenticated: false,
+      editing: false,
+      book: null,
+      cart: [],
+    };
+  }
+  
   //fetch
-      componentDidMount() {
-        this.setState({
-          loading: false,
-          authenticated: false,
-          editing: false,
-        });
+  componentDidMount() {
+    const cart = getCartFromServer();
+    const url_parts = window.location.href.split('/');
+    const url_id = +url_parts[url_parts.length - 1];
+    const book = data.find(b => b.id === url_id);
+
+    this.setState({
+      loading: false,
+      authenticated: false,
+      editing: false,
+      book: book,
+      cart: cart,
+    });
+  }
+
+  onAddToCart() {
+    addToCart(this.state.book.id);
+    
   }
 
     render () {
       const url_parts = window.location.href.split('/');
       const url_id = +url_parts[url_parts.length - 1];
-      console.log(data);
-      console.log(url_id);
-
-      const book = data.find(b => b.id === url_id); 
+      const book = data.find(b => b.id === url_id);
 
         return (
-            <Layout>
+            <Layout cartItems={this.state.cart.length}>
               <div className="container mybooks-container">
                   {this.editing === true ? (
                     <div className="row mt-4 mb-4">
@@ -169,7 +190,7 @@ class Book extends React.Component {
                       </form>{" "}
                     </div>
                   ) : (
-                    <div className="latestbook text-body text-decoration-none">
+                    <div className="latestbook text-body text-decoration-none" key={book.id}>
                     <div className="row mt-4 mb-4">
                     <div className="col col-lg-2 mb-4">
                         <div
@@ -214,7 +235,7 @@ class Book extends React.Component {
                         </div>
                         <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
                             <button
-                            className="btn btn-edit mt-3">
+                            className="btn btn-edit mt-3" onClick={this.onAddToCart}>
                             <ShoppingCartIcon/> Add to Cart
                             </button>
                         {this.authenticated == book.user ? (
