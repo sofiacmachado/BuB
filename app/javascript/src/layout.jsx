@@ -5,6 +5,35 @@ import fb_logo from "/app/assets/icons/fb_logo.svg";
 import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
+import books from "./data.js";
+
+
+export function onAdd(book) {
+    const [cartItems, setCartItems] = useState([]);
+    const exist = cartItems.find((x) => x.id === book.id);
+    if (exist) {
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === book.id ? { ...exist, qty: exist.qty + 1 } : x
+        )
+      );
+    } else {
+      setCartItems([...cartItems, { ...book, qty: 1 }]);
+    }
+};
+
+  export function onRemove(book) {
+    const exist = cartItems.find((x) => x.id === book.id);
+    if (exist.qty === 1) {
+      setCartItems(cartItems.filter((x) => x.id !== book.id));
+    } else {
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === book.id ? { ...exist, qty: exist.qty - 1 } : x
+        )
+      );
+    }
+  };
 
 export class Layout extends React.Component {
 
@@ -17,8 +46,9 @@ export class Layout extends React.Component {
           logoutClassName: "d-none",
           browseAuthor: true,
           isNavCollapse: false,
+          cartItems: props.cartItems == null ? 0 : props.cartItems,
         };
-    
+   
         this.doLogout = this.doLogout.bind(this);
         this.handleBrowseAuthor = this.handleBrowseAuthor.bind(this);
         this.handleBrowseTitle = this.handleBrowseTitle.bind(this);
@@ -35,8 +65,10 @@ export class Layout extends React.Component {
             logoutClassName: "d-none",
             browseAuthor: true,
             isNavCollapse: false,
+            cartItems: {},
         };
             this.setState({
+              cartItems: data.cartItems,
               browseAuthor: data.authenticated,
               isNavCollapse: data.authenticated,
               authenticated: data.authenticated,
@@ -76,6 +108,8 @@ export class Layout extends React.Component {
       }
       
       render() {
+          
+          const book = books;
 
             return (
                 <React.Fragment>
@@ -117,8 +151,8 @@ export class Layout extends React.Component {
                                                 </a>
                                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                     <li className="dropdown-item"><a href="/cart" className="nav--link">Cart{' '}
-                                                    {this.countCartItems ? (
-                                                        <button className="cart-indicator">{this.countCartItems}</button>
+                                                    {this.state.cartItems > 0 ? (
+                                                        <button className="cart-indicator">{this.state.cartItems}</button>
                                                     ) : (
                                                         ''
                                                     )}</a></li>

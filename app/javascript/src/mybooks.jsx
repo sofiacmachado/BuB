@@ -10,7 +10,6 @@ class Mybooks extends React.Component {
     constructor(props) {
         super(props);
         this.state =   {
-           
             loading: true,
             authenticated: true,
             editing: false,
@@ -30,7 +29,6 @@ class Mybooks extends React.Component {
 
     render() {
         const book = data; 
-
         const { authenticated } = this.state;
 
         if (authenticated === false) {

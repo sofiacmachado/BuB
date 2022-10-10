@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Layout } from './layout';
-import './cart.scss';
-import data from "./data.js";
+import { Layout } from '../layout';
+import '../cart/cart.scss';
+import data from "../data";
 
 class Cart extends React.Component {
     
