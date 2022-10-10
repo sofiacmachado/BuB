@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import './cart.scss';
-import data from "../data.js";
+import data from "./data.js";
 
 class Cart extends React.Component {
     
@@ -26,9 +26,9 @@ class Cart extends React.Component {
       }
 
     render() {
-        const [cartItems, setCartItems] = useState([]);
-        const cartItems = data; 
-       const totalPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.price, 0);
+        const [cartItems, setCartItems] = useState([data]);
+        
+        const totalPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.price, 0);
 
             return (
                 <Layout>
@@ -93,9 +93,4 @@ class Cart extends React.Component {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    ReactDOM.render(
-        <Cart />,
-        document.body.appendChild(document.createElement("div"))
-    );
-});
+export default Cart;
