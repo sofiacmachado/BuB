@@ -81,14 +81,13 @@ class Orders extends React.Component {
                                   <span className="mb-4 text-danger d-flex justify-content-center">Delievering</span>
                               ) : ( <span className="mb-4 text-danger d-flex justify-content-center">Shipping</span> )
                               }
-                              <div className="dropdown">
-                                <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Change Order Status
-                                </button>
-                                <select className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <option className="dropdown-item" href="#" value="pending">Change Order Status</option>
-                                  <option className="dropdown-item" href="#" value="pending">Complete</option>
-                                </select>
+                              <div class="dropdown">
+                                  <button class="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Change Order Status
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#" value="complete">Complete</a>
+                                  </div>
                               </div>
                           </p>
                    </div>
