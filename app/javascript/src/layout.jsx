@@ -54,20 +54,12 @@ export class Layout extends React.Component {
             this.updateCart();   
         }
     
-      componentDidUpdate(prevProps) {
-        if(!equal(this.props.cartItems, prevProps.cartItems)) // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-        {
-          this.updateCart();
+        componentDidUpdate(prevProps) {
+            //Typical usage, don't forget to compare the props
+            if (this.props.cartItems !== prevProps.cartItems) {
+              this.fetchData(this.props.cartItems);
+            }
         }
-      } 
-      
-      updateCart() {
-        if (this.props.cartItems) {
-          this.props.dispatch(actions.fetchAllSites())
-        } else {
-          this.props.dispatch(actions.fetchUsersSites(cartItems))
-        }  
-      }
 
       doLogout(e) {
           this.setState({
@@ -101,6 +93,7 @@ export class Layout extends React.Component {
       render() {
           
           const book = books;
+            this.props.cartItems;
 
             return (
                 <React.Fragment>
