@@ -22,45 +22,37 @@ export class Layout extends React.Component {
           cartItems: props.cartItems,
           //cartItems: props.cartItems == null ? 0 : props.cartItems,
         };
-        this.updateCart = this.updateCart.bind(this);
+        
+ 
         this.doLogout = this.doLogout.bind(this);
         this.handleBrowseAuthor = this.handleBrowseAuthor.bind(this);
         this.handleBrowseTitle = this.handleBrowseTitle.bind(this);
         this.handleNavCollapse = this.handleNavCollapse.bind(this);
         this.checkNavCollapse = this.checkNavCollapse.bind(this);
       }
-
-        componentDidMount() {
-            // fetch
-            const cartItems = getCartFromServer();
-            
-            let data = {
-                authenticated: true,
-                sessionId: 0,
-                loginClassName: "",
-                logoutClassName: "d-none",
-                browseAuthor: true,
-                isNavCollapse: false,
-            };
+      
+      componentDidMount() {
+        const cartItems = getCartFromServer();
+        // fetch
+        let data = {
+            authenticated: true,
+            sessionId: 0,
+            loginClassName: "",
+            logoutClassName: "d-none",
+            browseAuthor: true,
+            isNavCollapse: false,
+        };
             this.setState({
-                cartItems: cartItems.length,
-                browseAuthor: data.authenticated,
-                isNavCollapse: data.authenticated,
-                authenticated: data.authenticated,
-                sessionId: data.sessionId,
-                loginClassName : data.authenticated ? "d-none" : "nav-item log-in",
-                logoutClassName : data.authenticated ? "nav-item log-in" : "d-none",
+              cartItems: cartItems.length,
+              browseAuthor: data.authenticated,
+              isNavCollapse: data.authenticated,
+              authenticated: data.authenticated,
+              sessionId: data.sessionId,
+              loginClassName : data.authenticated ? "d-none" : "nav-item log-in",
+              logoutClassName : data.authenticated ? "nav-item log-in" : "d-none",
             })
-            this.updateCart();   
-        }
-    
-        componentDidUpdate(prevProps) {
-            //Typical usage, don't forget to compare the props
-            if (this.props.cartItems !== prevProps.cartItems) {
-              this.fetchData(this.props.cartItems);
-            }
-        }
-
+          }
+          
       doLogout(e) {
           this.setState({
             authenticated: false,
@@ -93,7 +85,6 @@ export class Layout extends React.Component {
       render() {
           
           const book = books;
-            this.props.cartItems;
 
             return (
                 <React.Fragment>

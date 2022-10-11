@@ -18,8 +18,8 @@ export function addToCart(bookId) {
         alert('Cannot be added to the cart again');
     } else {
         userCart.push(bookId);
-        alert("Book added to the cart!");
         updateCartOnServer();
+        alert("Book added to the cart!");
     }
     console.log(userCart);
 }
