@@ -1,37 +1,48 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Layout } from '../layout';
-import '../cart/cart.scss';
-import data from "../data";
+import { Layout } from './layout';
+import './cart.scss';
+import data from "./data";
+import { getCartFromServer, removeFromCart } from "./cart_api.js";
 
 class Cart extends React.Component {
     
     constructor(props) {
         super(props);
+        this.onRemoveFromCart = this.onRemoveFromCart.bind(this);
         this.state =   {
             loading: true,
             authenticated: false,
-            editing: false,
+            book: null,
+            cart: [],
             }
           }
   
     //fetch
       componentDidMount() {
+        const cart = getCartFromServer();
+        const book = data;
   
         this.setState({
           loading: false,
-          authenticated: false
-  
+          authenticated: false,
+          book: book,
+          cart: cart,
         });
       }
 
-    render() {
-        const [cartItems, setCartItems] = useState([data]);
-        
-        const totalPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.price, 0);
+      onRemoveFromCart() {
+        removeFromCart(this.state.book.id);
+        const cart = getCartFromServer();
+        this.setState({cart: cart});
+      }
 
+    render() {
+        
+        const book = item;
+        console.log('renderer')
             return (
-                <Layout>
+                <Layout  cartItems={this.state.cart.length}>
                     <div className="container mybooks-container">
                         <div className="row">
                             <div className="col-4 mybooks-title">
@@ -44,7 +55,7 @@ class Cart extends React.Component {
                         </div>
                         <div className="row mt-4 mb-4">
 
-                                {cartItems.map((item) => (
+                                {cartItems.map((book) => (
                                      <div key={item.id} className="latestbook text-body text-decoration-none">
                                      <div className="row mt-4 mb-4 row-item">
                                         <div className="col-2 col-lg-4">
@@ -66,7 +77,7 @@ class Cart extends React.Component {
                                                 </p>
                                             </div>
                                             <div className="col-2">
-                                                <button onClick={() => onRemove(item)}  className="btn btn-edit remove">
+                                                <button onClick={this.onRemoveFromCart}  className="btn btn-edit remove">
                                                     x
                                                 </button>
                                             </div>
@@ -93,4 +104,9 @@ class Cart extends React.Component {
     }
 }
 
-export default Cart;
+document.addEventListener('DOMContentLoaded', () => {
+    ReactDOM.render(
+      <Cart />,
+      document.body.appendChild(document.createElement('div')),
+    )
+  })
