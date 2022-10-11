@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Layout } from './layout';
+import { Layout } from '../layout';
 import './cart.scss';
-import data from "./data";
-import { getCartFromServer, removeFromCart } from "./cart_api.js";
+import data from "../data";
+import { getCartFromServer, removeFromCart } from "../cart_api.js";
 
-class Cart extends React.Component {
+export class Cart extends React.Component {
     
     constructor(props) {
         super(props);
@@ -38,8 +38,9 @@ class Cart extends React.Component {
       }
 
     render() {
-        
-        const book = item;
+        const cartBooks = data.filter((book) => this.state.cart.includes(book.id));
+        const totalPrice = cartBooks.reduce((prev, book) => prev + book.price, 0);
+
         console.log('renderer')
             return (
                 <Layout  cartItems={this.state.cart.length}>
@@ -47,7 +48,7 @@ class Cart extends React.Component {
                         <div className="row">
                             <div className="col-4 mybooks-title">
                                 <h4 className="mb-1">My Shopping Cart</h4>
-                                {cartItems.length === 0 && 
+                                {this.state.cart.length === 0 && 
                                 <p className="text-secondary mb-3">
                                     Cart is empty
                                 </p>}
@@ -55,7 +56,7 @@ class Cart extends React.Component {
                         </div>
                         <div className="row mt-4 mb-4">
 
-                                {cartItems.map((book) => (
+                                {cartBooks.map((item) => (
                                      <div key={item.id} className="latestbook text-body text-decoration-none">
                                      <div className="row mt-4 mb-4 row-item">
                                         <div className="col-2 col-lg-4">
@@ -84,7 +85,7 @@ class Cart extends React.Component {
                                     </div>
                                     </div>
                                         ))}
-                                        {cartItems.length !== 0 && (
+                                        {this.state.cart.length !== 0 && (
                                             <div className='checkout-row'>
                                                 <div className="col-12 mt-4">
                                                     <p className="price-total">Total Price: ${totalPrice}</p>
@@ -105,6 +106,7 @@ class Cart extends React.Component {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
     ReactDOM.render(
       <Cart />,
       document.body.appendChild(document.createElement('div')),
