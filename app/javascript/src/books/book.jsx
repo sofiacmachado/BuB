@@ -37,7 +37,8 @@ class Book extends React.Component {
 
   onAddToCart() {
     addToCart(this.state.book.id);
-    
+    const cart = getCartFromServer();
+    this.setState({cart: cart});
   }
 
     render () {

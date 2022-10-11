@@ -6,7 +6,6 @@ import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
 import books from "./data.js";
-import { getCartFromServer } from "./cart_api.js";
 
 export class Layout extends React.Component {
 
@@ -19,8 +18,6 @@ export class Layout extends React.Component {
           logoutClassName: "d-none",
           browseAuthor: true,
           isNavCollapse: false,
-          cartItems: props.cartItems,
-          //cartItems: props.cartItems == null ? 0 : props.cartItems,
         };
         
  
@@ -32,7 +29,6 @@ export class Layout extends React.Component {
       }
       
       componentDidMount() {
-        const cartItems = getCartFromServer();
         // fetch
         let data = {
             authenticated: true,
@@ -43,7 +39,6 @@ export class Layout extends React.Component {
             isNavCollapse: false,
         };
             this.setState({
-              cartItems: cartItems.length,
               browseAuthor: data.authenticated,
               isNavCollapse: data.authenticated,
               authenticated: data.authenticated,
@@ -52,7 +47,7 @@ export class Layout extends React.Component {
               logoutClassName : data.authenticated ? "nav-item log-in" : "d-none",
             })
           }
-          
+
       doLogout(e) {
           this.setState({
             authenticated: false,
@@ -83,7 +78,6 @@ export class Layout extends React.Component {
       }
       
       render() {
-          
           const book = books;
 
             return (
@@ -126,8 +120,8 @@ export class Layout extends React.Component {
                                                 </a>
                                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                     <li className="dropdown-item"><a href="/cart" className="nav--link">Cart{' '}
-                                                    {this.state.cartItems > 0 ? (
-                                                        <button className="cart-indicator">{this.state.cartItems}</button>
+                                                    {this.props.cartItems != null && this.props.cartItems > 0 ? (
+                                                        <button className="cart-indicator">{this.props.cartItems}</button>
                                                     ) : (
                                                         ''
                                                     )}</a></li>
