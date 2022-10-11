@@ -6,34 +6,7 @@ import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
 import books from "./data.js";
-
-
-export function onAdd(book) {
-    const [cartItems, setCartItems] = useState([]);
-    const exist = cartItems.find((x) => x.id === book.id);
-    if (exist) {
-      setCartItems(
-        cartItems.map((x) =>
-          x.id === book.id ? { ...exist, qty: exist.qty + 1 } : x
-        )
-      );
-    } else {
-      setCartItems([...cartItems, { ...book, qty: 1 }]);
-    }
-};
-
-  export function onRemove(book) {
-    const exist = cartItems.find((x) => x.id === book.id);
-    if (exist.qty === 1) {
-      setCartItems(cartItems.filter((x) => x.id !== book.id));
-    } else {
-      setCartItems(
-        cartItems.map((x) =>
-          x.id === book.id ? { ...exist, qty: exist.qty - 1 } : x
-        )
-      );
-    }
-  };
+import { getCartFromServer } from "./cart_api.js";
 
 export class Layout extends React.Component {
 
@@ -46,36 +19,54 @@ export class Layout extends React.Component {
           logoutClassName: "d-none",
           browseAuthor: true,
           isNavCollapse: false,
-          cartItems: props.cartItems == null ? 0 : props.cartItems,
+          cartItems: props.cartItems,
+          //cartItems: props.cartItems == null ? 0 : props.cartItems,
         };
-   
+        this.updateCart = this.updateCart.bind(this);
         this.doLogout = this.doLogout.bind(this);
         this.handleBrowseAuthor = this.handleBrowseAuthor.bind(this);
         this.handleBrowseTitle = this.handleBrowseTitle.bind(this);
         this.handleNavCollapse = this.handleNavCollapse.bind(this);
         this.checkNavCollapse = this.checkNavCollapse.bind(this);
       }
-      
-      componentDidMount() {
-        // fetch
-        let data = {
-            authenticated: true,
-            sessionId: 0,
-            loginClassName: "",
-            logoutClassName: "d-none",
-            browseAuthor: true,
-            isNavCollapse: false,
-            cartItems: {},
-        };
+
+        componentDidMount() {
+            // fetch
+            const cartItems = getCartFromServer();
+            
+            let data = {
+                authenticated: true,
+                sessionId: 0,
+                loginClassName: "",
+                logoutClassName: "d-none",
+                browseAuthor: true,
+                isNavCollapse: false,
+            };
             this.setState({
-              cartItems: data.cartItems,
-              browseAuthor: data.authenticated,
-              isNavCollapse: data.authenticated,
-              authenticated: data.authenticated,
-              sessionId: data.sessionId,
-              loginClassName : data.authenticated ? "d-none" : "nav-item log-in",
-              logoutClassName : data.authenticated ? "nav-item log-in" : "d-none",
+                cartItems: cartItems.length,
+                browseAuthor: data.authenticated,
+                isNavCollapse: data.authenticated,
+                authenticated: data.authenticated,
+                sessionId: data.sessionId,
+                loginClassName : data.authenticated ? "d-none" : "nav-item log-in",
+                logoutClassName : data.authenticated ? "nav-item log-in" : "d-none",
             })
+            this.updateCart();   
+        }
+    
+      componentDidUpdate(prevProps) {
+        if(!equal(this.props.cartItems, prevProps.cartItems)) // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
+        {
+          this.updateCart();
+        }
+      } 
+      
+      updateCart() {
+        if (this.props.cartItems) {
+          this.props.dispatch(actions.fetchAllSites())
+        } else {
+          this.props.dispatch(actions.fetchUsersSites(cartItems))
+        }  
       }
 
       doLogout(e) {
