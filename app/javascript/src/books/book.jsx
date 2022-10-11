@@ -1,6 +1,5 @@
 import React from 'react';
-import  { onAdd, Layout } from '../layout';
-import ReactDOM from 'react-dom';
+import  { Layout } from '../layout';
 import './book.scss';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import data from "../data.js";
@@ -37,7 +36,6 @@ class Book extends React.Component {
 
   onAddToCart() {
     addToCart(this.state.book.id);
-    
   }
 
     render () {
