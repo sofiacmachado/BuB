@@ -1,1 +1,1 @@
-import '../src/cart/cart';
+import '../cart';
