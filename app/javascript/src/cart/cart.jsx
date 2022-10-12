@@ -31,17 +31,17 @@ export class Cart extends React.Component {
         });
       }
 
-      onRemoveFromCart() {
-        removeFromCart(this.state.book.id);
+      onRemoveFromCart(bookId) {
+        removeFromCart(bookId);
         const cart = getCartFromServer();
         this.setState({cart: cart});
+        console.log(bookId);
       }
 
     render() {
         const cartBooks = data.filter((book) => this.state.cart.includes(book.id));
         const totalPrice = cartBooks.reduce((prev, book) => prev + book.price, 0);
 
-        console.log('renderer')
             return (
                 <Layout  cartItems={this.state.cart.length}>
                     <div className="container mybooks-container">
@@ -78,7 +78,7 @@ export class Cart extends React.Component {
                                                 </p>
                                             </div>
                                             <div className="col-2">
-                                                <button onClick={this.onRemoveFromCart}  className="btn btn-edit remove">
+                                                <button onClick={() => this.onRemoveFromCart(item.id)}  className="btn btn-edit remove">
                                                     x
                                                 </button>
                                             </div>
