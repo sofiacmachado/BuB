@@ -25,8 +25,9 @@ export function addToCart(bookId) {
 }
 
 export function removeFromCart(bookId) {
-    userCart = userCart.filter(book => book.id !== bookId);
-    updateCartOnServer();
+        userCart = userCart.filter(id => id !== bookId);
+        updateCartOnServer();
+        console.log(userCart);
 }
 
 function updateCartOnServer() {
