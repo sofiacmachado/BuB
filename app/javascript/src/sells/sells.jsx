@@ -9,26 +9,47 @@ class Sells extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleShipChange = this.handleShipChange.bind(this);
+    this.handleDeliChange = this.handleDeliChange.bind(this);
     this.state =   {
+      sold_books: [],
       loading: true,
       authenticated: false,
-      editing: false,
-      }
+      
+      };
+    }
+    
+    handleShipChange(book) {
+      book.order_status = 'Shipping';
+      this.forceUpdate();
+      //this.setState({ sold_books: this.state.sold_books });
+      console.log('shipping')
+    
+    };
+    
+    handleDeliChange(book) {
+      book.order_status = 'Delivering';
+      this.forceUpdate();
+      //this.setState({ sold_books: this.state.sold_books });
+      console.log('delivering')
+    
     }
 
-//fetch
+    //fetch
   componentDidMount() {
+    const sold_books = data; 
 
     this.setState({
+      sold_books: sold_books,
       loading: false,
-      authenticated: false,
-      editing: false,
-
+      authenticated: true
     });
-}
+  }
+  
 
   render() {
-    const sold_books = data; 
+    
+    const {sold_books} = this.state; 
 
     if (this.state.loading) {
       return <p>Loading...</p>;
@@ -75,20 +96,21 @@ class Sells extends React.Component {
                           Amount: 
                           </p>
                           <span className='price-tag d-flex justify-content-center mb-4'>{book.price}$</span>
-                              <span className='d-flex justify-content-center'>Order status:{" "}</span>
-                              {book.order_status === 'complete' ? (
+                              <span className='d-flex justify-content-center'>Order status: {" "}</span>
+                              <span className="mb-4 text-danger d-flex justify-content-center">{book.order_status}</span>
+                              {/* {book.order_status === 'complete' ? (
                                   <span className="mb-4 text-success d-flex justify-content-center">Complete <CheckIcon/></span>
                               ) : book.order_status === 'delievering' ? (
-                                  <span className="mb-4 text-danger d-flex justify-content-center">Delievering</span>
+                                  <span className="mb-4 text-danger d-flex justify-content-center">Delivering</span>
                               ) : ( <span className="mb-4 text-danger d-flex justify-content-center">Shipping</span> )
-                              }
-                               <div class="dropdown">
-                                  <button class="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              } */}
+                               <div className="dropdown">
+                                  <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Change Order Status
                                   </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#" value="pending">Shipping</a>
-                                    <a class="dropdown-item" href="#" value="shipped">Delievering</a>
+                                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a className="dropdown-item" href="#" value={book.order_status} onClick={() => this.handleShipChange(book)}>Shipping</a>
+                                    <a className="dropdown-item" href="#" value={book.order_status} onClick={() => this.handleDeliChange(book)}>Delivering</a>
                                   </div>
                               </div>
                           </p>
