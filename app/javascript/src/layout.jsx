@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React from 'react';
 import './layout.scss';
 import logo from "/app/assets/images/bub_logo.png";
 import fb_logo from "/app/assets/icons/fb_logo.svg";
@@ -12,7 +12,7 @@ export class Layout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          authenticated: true,
+          authenticated: false,
           sessionId: 0,
           loginClassName: "",
           logoutClassName: "d-none",
@@ -30,19 +30,21 @@ export class Layout extends React.Component {
       
       componentDidMount() {
         // fetch
+        const book = books;
         let data = {
             authenticated: true,
             sessionId: 0,
             loginClassName: "",
             logoutClassName: "d-none",
+            accountClassName: "",
             browseAuthor: true,
             isNavCollapse: false,
         };
             this.setState({
-              browseAuthor: data.authenticated,
-              isNavCollapse: data.authenticated,
+              browseAuthor: data.browseAuthor,
+              isNavCollapse: data.isNavCollapse,
               authenticated: data.authenticated,
-              sessionId: data.sessionId,
+              accountClassName : data.authenticated ? "nav-item dropdown nav-item-account" : "d-none",
               loginClassName : data.authenticated ? "d-none" : "nav-item log-in",
               logoutClassName : data.authenticated ? "nav-item log-in" : "d-none",
             })
@@ -51,7 +53,6 @@ export class Layout extends React.Component {
       doLogout(e) {
           this.setState({
             authenticated: false,
-            sessionId: 0,
             loginClassName : "",
             logoutClassName : "d-none",
           })
@@ -78,7 +79,6 @@ export class Layout extends React.Component {
       }
       
       render() {
-          const book = books;
 
             return (
                 <React.Fragment>
@@ -114,7 +114,7 @@ export class Layout extends React.Component {
                                         <li className="nav-item ">
                                             <a href="/about" className="nav--link">About</a>
                                         </li>
-                                        <li className="nav-item dropdown">
+                                        <li className={this.state.accountClassName}>
                                                 <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Account <i className="fa fa-caret-down"></i>
                                                 </a>
@@ -140,9 +140,6 @@ export class Layout extends React.Component {
                                             Log out
                                         </a>
                                         </li>
-                                        {/* <li className="nav-item log-in">
-                                            <a href="/login" className="nav--link">Login</a>
-                                        </li> */}
                                     </ul>
                                 </div>
                             </nav>

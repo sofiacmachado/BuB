@@ -13,7 +13,7 @@ const data = [
       "image_url": "https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg",
       "user": 1,
       "buyer": 'Tom',
-      "order_status": 'shipping'
+      "order_status": 'Shipping'
     },
     {
       "id": 2,
@@ -29,7 +29,7 @@ const data = [
       "image_url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg",
       "user": 1,
       "buyer": 'Sam',
-      "order_status": 'delievering'
+      "order_status": 'Delievering'
     },
   ]
 
