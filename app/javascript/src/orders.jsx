@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import "./orders.scss";
 import data from "./data.js";
+import Tooltip from "@material-ui/core/Tooltip";
 
 class Orders extends React.Component {
  
@@ -13,12 +14,23 @@ class Orders extends React.Component {
       authenticated: false,
       editing: false,
       }
+
+    this.handleCompleteChange = this.handleCompleteChange.bind(this);
+
     }
+
+    handleCompleteChange(book) {
+      book.order_status = 'Complete';
+      this.forceUpdate();
+      //this.setState({ sold_books: this.state.sold_books });
+    };
 
 //fetch
   componentDidMount() {
+    const ordered_books = data; 
 
     this.setState({
+      ordered_books: ordered_books,
       loading: false,
       authenticated: false,
       editing: false,
@@ -27,12 +39,11 @@ class Orders extends React.Component {
 }
 
   render() {
-    const ordered_books = data; 
+    const { ordered_books } = this.state; 
 
     if (this.state.loading) {
       return <p>Loading...</p>;
     }
-    console.log(ordered_books);
 
     return (
       <Layout>
@@ -75,18 +86,31 @@ class Orders extends React.Component {
                           </p>
                           <span className='price-tag d-flex justify-content-center mb-4'>{book.price}$</span>
                               <span className='d-flex justify-content-center'>Order status:{" "}</span>
-                              {book.order_status === 'complete' ? (
-                                  <span className="mb-4 text-success d-flex justify-content-center">Complete <CheckIcon/></span>
+                              <span className="mb-4 text-danger d-flex justify-content-center">{book.order_status}</span>
+                              {/* {book.order_status === 'complete' ? (
+                                   <span className="mb-4 text-success d-flex justify-content-center">Complete <CheckIcon/></span>
                               ) : book.order_status === 'delievering' ? (
                                   <span className="mb-4 text-danger d-flex justify-content-center">Delievering</span>
                               ) : ( <span className="mb-4 text-danger d-flex justify-content-center">Shipping</span> )
-                              }
-                              <div class="dropdown">
-                                  <button class="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Change Order Status
-                                  </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#" value="complete">Complete</a>
+                              } */}
+                              <div className="dropdown">
+                                  <Tooltip title="Tell the seller that your order has arrived" placement="top">
+                                    <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Change Order Status
+                                    </button>
+                                  </Tooltip>
+                                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <Tooltip title="Only the seller can change the status before completion" placement="left">
+                                      <span>
+                                        <a className="dropdown-item disabled" role="button" aria-disabled="true" value={book.order_status}>Shipping</a>
+                                        </span>
+                                    </Tooltip>
+                                    <Tooltip title="Only the seller can change the status before completion" placement="left">
+                                      <span>
+                                        <a className="dropdown-item disabled" role="button" aria-disabled="true" value={book.order_status}>Delivering</a>
+                                      </span>  
+                                    </Tooltip>
+                                    <a className="dropdown-item" role="button" value={book.order_status} onClick={() => this.handleCompleteChange(book)}>Complete</a>
                                   </div>
                               </div>
                           </p>

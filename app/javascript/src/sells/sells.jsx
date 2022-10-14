@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Layout } from "../layout";
 import data from "../data.js";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import "./sells.scss";
 
@@ -9,30 +10,25 @@ class Sells extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handleShipChange = this.handleShipChange.bind(this);
-    this.handleDeliChange = this.handleDeliChange.bind(this);
     this.state =   {
       sold_books: [],
       loading: true,
-      authenticated: false,
-      
-      };
+      authenticated: false,  
+    };
+      this.handleShipChange = this.handleShipChange.bind(this);
+      this.handleDeliChange = this.handleDeliChange.bind(this);
     }
     
     handleShipChange(book) {
       book.order_status = 'Shipping';
       this.forceUpdate();
       //this.setState({ sold_books: this.state.sold_books });
-      console.log('shipping')
-    
     };
     
     handleDeliChange(book) {
       book.order_status = 'Delivering';
       this.forceUpdate();
       //this.setState({ sold_books: this.state.sold_books });
-      console.log('delivering')
-    
     }
 
     //fetch
@@ -105,12 +101,19 @@ class Sells extends React.Component {
                               ) : ( <span className="mb-4 text-danger d-flex justify-content-center">Shipping</span> )
                               } */}
                                <div className="dropdown">
+                               <Tooltip title="Let the buyer know how is the order processing" placement="top">
                                   <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Change Order Status
                                   </button>
+                                  </Tooltip>
                                   <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a className="dropdown-item" href="#" value={book.order_status} onClick={() => this.handleShipChange(book)}>Shipping</a>
-                                    <a className="dropdown-item" href="#" value={book.order_status} onClick={() => this.handleDeliChange(book)}>Delivering</a>
+                                    <a className="dropdown-item" role="button" value={book.order_status} onClick={() => this.handleShipChange(book)}>Shipping</a>
+                                    <a className="dropdown-item" role="button" value={book.order_status} onClick={() => this.handleDeliChange(book)}>Delivering</a>
+                                    <Tooltip title="Only the buyer can complete the order" placement="left">
+                                      <span>
+                                        <a className="dropdown-item disabled" role="button" aria-disabled="true" value={book.order_status}>Complete</a>
+                                      </span>
+                                    </Tooltip>
                                   </div>
                               </div>
                           </p>
