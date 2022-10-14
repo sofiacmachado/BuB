@@ -16,7 +16,7 @@ const BOOKSTORE = [
           genre: 'classic',
           price: 4,
           rating: 4.08/5,
-          image_url: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg',
+          image: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg',
           user: 1
         },
         {
@@ -30,7 +30,7 @@ const BOOKSTORE = [
           genre: 'classic',
           price: 8,
           rating: 4.2/5,
-          image_url: 'https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg',
+          image: 'https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg',
           user: 1
         }
       ]
@@ -50,7 +50,7 @@ const BOOKSTORE = [
                 genre: '',
                 price: '',
                 rating: '',
-                image_url: '',
+                image: '',
                 user: '',
                 paid: false,
                 loading: false,
@@ -76,7 +76,7 @@ const BOOKSTORE = [
                 price: data.book.price,
                 isbn: data.book.isbn,
                 rating: data.book.rating,
-                image_url: data.book.image_url,
+                image: data.book.image,
                 user: data.book.user,
                 paid: false,
                 loading: true,
@@ -111,7 +111,7 @@ const BOOKSTORE = [
                 <div className="col col-lg-2 mb-4">
                     <div
                     className="book-image mb-3"
-                    style={{ backgroundImage: `url(${this.state.image_url})` }}
+                    style={{ backgroundImage: `url(${this.state.image})` }}
                     />
                 </div>
                     <div className="col-6 col-lg-2 mb-4">

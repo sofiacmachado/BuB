@@ -71,7 +71,7 @@ class Sells extends React.Component {
                   <div className="col col-lg-2 mb-4">
                       <div
                       className="book-image mb-3"
-                      style={{ backgroundImage: `url(${book.image_url})` }}
+                      style={{ backgroundImage: `url(${book.image})` }}
                       />
                   </div>
                       <div className="col-8 col-lg-4 mb-4">

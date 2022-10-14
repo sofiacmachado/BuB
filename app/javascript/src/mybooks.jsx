@@ -10,17 +10,18 @@ class Mybooks extends React.Component {
     constructor(props) {
         super(props);
         this.state =   {
-            loading: true,
             authenticated: true,
             editing: false,
-            }
-          }
-  
+        }
+    
+ //       this.editMode = this.editMode.bind(this);
+    }
+    
     //fetch
-      componentDidMount() {
+    componentDidMount() {
+      
   
         this.setState({
-          loading: false,
           authenticated: true,
           editing: false,
   
@@ -28,8 +29,9 @@ class Mybooks extends React.Component {
       }
 
     render() {
-        const book = data; 
         const { authenticated } = this.state;
+          
+        const book = data;
 
         if (authenticated === false) {
             return (
@@ -79,7 +81,7 @@ class Mybooks extends React.Component {
                                     <div className="col col-lg-2 mb-4">
                                         <div
                                         className="book-image mb-3"
-                                        style={{ backgroundImage: `url(${book.image_url})` }}
+                                        style={{ backgroundImage: `url(${book.image})` }}
                                         />
                                     </div>
                                         <div className="col-6 col-lg-2 mb-4">
@@ -121,14 +123,11 @@ class Mybooks extends React.Component {
                                                 {/* who's selling */}
                                                 For Sale
                                             </p>
-                                        {this.state.authenticated.user == book.user.id ? (
-                                            <button
+                                            <a href={`book/edit/${book.id}`} 
                                             className="btn btn-edit  mt-3"
-                                            //  onClick={((e) => e, this.editMode)}
                                             >
                                             Edit book
-                                            </button>
-                                        ) : null}
+                                            </a>
                                     </div>
                                     </div>
                                 </a>
