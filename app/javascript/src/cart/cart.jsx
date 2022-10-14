@@ -62,7 +62,7 @@ export class Cart extends React.Component {
                                         <div className="col-2 col-lg-4">
                                             <div
                                             className="book-image my-3"
-                                            style={{ backgroundImage: `url(${item.image_url})` }}
+                                            style={{ backgroundImage: `url(${item.image})` }}
                                             />
                                         </div>
                                             <div className="col-4">

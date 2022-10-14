@@ -35,7 +35,7 @@ class BrowseTitle extends React.Component {
         {book.map((book) => {
           return(
               <a href={`/book/${book.id}`} className="latestbook text-body text-decoration-none">
-                <div className="book-image mb-1 rounded" style={{ backgroundImage: `url(${book.image_url})` }} />
+                <div className="book-image mb-1 rounded" style={{ backgroundImage: `url(${book.image})` }} />
                 <p className="text-uppercase mb-0 text-secondary"><small><b>{book.author}</b></small></p>
                 <h6 className="mb-0">{book.title}</h6>
                 <p className="mb-0"><small>${book.price}</small></p>
