@@ -123,7 +123,7 @@ class Mybooks extends React.Component {
                                                 {/* who's selling */}
                                                 For Sale
                                             </p>
-                                            <a href={`book/edit/${book.id}`} 
+                                            <a href={`mybooks/edit/${book.id}`} 
                                             className="btn btn-edit  mt-3"
                                             >
                                             Edit book
