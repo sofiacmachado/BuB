@@ -150,12 +150,12 @@ export class Layout extends React.Component {
                     <div className="container footer">
                         <div className="social-links">
                             <p>Follow Us</p>
-                            <a className="src_social"><img src={fb_logo}></img></a>
-                            <a className="src_social"><img src={insta_logo}></img></a>
-                            <a className="src_social"><img src={twitter_logo}></img></a>
-                            <a className="src_social"><img src={youtube_logo}></img></a>
+                            <a href="#" className="src_social"><img src={fb_logo}></img></a>
+                            <a href="#" className="src_social"><img src={insta_logo}></img></a>
+                            <a href="#" className="src_social"><img src={twitter_logo}></img></a>
+                            <a href="#" className="src_social"><img src={youtube_logo}></img></a>
                         </div>
-                        <p className="contact-footer">Email us at beforeusedbooks@gmail.com</p>
+                        <p className="contact-footer">Email us at <a href="#" className="email">beforeusedbooks@gmail.com</a></p>
                         <p className="copy">©2022 Before Used Books</p>
                     </div>
                 </footer>
