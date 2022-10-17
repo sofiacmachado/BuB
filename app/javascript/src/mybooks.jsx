@@ -22,7 +22,7 @@ class Mybooks extends React.Component {
       
   
         this.setState({
-          authenticated: true,
+          authenticated: false,
           editing: false,
   
         });
@@ -46,7 +46,7 @@ class Mybooks extends React.Component {
                             <div className="border border-light rounded shadow-sm p-4">
                                 <p className="mb-0">
                                 Please{" "}
-                                <a href="">
+                                <a href="/login" className="login-link">
                                     log in
                                 </a>{" "}
                                 to see your books.

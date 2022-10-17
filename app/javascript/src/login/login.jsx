@@ -5,39 +5,37 @@ import SignupWidget from './signupWidget';
 import './login.scss'
 
 const login1 = {
-    authenticated: false,
-    show_login: true,
+  authenticated: false,
+  show_login: true,
 }
-
 class Login extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state =   {
-            authenticated: false,
-            show_login: true,
-            }
-          }
-
-  componentDidMount() {
-    let data = {
-        login: login1,
+  constructor(props) {
+    super(props);
+    this.state =   {
+        authenticated: false,
+        show_login: true,
+        }
       }
-    
-      data = true;
-      this.setState({
-        authenticated: data,
-      });
+
+componentDidMount() {
+let data = {
+    login: login1,
   }
- toggle = () => {
-    this.setState({
-      show_login: !this.state.show_login,
-    })
-  }
+
+  data = true;
+  this.setState({
+    authenticated: data,
+  });
+}
+toggle = () => {
+this.setState({
+  show_login: !this.state.show_login,
+})
+}
 
   render () {
     const { authenticated, show_login } = this.state;
-    /* if (authenticated) {
+     if (authenticated) {
       return (
         <Layout>
           <div className="container mybooks-container">
@@ -51,7 +49,7 @@ class Login extends React.Component {
           </div>
         </Layout>
       );
-    }; */
+    };
 
     return (
       <Layout>

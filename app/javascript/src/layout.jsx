@@ -8,7 +8,6 @@ import youtube_logo from "/app/assets/icons/youtube_logo.svg";
 import books from "./data.js";
 
 export class Layout extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -77,6 +76,7 @@ export class Layout extends React.Component {
             return ''
         }
       }
+      
       
       render() {
 

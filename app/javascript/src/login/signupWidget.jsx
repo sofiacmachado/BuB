@@ -1,6 +1,5 @@
 // signupWidget.jsx
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class SignupWidget extends React.Component {
   state = {
@@ -75,21 +74,22 @@ class SignupWidget extends React.Component {
       })
   }
 
-  render () {
-    const { email, password, username, error } = this.state;
-    return (
-      <React.Fragment>
-        <form onSubmit={this.signup}>
-          <input name="username" type="text" className="form-control form-control-lg mb-3" placeholder="Username" value={username} onChange={this.handleChange} required />
-          <input name="email" type="text" className="form-control form-control-lg mb-3" placeholder="Email" value={email} onChange={this.handleChange} required />
-          <input name="password" type="password" className="form-control form-control-lg mb-3" placeholder="Password" value={password} onChange={this.handleChange} required />
-          <button type="submit" className="btn btn-danger btn-block btn-lg">Sign up</button>
-        </form>
-        <hr/>
-        <p className="mb-0">Already have an account? <a className="text-primary" onClick={this.props.toggle}>Log in</a></p>
-      </React.Fragment>
-    )
-  }
-}
 
-export default SignupWidget
+    render () {
+      const { email, password, username } = this.state;
+      return (
+        <React.Fragment>
+          <form onSubmit={this.signup}>
+            <input name="username" type="text" className="form-control form-control-lg mb-3" placeholder="Username" value={username} onChange={this.handleChange} required />
+            <input name="email" type="text" className="form-control form-control-lg mb-3" placeholder="Email" value={email} onChange={this.handleChange} required />
+            <input name="password" type="password" className="form-control form-control-lg mb-3" placeholder="Password" value={password} onChange={this.handleChange} required />
+            <button type="submit" className="btn btn-danger btn-block btn-lg">Sign up</button>
+          </form>
+          <hr/>
+          <p className="mb-0">Already have an account? <a className="text-primary link" onClick={this.props.toggle}>Log in</a></p>
+        </React.Fragment>
+      )
+    }
+  }
+
+export default SignupWidget;

@@ -101,14 +101,15 @@ footer {
   text-transform: uppercase;
 }
 
-a { 
+.email { 
   color: #FFEFD6;
+  text-decoration: none;
+
 }
 
-a:hover {
+.email:hover {
   cursor: pointer;
-  color: #FFEFD6;
-  text-decoration: none !important;
+  color: #5c8e92;
 }
 
 

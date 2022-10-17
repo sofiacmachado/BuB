@@ -11,6 +11,17 @@ header {
     color: #795454;
   }
   
+  .link {
+    text-decoration: none !important;
+    color: #795454 !important;
+  }
+  
+  .link:hover {
+    text-decoration: none !important;
+    color: #fa824c !important;
+  }
+
+
   h4 {
     font-size: 28px !important;
     font-weight: 600 !important;
@@ -19,10 +30,6 @@ header {
   p {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-  }
-  
-  a {
-    text-decoration: none !important;
   }
   
   .btn-login {
