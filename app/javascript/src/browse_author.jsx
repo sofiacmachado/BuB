@@ -4,14 +4,35 @@ import './browse.scss';
 import { Layout } from './layout';
 import SearchBar from "./searchBar/SearchBarAuthor";
 import data from "./data.js";
-
+import {isLoggedIn} from './login_api';
+import { getCartFromServer } from "./cart_api.js";
 
 class BrowseAuthor extends React.Component {
   
+  constructor(props) {
+    super(props);
+    this.state =   {
+        authenticated: false,
+        cart: [],
+    }
+}
+
+//fetch
+componentDidMount() {
+    const logIn = isLoggedIn();
+    const cart = getCartFromServer();
+    this.setState({
+      cart: cart,
+      authenticated: logIn,
+
+    });
+  }
+  
   render() {
+    const { cart, authenticated } = this.state;
     const  book  = data; 
     return (
-      <Layout>
+      <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
             <div className="row mb-4 d-flex justify-content-center">
                 <div className="col-8 mb-4 mybooks-title">

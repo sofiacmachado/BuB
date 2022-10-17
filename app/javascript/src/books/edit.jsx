@@ -4,6 +4,8 @@ import  { Layout } from '../layout';
 import './add.scss';
 import data from "../data.js";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import {isLoggedIn} from '../login_api';
+import { getCartFromServer } from "../cart_api.js";
 
 class Edit extends React.Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class Edit extends React.Component {
       loading: false,
       authenticated: false,
       book: {},
+      cart: []
     };
 
     //this.removeBook = this.removeBook.bind(this);
@@ -51,18 +54,10 @@ class Edit extends React.Component {
     this.setState({ description: event.target.value });
   };
 
-  
-  //fetch
-  componentDidMount() {
-    
-    const url_parts = window.location.href.split('/');
-    const url_id = +url_parts[url_parts.length - 1];
-    const book = data.find(b => b.id === url_id);
-
+  submitEdit() {
     const formData = new FormData();
-    
     const image = document.getElementById("addPhoto");
-
+    
     for (let i = 0; i < image.files.length; i++) {
       formData.append("book[image]", this.state.image.files[i]);
     }
@@ -76,11 +71,20 @@ class Edit extends React.Component {
     formData.set("book[genre]", this.state.genre);
     formData.set("book[price]", this.state.price);
     formData.set("book[rating]", this.state.rating);
-
+  }
+  //fetch
+  componentDidMount() {
+    
+    const url_parts = window.location.href.split('/');
+    const url_id = +url_parts[url_parts.length - 1];
+    const book = data.find(b => b.id === url_id);
+    const logIn = isLoggedIn();
+    const cart = getCartFromServer();
 
     this.setState({
+      cart: cart,
       loading: false,
-      authenticated: false,
+      authenticated: logIn,
       book: book,
     });
   
@@ -88,20 +92,7 @@ class Edit extends React.Component {
 
     render () {
 
-      const {
-        /* title,
-        auhtor,
-        isbn,
-        description,
-        condition,
-        user_description,
-        genre,
-        price,
-        rating,
-        image, */
-        loading,
-        authenticated,
-      } = this.state;
+      const { cart, loading, authenticated} = this.state;
 
       const url_parts = window.location.href.split('/');
       const url_id = +url_parts[url_parts.length - 1];
@@ -110,12 +101,24 @@ class Edit extends React.Component {
       if (loading) {
         return <p>Loading...</p>;
       }
-
-      console.log('render');
-
+      if (authenticated === false) {
         return (
-            <Layout>
-
+          <Layout authenticated={authenticated}>
+            <div className="container mybooks-container">
+              <div className="row">
+                <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
+                  <div className="border p-4">
+                    <p className="mb-0">You have to be logged in.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Layout>
+        );
+      }
+      if (authenticated === true) {
+        return (
+            <Layout cartItems={cart.length} authenticated={authenticated}>
               <div className="container mybooks-container mb-4">
               <h4 className="mb-4">Edit your book</h4>
                 <form className="col-12" onSubmit={this.updateBook}>
@@ -231,7 +234,7 @@ class Edit extends React.Component {
                         />
                     </div>
                     <button type="submit" className="btn btn-primary mb-2">
-                        Update book
+                        Update book 
                     </button>
                     <button className="btn btn-danger mb-2"
                         onClick={((e) => e, this.removeBook)}
@@ -249,8 +252,9 @@ class Edit extends React.Component {
           );
         }
       }
-      
-        ReactDOM.render(
-            <Edit />,
-            document.body.appendChild(document.createElement("div"))
-        );
+    }
+    
+      ReactDOM.render(
+          <Edit />,
+          document.body.appendChild(document.createElement("div"))
+      );

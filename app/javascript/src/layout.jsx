@@ -6,15 +6,13 @@ import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
 import books from "./data.js";
+import {doLogOut} from './login_api';
+
 
 export class Layout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          authenticated: false,
-          sessionId: 0,
-          loginClassName: "",
-          logoutClassName: "d-none",
           browseAuthor: true,
           isNavCollapse: false,
         };
@@ -31,30 +29,17 @@ export class Layout extends React.Component {
         // fetch
         const book = books;
         let data = {
-            authenticated: true,
-            sessionId: 0,
-            loginClassName: "",
-            logoutClassName: "d-none",
-            accountClassName: "",
             browseAuthor: true,
             isNavCollapse: false,
         };
             this.setState({
               browseAuthor: data.browseAuthor,
-              isNavCollapse: data.isNavCollapse,
-              authenticated: data.authenticated,
-              accountClassName : data.authenticated ? "nav-item dropdown nav-item-account" : "d-none",
-              loginClassName : data.authenticated ? "d-none" : "nav-item log-in",
-              logoutClassName : data.authenticated ? "nav-item log-in" : "d-none",
+              isNavCollapse: data.isNavCollapse
             })
           }
 
       doLogout(e) {
-          this.setState({
-            authenticated: false,
-            loginClassName : "",
-            logoutClassName : "d-none",
-          })
+        doLogOut();
         return false;
       }
 
@@ -79,8 +64,8 @@ export class Layout extends React.Component {
       
       
       render() {
-
-            return (
+        const authenticated = this.props.authenticated;
+        return (
                 <React.Fragment>
                     <header>
                         <div className="container navbar-container">
@@ -93,9 +78,6 @@ export class Layout extends React.Component {
                                         <span className="navbar-toggler-icon"></span>
                                     </button>
                                     <ul className={`${this.checkNavCollapse()} navbar-collapse`} id="navbarToggleExternalContent">
-                                        {/* <li className="nav-item">
-                                            <a href="/" className="nav--link">Home</a>
-                                        </li> */}
                                         <li className="nav-item">
                                             <a href="/mybooks" className="nav--link">Sell</a>
                                         </li>
@@ -114,7 +96,8 @@ export class Layout extends React.Component {
                                         <li className="nav-item ">
                                             <a href="/about" className="nav--link">About</a>
                                         </li>
-                                        <li className={this.state.accountClassName}>
+                                        {authenticated ? 
+                                        (<li className="nav-item dropdown nav-item-account">
                                                 <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Account <i className="fa fa-caret-down"></i>
                                                 </a>
@@ -129,17 +112,20 @@ export class Layout extends React.Component {
                                                     <li className="dropdown-item"><a href="/sells" className="nav--link">Sells</a></li>
                                                     <li className="dropdown-item"><a href="/mybooks" className="nav--link">Your Books</a></li>
                                                 </ul>
-                                        </li>
-                                        <li className={this.state.loginClassName} >
+                                        </li>) : ('')}
+                                        {!authenticated ?
+                                        (<li className='nav-item log-in' >
                                             <a className="nav--link log-in" href="/login">
                                             Log in
                                         </a>
                                         </li>
-                                        <li className={this.state.logoutClassName} >
+                                        ) : (
+                                        <li className='nav-item log-in'>
                                             <a className="nav--link log-out" href="/" onClick={this.doLogout}>
                                             Log out
                                         </a>
                                         </li>
+                                        )}
                                     </ul>
                                 </div>
                             </nav>

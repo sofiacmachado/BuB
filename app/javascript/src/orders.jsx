@@ -4,12 +4,15 @@ import { Layout } from './layout';
 import "./orders.scss";
 import data from "./data.js";
 import Tooltip from "@material-ui/core/Tooltip";
+import {isLoggedIn} from './login_api';
+import { getCartFromServer } from "./cart_api.js";
 
 class Orders extends React.Component {
  
   constructor(props) {
     super(props);
     this.state =   {
+      cart: [],
       loading: true,
       authenticated: false,
       editing: false,
@@ -28,25 +31,28 @@ class Orders extends React.Component {
 //fetch
   componentDidMount() {
     const ordered_books = data; 
+    const logIn = isLoggedIn();
+    const cart = getCartFromServer();
 
     this.setState({
       ordered_books: ordered_books,
+      cart: cart,
+      authenticated: logIn,
       loading: false,
-      authenticated: false,
       editing: false,
 
     });
 }
 
   render() {
-    const { ordered_books } = this.state; 
+    const { ordered_books, cart, authenticated } = this.state; 
 
     if (this.state.loading) {
       return <p>Loading...</p>;
     }
 
     return (
-      <Layout>
+      <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
                     <div className="row">
                         <div className="col-4 mybooks-title">
@@ -87,12 +93,6 @@ class Orders extends React.Component {
                           <span className='price-tag d-flex justify-content-center mb-4'>{book.price}$</span>
                               <span className='d-flex justify-content-center'>Order status:{" "}</span>
                               <span className="mb-4 text-danger d-flex justify-content-center">{book.order_status}</span>
-                              {/* {book.order_status === 'complete' ? (
-                                   <span className="mb-4 text-success d-flex justify-content-center">Complete <CheckIcon/></span>
-                              ) : book.order_status === 'delievering' ? (
-                                  <span className="mb-4 text-danger d-flex justify-content-center">Delievering</span>
-                              ) : ( <span className="mb-4 text-danger d-flex justify-content-center">Shipping</span> )
-                              } */}
                               <div className="dropdown">
                                   <Tooltip title="Tell the seller that your order has arrived" placement="top">
                                     <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

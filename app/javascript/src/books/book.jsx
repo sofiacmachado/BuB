@@ -4,6 +4,7 @@ import './book.scss';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import data from "../data.js";
 import { getCartFromServer, addToCart } from "../cart_api.js";
+import {isLoggedIn} from '../login_api';
 
 class Book extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Book extends React.Component {
   
   //fetch
   componentDidMount() {
-    
+    const logIn = isLoggedIn();
     const cart = getCartFromServer();
     const url_parts = window.location.href.split('/');
     const url_id = +url_parts[url_parts.length - 1];
@@ -28,7 +29,7 @@ class Book extends React.Component {
 
     this.setState({
       loading: false,
-      authenticated: false,
+      authenticated: logIn,
       book: book,
       cart: cart,
     });
@@ -43,20 +44,7 @@ class Book extends React.Component {
 
     render () {
 
-      const {
-        /* title,
-        auhtor,
-        isbn,
-        description,
-        condition,
-        user_description,
-        genre,
-        price,
-        rating,
-        image, */
-        loading,
-        authenticated,
-      } = this.state;
+      const { loading, authenticated, cart } = this.state;
 
       const url_parts = window.location.href.split('/');
       const url_id = +url_parts[url_parts.length - 1];
@@ -69,7 +57,7 @@ class Book extends React.Component {
       }
 
         return (
-            <Layout cartItems={this.state.cart.length}>
+            <Layout cartItems={cart.length} authenticated={authenticated}>
               <div className="container mybooks-container">
                   <div className="latestbook text-body text-decoration-none" key={book.id}>
                     <div className="row mt-4 mb-4">

@@ -4,6 +4,7 @@ import { Layout } from '../layout';
 import './cart.scss';
 import data from "../data";
 import { getCartFromServer, removeFromCart } from "../cart_api.js";
+import {isLoggedIn} from '../login_api';
 
 export class Cart extends React.Component {
     
@@ -20,12 +21,13 @@ export class Cart extends React.Component {
   
     //fetch
       componentDidMount() {
+        const logIn = isLoggedIn();
         const cart = getCartFromServer();
         const book = data;
   
         this.setState({
           loading: false,
-          authenticated: false,
+          authenticated: logIn,
           book: book,
           cart: cart,
         });
@@ -39,16 +41,17 @@ export class Cart extends React.Component {
       }
 
     render() {
-        const cartBooks = data.filter((book) => this.state.cart.includes(book.id));
+        const { cart, authenticated } = this.state;
+        const cartBooks = data.filter((book) => cart.includes(book.id));
         const totalPrice = cartBooks.reduce((prev, book) => prev + book.price, 0);
 
             return (
-                <Layout  cartItems={this.state.cart.length}>
+                <Layout  cartItems={cart.length}  authenticated={authenticated}>
                     <div className="container mybooks-container">
                         <div className="row">
                             <div className="col-4 mybooks-title">
                                 <h4 className="mb-1">My Shopping Cart</h4>
-                                {this.state.cart.length === 0 && 
+                                {cart.length === 0 && 
                                 <p className="text-secondary mb-3">
                                     Cart is empty
                                 </p>}

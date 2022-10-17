@@ -2,12 +2,9 @@ import React from 'react';
 import { Layout } from '../layout';
 import LoginWidget from './loginWidget';
 import SignupWidget from './signupWidget';
-import './login.scss'
+import './login.scss';
+import {isLoggedIn} from '../login_api';
 
-const login1 = {
-  authenticated: false,
-  show_login: true,
-}
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -15,27 +12,31 @@ class Login extends React.Component {
         authenticated: false,
         show_login: true,
         }
-      }
-
-componentDidMount() {
-let data = {
-    login: login1,
   }
 
-  data = true;
-  this.setState({
-    authenticated: data,
-  });
-}
-toggle = () => {
-this.setState({
-  show_login: !this.state.show_login,
-})
-}
+  componentDidMount() {
+    const logIn = isLoggedIn();  
+    let data = {
+      show_login: true,
+    };
+    this.setState({
+      authenticated: logIn,
+      show_login: data.show_login,
+    });
+  }
+
+  
+    toggle = () => {
+      this.setState({
+        show_login: !this.state.show_login,
+    })
+  }
 
   render () {
+
     const { authenticated, show_login } = this.state;
-     if (authenticated) {
+    
+     if(authenticated) {
       return (
         <Layout>
           <div className="container mybooks-container">
@@ -49,8 +50,7 @@ this.setState({
           </div>
         </Layout>
       );
-    };
-
+    }
     return (
       <Layout>
         <div className="container mybooks-container">
