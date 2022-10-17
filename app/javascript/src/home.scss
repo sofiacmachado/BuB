@@ -7,11 +7,16 @@
     color: #795454;
   }
 
-  a {
+  .link {
     text-decoration: none;
     color: #795454;
   }
   
+  .link:hover {
+    text-decoration: none;
+    color: #fa824c;
+  }
+
   .slogan-text {
     padding-top: 300px;
   }

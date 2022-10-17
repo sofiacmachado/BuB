@@ -13,8 +13,8 @@ class Home extends React.Component {
                 <div className="row align-items-center justify-content-center">
                     <div className="col-md-7 mx-auto text-center slogan-text" data-aos="fade-up">
                         <h1>Discover your next read</h1>
-                        <p><a href="#">Browse</a> through our list and find books to fill your shelves.</p>
-                        <p><a href="#">Sell</a> your already read books to someone who wants to read it.</p>
+                        <p><a href="/browse_title" className="link">Browse</a> through our list and find books to fill your shelves.</p>
+                        <p><a href="/mybooks" className="link">Sell</a> your already read books to someone who wants to read it.</p>
                     </div>
                 </div>
             </div>

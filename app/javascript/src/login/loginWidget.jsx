@@ -1,6 +1,5 @@
 // loginWidget.jsx
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class LoginWidget extends React.Component {
   state = {
@@ -56,10 +55,10 @@ class LoginWidget extends React.Component {
           {error && <p className="text-danger mt-2">{error}</p>}
         </form>
         <hr/>
-        <p className="mb-0">Don't have an account? <a className="text-primary" onClick={this.props.toggle}>Sign up</a></p>
+        <p className="mb-0">Don't have an account? <a className="text-primary link" onClick={this.props.toggle}>Sign up</a></p>
       </React.Fragment>
     )
   }
 }
 
-export default LoginWidget
+export default LoginWidget;
