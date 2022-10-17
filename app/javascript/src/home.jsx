@@ -3,11 +3,30 @@ import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import './home.scss';
 import heroBackground from "/app/assets/images/hero_background.png";
+import { getCartFromServer } from "./cart_api.js";
+import {isLoggedIn} from './login_api';
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      authenticated: false,
+      cart: [],
+    };
+  }
+  componentDidMount() {
+    const logIn = isLoggedIn();
+    const cart = getCartFromServer();
+
+    this.setState({
+      authenticated: logIn,
+      cart: cart,
+    });
+  }
   render() {
+    const { authenticated, cart } = this.state;
     return (
-      <Layout>
+      <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="intro-section" style={{ backgroundImage: `url(${heroBackground})`}}>
             <div className="container">
                 <div className="row align-items-center justify-content-center">

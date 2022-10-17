@@ -3,39 +3,39 @@ import { Layout } from './layout';
 import ReactDOM from 'react-dom';
 import './mybooks.scss'
 import data from "./data.js";
-
+import {isLoggedIn} from './login_api';
+import { getCartFromServer } from "./cart_api.js";
 
 class Mybooks extends React.Component {
     
     constructor(props) {
         super(props);
         this.state =   {
-            authenticated: true,
+            authenticated: false,
             editing: false,
+            cart: [],
         }
-    
- //       this.editMode = this.editMode.bind(this);
     }
     
     //fetch
     componentDidMount() {
-      
-  
+        const logIn = isLoggedIn();
+        const cart = getCartFromServer();
         this.setState({
-          authenticated: false,
+          cart: cart,
+          authenticated: logIn,
           editing: false,
   
         });
       }
 
     render() {
-        const { authenticated } = this.state;
-          
+        const { cart, authenticated } = this.state;
         const book = data;
 
         if (authenticated === false) {
             return (
-                <Layout>
+                <Layout cartItems={cart.length} authenticated={authenticated}>
                     <div className="container mybooks-container">
                         <div className="row">
                             <div className="col-10 mybooks-title">
@@ -58,7 +58,7 @@ class Mybooks extends React.Component {
             );
         }
         return (
-            <Layout>
+            <Layout cartItems={cart.length} authenticated={authenticated}>
                 <div className="container mybooks-container">
                     <div className="row">
                         <div className="col-4 mybooks-title">
@@ -120,7 +120,6 @@ class Mybooks extends React.Component {
                                         </div>
                                         <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
                                             <p className="for-sale rounded">
-                                                {/* who's selling */}
                                                 For Sale
                                             </p>
                                             <a href={`mybooks/edit/${book.id}`} 

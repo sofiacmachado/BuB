@@ -2,11 +2,32 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import './about.scss';
+import { getCartFromServer } from "./cart_api.js";
+import {isLoggedIn} from './login_api';
 
 class About extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      authenticated: false,
+      cart: [],
+    };
+  }
+  componentDidMount() {
+    const logIn = isLoggedIn();
+    const cart = getCartFromServer();
+
+    this.setState({
+      authenticated: logIn,
+      cart: cart,
+    });
+  }
+
   render() {
+    const { authenticated, cart } = this.state;
     return (
-      <Layout>
+      <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
             <div className="row mb-4 d-flex justify-content-center">
                 <div className="col-8 mb-4 mybooks-title">

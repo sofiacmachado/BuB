@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { Layout } from "../layout";
 import data from "../data.js";
 import Tooltip from "@material-ui/core/Tooltip";
+import {isLoggedIn} from '../login_api';
+import { getCartFromServer } from "../cart_api.js";
 
 import "./sells.scss";
 
@@ -11,6 +13,7 @@ class Sells extends React.Component {
   constructor(props) {
     super(props);
     this.state =   {
+      cart: [],
       sold_books: [],
       loading: true,
       authenticated: false,  
@@ -33,19 +36,22 @@ class Sells extends React.Component {
 
     //fetch
   componentDidMount() {
-    const sold_books = data; 
+    const sold_books = data;
+    const logIn = isLoggedIn();
+    const cart = getCartFromServer(); 
 
     this.setState({
+      cart: cart,
       sold_books: sold_books,
       loading: false,
-      authenticated: true
+      authenticated: logIn,
     });
   }
   
 
   render() {
     
-    const {sold_books} = this.state; 
+    const {sold_books, cart, authenticated } = this.state; 
 
     if (this.state.loading) {
       return <p>Loading...</p>;
@@ -53,7 +59,7 @@ class Sells extends React.Component {
     console.log(sold_books);
 
     return (
-      <Layout>
+      <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
                     <div className="row">
                         <div className="col-4 mybooks-title">

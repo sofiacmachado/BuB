@@ -2,7 +2,8 @@ import React from "react";
 import { Layout } from "../layout";
 import CheckIcon from '@mui/icons-material/Check';
 import "./success.scss";
-
+import { getCartFromServer, addToCart } from "../cart_api.js";
+import {isLoggedIn} from '../login_api';
 
 const BOOKSTORE = [
     {
@@ -55,11 +56,14 @@ const BOOKSTORE = [
                 paid: false,
                 loading: false,
                 authenticated: false,
+                cart: [],
                 }
               }
       
         //fetch
             componentDidMount() {
+              const logIn = isLoggedIn();
+              const cart = getCartFromServer();
               let data = {
                 book:  BOOKSTORE[0],
               }
@@ -80,7 +84,8 @@ const BOOKSTORE = [
                 user: data.book.user,
                 paid: false,
                 loading: true,
-                authenticated: false,
+                authenticated: logIn,
+                cart: cart,
       
               });
               //fetch
@@ -93,18 +98,18 @@ const BOOKSTORE = [
         }
 
   render() {
-    const { loading } = this.state;
+    const { loading, cart, authenticated } = this.state;
 
     if (loading) {
       return <p>Loading...</p>;
     }
 
     return (
-      <Layout>
+      <Layout  cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
                     <div className="row">
                         <div className="col-4 mybooks-title">
-                            <h4 className="mb-1">You're order is confirmed!</h4>
+                            <h4 className="mb-1">Your order is confirmed!</h4>
                         </div>
                     </div>
             <div className="row mt-4 mb-4">
