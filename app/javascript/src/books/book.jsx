@@ -96,7 +96,7 @@ class Book extends React.Component {
                         </p>
                         <small className="text-secondary">Detailed Condition:</small>
                         <p className="text-secondary condition">
-                            {book.user_description}
+                            {book.condition_description}
                         </p>
                         <p className="mb-0 text-secondary">
                             {book.description}
