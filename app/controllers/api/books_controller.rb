@@ -8,7 +8,7 @@ module Api
       end
   
       def show
-        @property = Book.find_by(id: params[:id])
+        @book = Book.find_by(id: params[:id])
         return render json: { error: 'not_found' }, status: :not_found if !@book
   
         render 'api/books/show', status: :ok

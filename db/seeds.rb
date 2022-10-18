@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-users = User.create([
+users = User.create!([
   { username: 'Tommy', email: 'tommy@test.com', password: 'password' },
   { username: 'Bobby', email: 'bobby@test.com', password: 'password' },
   { username: 'Sarah', email: 'sarah@test.com', password: 'password' },
@@ -15,7 +15,7 @@ users = User.create([
   { username: 'Cammy', email: 'cammy@test.com', password: 'password' },
 ])
 
-books = Book.create([{
+books = Book.create!([{
     title: "Notes from Underground",
     author: "Leo Tolstoy",
     isbn: 9780140449174,
