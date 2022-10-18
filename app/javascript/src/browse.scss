@@ -87,7 +87,8 @@ header {
     text-transform: uppercase;
   }
 
-  h3 {
+  h3,
+  .see-more {
     color: #fa824c;
     background-color: inherit;
     font-weight: 700;
@@ -143,7 +144,7 @@ header {
   margin-right: 30px;
 }
 
-.see-all {
+.see-more {
   display: flex;
   justify-content: space-between;
   align-items: center;
