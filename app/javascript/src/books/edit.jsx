@@ -152,7 +152,7 @@ class Edit extends React.Component {
                             <option hidden className='light'>Select an Option</option> 
                             <option>Classic</option>
                             <option>Fantasy</option>
-                            <option>Drama</option>
+                            <option>Fiction</option>
                             <option>Poetry</option>
                             <option>Non-Fiction</option>
                         </select>
