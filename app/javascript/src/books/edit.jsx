@@ -45,7 +45,7 @@ class Edit extends React.Component {
     this.setState({ condition: event.target.value });
   };
   handleUserDescriptionChange = (event) => {
-    this.setState({ user_description: event.target.value });
+    this.setState({ condition_description: event.target.value });
   };
   handlePriceChange = (event) => {
     this.setState({ price: event.target.value });
@@ -67,7 +67,7 @@ class Edit extends React.Component {
     formData.set("book[isbn]", this.state.isbn);
     formData.set("book[description]", this.state.description);
     formData.set("book[condition]", this.state.condition);
-    formData.set("book[user_description]", this.state.user_description);
+    formData.set("book[condition_description]", this.state.condition_description);
     formData.set("book[genre]", this.state.genre);
     formData.set("book[price]", this.state.price);
     formData.set("book[rating]", this.state.rating);
@@ -215,9 +215,9 @@ class Edit extends React.Component {
                             className="form-control"
                             rows="8"
                             id="inputDescription"
-                            placeholder={book.user_description}
+                            placeholder={book.condition_description}
                             onChange={this.handleUserDescriptionChange}
-                            value={book.user_description}
+                            value={book.condition_description}
                             maxLength="800"
                         />
                        
