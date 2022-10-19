@@ -3,33 +3,24 @@ import ReactDOM from 'react-dom';
 import './browse.scss';
 import { Layout } from './layout';
 import SearchBar from "./searchBar/SearchBarTitle";
-import data from "./data.js";
 import {isLoggedIn} from './login_api';
 import { getCartFromServer } from "./cart_api.js";
+import { handleErrors } from './utils/fetchHelper';
+
+//removed cart and authenticated boolean
 
 class BrowseTitle extends React.Component {
-    
-  constructor(props) {
-    super(props);
-    this.state =   {
-        authenticated: false,
-        cart: [],
-    }
-}
   state = {
     books: [],
     total_pages: null,
     next_page: null,
     loading: true,
+    nextPageClass: "d-flex justify-content-around",
   }
  
+
   componentDidMount() {
-    const logIn = isLoggedIn();
-    const cart = getCartFromServer();
-    this.setState({
-      cart: cart,
-      authenticated: logIn,
-    });
+   
     fetch('/api/books?page=1')
     .then(handleErrors)
       .then(data => {
@@ -38,6 +29,7 @@ class BrowseTitle extends React.Component {
           total_pages: data.total_pages,
           next_page: data.next_page,
           loading: false,
+          nextPageClass : data.next_page ? "d-flex justify-content-around" : "",
         })
       })
     }
@@ -55,14 +47,15 @@ class BrowseTitle extends React.Component {
             total_pages: data.total_pages,
             next_page: data.next_page,
             loading: false,
+            nextPageClass : data.next_page ? "d-flex justify-content-around" : "",
           })
         })
     }
 
   render() {
-    const { cart, authenticated, books, next_page, loading } = this.state;
+    const {  nextPageClass, books, next_page, loading } = this.state;
     return (
-      <Layout  cartItems={cart.length} authenticated={authenticated}>
+      <Layout>
         <div className="container mybooks-container">
             <div className="row mb-4 d-flex justify-content-center">
                 <div className="col-8 mb-4 mybooks-title">
@@ -79,17 +72,16 @@ class BrowseTitle extends React.Component {
           <hr />
           {loading && <p>loading...</p>}
           {(loading || next_page === null) ||
-            <div className="see-all">
+            <div className="see-more">
               <h2>Latest Uploaded Books</h2>
               <button className="see-more" onClick={this.loadMore}>See More</button>
             </div>
-          }
-
-        <div className="col-6 col-lg-4 mb-4 d-inline-flex lastbooks">
+            }
+        <div className={nextPageClass}>
           {books.map((book) => {
             return(
-              <div  key={book.id} >
-                <a href={`/book/${book.id}`} className="latestbook text-body text-decoration-none">
+              <div key={book.id} className="col-2 mb-4 d-inline-flex justify-content-center latestbooks">
+                <a href={`/book/${book.id}`} className="text-body text-decoration-none">
                   <div className="book-image mb-1 rounded" style={{ backgroundImage: `url(${book.image})` }} />
                   <p className="text-uppercase mb-0 text-secondary"><small><b>{book.author}</b></small></p>
                   <h6 className="mb-0">{book.title}</h6>
