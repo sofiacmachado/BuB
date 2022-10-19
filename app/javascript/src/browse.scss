@@ -129,23 +129,17 @@ header {
   }
 
   .book-image {
-    padding-top: 200px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    padding: 120px 80px;
+    background-size: contain;
+    background-repeat: round;
+    max-width: 80px;
+
   }
-
-.lastbooks {
-  margin-right: 30px;
-  max-width: 300px;
-}
-
-.latestbook {
-  margin-right: 30px;
-}
 
 .see-more {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: none;
 }
+
