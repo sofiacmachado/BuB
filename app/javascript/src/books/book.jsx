@@ -2,38 +2,29 @@ import React from 'react';
 import  { Layout } from '../layout';
 import './book.scss';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import data from "../data.js";
 import { getCartFromServer, addToCart } from "../cart_api.js";
 import {isLoggedIn} from '../login_api';
+import { handleErrors } from '../utils/fetchHelper';
 
 class Book extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onAddToCart = this.onAddToCart.bind(this);
-    this.state = {
-      loading: false,
-      authenticated: false,
-      book: {},
-      cart: [],
-    };
+
+  state = {
+    book: {},
+    loading: true,
+    cart: [],
   }
 
-  
-  //fetch
   componentDidMount() {
-    const logIn = isLoggedIn();
     const cart = getCartFromServer();
-    const url_parts = window.location.href.split('/');
-    const url_id = +url_parts[url_parts.length - 1];
-    const book = data.find(b => b.id === url_id);
-
-    this.setState({
-      loading: false,
-      authenticated: logIn,
-      book: book,
-      cart: cart,
-    });
-  
+    fetch(`/api/books/${this.props.book_id}`)
+      .then(handleErrors)
+      .then(data => {
+        this.setState({
+          book: data.book,
+          loading: false,
+          cart: data.cart,
+        })
+      })
   }
 
   onAddToCart() {
@@ -44,13 +35,19 @@ class Book extends React.Component {
 
     render () {
 
-      const { loading, authenticated, cart } = this.state;
-
-      const url_parts = window.location.href.split('/');
-      const url_id = +url_parts[url_parts.length - 1];
-      const book = data.find(b => b.id === url_id);
-
-      console.log(this.state.editing);
+      const { book, loading, authenticated, cart } = this.state;
+      const {
+        title,
+        author,
+        isbn,
+        genre,
+        description,
+        condition,
+        condition_description,
+        price,
+        image,
+        user,
+        } = book;
 
       if (loading) {
         return <p>Loading...</p>;
@@ -59,47 +56,47 @@ class Book extends React.Component {
         return (
             <Layout cartItems={cart.length} authenticated={authenticated}>
               <div className="container mybooks-container">
-                  <div className="latestbook text-body text-decoration-none" key={book.id}>
+                  <div className="latestbook text-body text-decoration-none" key={id}>
                     <div className="row mt-4 mb-4">
                     <div className="col col-lg-2 mb-4">
                         <div
                         className="book-image mb-3"
-                        style={{ backgroundImage: `url(${book.image})` }}
+                        style={{ backgroundImage: `url(${image})` }}
                         />
                     </div>
                         <div className="col-6 col-lg-2 mb-4">
-                        <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
+                        <h6 className="mb-2 text-uppercase">"{title}"</h6>
                         <p className="text-uppercase mb-1 text-secondary">
                             <small>
-                            <b>{book.author}</b>
+                            <b>{author}</b>
                             </small>
                         </p>
                         <p className="text-uppercase mb-4 text-secondary">
                             <small>
-                            <b>{book.genre}</b>
+                            <b>{genre}</b>
                             </small>
                         </p>
                         <p className="text-uppercase mb-4 text-secondary">
                             <small>
-                            <b>ISBN: {book.isbn}</b>
+                            <b>ISBN: {isbn}</b>
                             </small>
                         </p>
                         <p className="text-uppercase mb-4 price-tag-title">
-                            Price: <span className='price-tag'>{book.price}$</span></p>
+                            Price: <span className='price-tag'>{price}$</span></p>
                         <p>
                         </p>
                         </div>
                         <div className="col-8 col-lg-6 mb-4 third-column">
                         <small className="text-secondary">Book's condition:</small>
                         <p className="text-secondary condition">
-                            {book.condition}
+                            {condition}
                         </p>
                         <small className="text-secondary">Detailed Condition:</small>
                         <p className="text-secondary condition">
-                            {book.condition_description}
+                            {condition_description}
                         </p>
                         <p className="mb-0 text-secondary">
-                            {book.description}
+                            {description}
                         </p>
                         </div>
                         <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
@@ -116,4 +113,11 @@ class Book extends React.Component {
         }
       }
       
-      export default Book;
+      document.addEventListener('DOMContentLoaded', () => {
+        const node = document.getElementById('params');
+        const data = JSON.parse(node.getAttribute('data-params'));
+        ReactDOM.render(
+          <Book book_id={data.book_id} />,
+          document.body.appendChild(document.createElement('div')),
+        )
+      })
