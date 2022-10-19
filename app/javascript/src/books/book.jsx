@@ -5,37 +5,34 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { getCartFromServer, addToCart } from "../cart_api.js";
 import {isLoggedIn} from '../login_api';
 import { handleErrors } from '../utils/fetchHelper';
-
+//removed cart and authenticated
 class Book extends React.Component {
 
   state = {
     book: {},
     loading: true,
-    cart: [],
   }
 
   componentDidMount() {
-    const cart = getCartFromServer();
     fetch(`/api/books/${this.props.book_id}`)
-      .then(handleErrors)
-      .then(data => {
-        this.setState({
-          book: data.book,
-          loading: false,
-          cart: data.cart,
-        })
+    .then(handleErrors)
+    .then(data => {
+      this.setState({
+        book: data.book,
+        loading: false,
       })
+    })
   }
-
+  
   onAddToCart() {
     addToCart(this.state.book.id);
     const cart = getCartFromServer();
     this.setState({cart: cart});
   }
-
-    render () {
-
-      const { book, loading, authenticated, cart } = this.state;
+  
+  render () {
+    
+      const { book, loading, authenticated } = this.state;
       const {
         title,
         author,
@@ -54,9 +51,9 @@ class Book extends React.Component {
       }
 
         return (
-            <Layout cartItems={cart.length} authenticated={authenticated}>
+            <Layout>
               <div className="container mybooks-container">
-                  <div className="latestbook text-body text-decoration-none" key={id}>
+                  <div className="latestbook text-body text-decoration-none" key={book.id}>
                     <div className="row mt-4 mb-4">
                     <div className="col col-lg-2 mb-4">
                         <div
@@ -74,6 +71,11 @@ class Book extends React.Component {
                         <p className="text-uppercase mb-4 text-secondary">
                             <small>
                             <b>{genre}</b>
+                            </small>
+                        </p>
+                        <p className="text-uppercase mb-4 text-secondary">
+                            <small>
+                            <b>{rating}</b>
                             </small>
                         </p>
                         <p className="text-uppercase mb-4 text-secondary">
@@ -112,12 +114,4 @@ class Book extends React.Component {
           );
         }
       }
-      
-      document.addEventListener('DOMContentLoaded', () => {
-        const node = document.getElementById('params');
-        const data = JSON.parse(node.getAttribute('data-params'));
-        ReactDOM.render(
-          <Book book_id={data.book_id} />,
-          document.body.appendChild(document.createElement('div')),
-        )
-      })
+export default Book;
