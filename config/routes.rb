@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get '/mybooks' => 'static_pages#mybooks'
   get '/mybooks/add' => 'static_pages#add'
-  get '/book/:id' => 'static_pages#book'
+  get '/books/:id' => 'static_pages#books'
   get 'mybooks/edit/:id' => 'static_pages#edit'
   get '/about' => 'static_pages#about'
   get '/faqs' => 'static_pages#faqs'
@@ -23,8 +23,10 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resources :sessions, only: [:create, :destroy]
     resources :books, only: [:index, :show]
+    resources :orders, only: [:create]
 
     get '/authenticated' => 'sessions#authenticated'
+    get '/books/:id/orders' => 'orders#get_book_orders'
 
   end
 

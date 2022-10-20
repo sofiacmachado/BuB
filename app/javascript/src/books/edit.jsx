@@ -22,8 +22,8 @@ class Edit extends React.Component {
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleGenreChange = this.handleGenreChange.bind(this);
     this.handleIsbnChange = this.handleIsbnChange.bind(this);
+    this.handleSummaryChange = this.handleSummaryChange.bind(this);
     this.handleConditionChange = this.handleConditionChange.bind(this);
-    this.handleUserDescriptionChange = this.handleUserDescriptionChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     
@@ -44,14 +44,14 @@ class Edit extends React.Component {
   handleConditionChange = (event) => {
     this.setState({ condition: event.target.value });
   };
-  handleUserDescriptionChange = (event) => {
-    this.setState({ condition_description: event.target.value });
+  handleDescriptionChange = (event) => {
+    this.setState({ description: event.target.value });
   };
   handlePriceChange = (event) => {
     this.setState({ price: event.target.value });
   };
-  handleDescriptionChange = (event) => {
-    this.setState({ description: event.target.value });
+  handleSummaryChange = (event) => {
+    this.setState({ summary: event.target.value });
   };
 
   submitEdit() {
@@ -65,9 +65,9 @@ class Edit extends React.Component {
     formData.set("book[title]", this.state.title);
     formData.set("book[auhtor]", this.state.auhtor);
     formData.set("book[isbn]", this.state.isbn);
-    formData.set("book[description]", this.state.description);
+    formData.set("book[summary]", this.state.summary);
     formData.set("book[condition]", this.state.condition);
-    formData.set("book[condition_description]", this.state.condition_description);
+    formData.set("book[description]", this.state.description);
     formData.set("book[genre]", this.state.genre);
     formData.set("book[price]", this.state.price);
     formData.set("book[rating]", this.state.rating);
@@ -168,15 +168,15 @@ class Edit extends React.Component {
                             maxLength="200"
                         />
 
-                        <label className="mb-1" htmlFor="inputDescription">Description</label>
+                        <label className="mb-1" htmlFor="inputSummary">Summary</label>
                         <textarea
                             type="text"
                             className="form-control"
                             rows="10"
-                            id="inputDescription"
-                            placeholder={book.description}
-                            onChange={this.handleDescriptionChange}
-                            value={book.description}
+                            id="inputSummary"
+                            placeholder={book.summary}
+                            onChange={this.handleSummaryChange}
+                            value={book.summary}
                             maxLength="2000"
                         />
                      
@@ -209,15 +209,15 @@ class Edit extends React.Component {
                             <option>Collectible</option>
                         </select>
 
-                        <label className="label-text" htmlFor="inputUserDescription">Description</label>
+                        <label className="label-text" htmlFor="inputDescription">Description</label>
                         <textarea
                             type="text"
                             className="form-control"
                             rows="8"
                             id="inputDescription"
-                            placeholder={book.condition_description}
-                            onChange={this.handleUserDescriptionChange}
-                            value={book.condition_description}
+                            placeholder={book.description}
+                            onChange={this.handleDescriptionChange}
+                            value={book.description}
                             maxLength="800"
                         />
                        
