@@ -13,14 +13,13 @@ header {
   
   .link {
     text-decoration: none !important;
-    color: #795454 !important;
-  }
-  
-  .link:hover {
-    text-decoration: none !important;
     color: #fa824c !important;
   }
 
+  .link:hover {
+    text-decoration: none !important;
+    color: #795454 !important;
+  }
 
   h4 {
     font-size: 28px !important;

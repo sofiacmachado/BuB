@@ -2,33 +2,29 @@ import React from 'react';
 import { Layout } from '../layout';
 import LoginWidget from './loginWidget';
 import SignupWidget from './signupWidget';
+import { handleErrors } from '../utils/fetchHelper';
 import './login.scss';
-import {isLoggedIn} from '../login_api';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state =   {
-        authenticated: false,
-        show_login: true,
-        }
+
+  state = {
+    authenticated: false,
+    show_login: true,
   }
 
   componentDidMount() {
-    const logIn = isLoggedIn();  
-    let data = {
-      show_login: true,
-    };
-    this.setState({
-      authenticated: logIn,
-      show_login: data.show_login,
-    });
+    fetch('/api/authenticated')
+      .then(handleErrors)
+      .then(data => {
+        this.setState({
+          authenticated: data.authenticated,
+        })
+      })
   }
-
   
-    toggle = () => {
-      this.setState({
-        show_login: !this.state.show_login,
+  toggle = () => {
+    this.setState({
+      show_login: !this.state.show_login,
     })
   }
 
