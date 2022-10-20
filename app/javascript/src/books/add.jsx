@@ -90,12 +90,12 @@ class Add extends React.Component {
                           placeholder="ex: 9789725647417"
                           />
 
-                      <label className="label-text" htmlFor="inputDescription">Description</label>
+                      <label className="label-text" htmlFor="inputSummary">Summary</label>
                       <textarea
                       type="text"
                       className="form-control"
                       rows="6"
-                      id="inputDescription"
+                      id="inputSummary"
                       placeholder="ex: Cornelius von Baerle, a respectable tulip-grower, lives only to cultivate the elusive black tulip and win a magnificent prize for its creation. But after his powerful godfat..."
                       maxLength="2000"
                       />
@@ -124,12 +124,12 @@ class Add extends React.Component {
                       <option>Refurbished</option>
                       </select>
 
-                      <label className="label-text" htmlFor="inputConditionDescription">Detailed Condition</label>
+                      <label className="label-text" htmlFor="inputDescription">Detailed Condition</label>
                       <textarea
                       type="text"
                       className="form-control"
                       rows="2"
-                      id="inputConditionDescription"
+                      id="inputDescription"
                       placeholder="ex: Read once, corners are a little bent"
                       maxLength="200"
                       />

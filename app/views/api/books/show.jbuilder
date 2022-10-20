@@ -5,9 +5,9 @@ json.book do
     json.isbn @book.isbn
     json.genre @book.genre
     json.rating @book.rating
-    json.description @book.description
+    json.summary @book.summary
     json.condition @book.condition
-    json.condition_description @book.condition_description
+    json.description @book.description
     json.price @book.price
     json.image @book.image
     json.user do

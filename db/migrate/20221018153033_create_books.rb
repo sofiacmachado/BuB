@@ -6,9 +6,9 @@ class CreateBooks < ActiveRecord::Migration[6.1]
       t.integer :isbn
       t.string :genre
       t.decimal :rating
-      t.string :description
+      t.string :summary
       t.string :condition
-      t.string :condition_description
+      t.string :description
       t.integer :price
       t.string :image
       t.belongs_to :user, index: true, foreign_key: true

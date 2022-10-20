@@ -112,10 +112,10 @@ class Mybooks extends React.Component {
                                         </p>
                                         <small className="text-secondary">Detailed Condition:</small>
                                         <p className="text-secondary condition">
-                                            {book.condition_description}
+                                            {book.description}
                                         </p>
                                         <p className="mb-0 text-secondary">
-                                            {book.description}
+                                            {book.summary}
                                         </p>
                                         </div>
                                         <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">

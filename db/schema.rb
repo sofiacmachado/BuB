@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_18_153033) do
+ActiveRecord::Schema.define(version: 2022_10_19_193856) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -27,6 +27,16 @@ ActiveRecord::Schema.define(version: 2022_10_18_153033) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_books_on_user_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.boolean "state"
+    t.integer "user_id"
+    t.integer "book_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_orders_on_book_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -46,5 +56,7 @@ ActiveRecord::Schema.define(version: 2022_10_18_153033) do
   end
 
   add_foreign_key "books", "users"
+  add_foreign_key "orders", "books"
+  add_foreign_key "orders", "users"
   add_foreign_key "sessions", "users"
 end
