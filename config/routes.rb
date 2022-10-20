@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/login' => 'static_pages#login'
   get '/mybooks' => 'static_pages#mybooks'
   get '/mybooks/add' => 'static_pages#add'
-  get '/books/:id' => 'static_pages#books'
+  get '/book/:id' => 'static_pages#book'
   get 'mybooks/edit/:id' => 'static_pages#edit'
   get '/about' => 'static_pages#about'
   get '/faqs' => 'static_pages#faqs'

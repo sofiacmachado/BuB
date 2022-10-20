@@ -3,17 +3,27 @@ import  { Layout } from '../layout';
 import './book.scss';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { getCartFromServer, addToCart } from "../cart_api.js";
-import {isLoggedIn} from '../login_api';
 import { handleErrors } from '../utils/fetchHelper';
-//removed cart and authenticated
+import StarIcon from '@mui/icons-material/Star';
+import Tooltip from "@material-ui/core/Tooltip";
+
+//removed cart
 class Book extends React.Component {
 
   state = {
     book: {},
     loading: true,
+    authenticated: false,
   }
 
   componentDidMount() {
+    fetch(`/api/authenticated`)
+    .then(handleErrors)
+    .then(data => {
+      this.setState({
+        authenticated: data.authenticated,
+      })
+    })
     fetch(`/api/books/${this.props.book_id}`)
     .then(handleErrors)
     .then(data => {
@@ -38,6 +48,7 @@ class Book extends React.Component {
         author,
         isbn,
         genre,
+        rating,
         summary,
         condition,
         description,
@@ -75,7 +86,7 @@ class Book extends React.Component {
                         </p>
                         <p className="text-uppercase mb-4 text-secondary">
                             <small>
-                            <b>{rating}</b>
+                            <b>{rating} <StarIcon/></b>
                             </small>
                         </p>
                         <p className="text-uppercase mb-4 text-secondary">
@@ -101,12 +112,24 @@ class Book extends React.Component {
                             {summary}
                         </p>
                         </div>
-                        <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
-                            <button
-                            className="btn btn-edit mt-3" onClick={this.onAddToCart}>
-                            <ShoppingCartIcon/> Add to Cart
-                            </button>
-                    </div>
+                        {authenticated === true ? 
+                        (<div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
+                          <button
+                          className="btn btn-edit mt-3" onClick={this.onAddToCart}>
+                          <ShoppingCartIcon/> Add to Cart
+                          </button>
+                        </div>) : 
+                          (<div className="col-4 col-lg-2 mb-4 d-grid add-btn">
+                            <Tooltip title="You have to be logged in." placement="top">
+                            <div>
+                              <button
+                              className="btn btn-edit mt-3" disabled>
+                              <ShoppingCartIcon/> Add to Cart
+                              </button>
+                              </div>
+                              </Tooltip>
+                          </div>)
+                      }
                     </div>
                 </div>
               </div>
