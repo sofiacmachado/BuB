@@ -5,19 +5,18 @@ import fb_logo from "/app/assets/icons/fb_logo.svg";
 import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
-import books from "./data.js";
-import {doLogOut} from './login_api';
-
+import { handleErrors } from './utils/fetchHelper';
 
 export class Layout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          browseAuthor: true,
-          isNavCollapse: false,
+            authenticated: false,
+            sessionId: 0,
+            browseAuthor: true,
+            isNavCollapse: false,
         };
         
- 
         this.doLogout = this.doLogout.bind(this);
         this.handleBrowseAuthor = this.handleBrowseAuthor.bind(this);
         this.handleBrowseTitle = this.handleBrowseTitle.bind(this);
@@ -25,23 +24,34 @@ export class Layout extends React.Component {
         this.checkNavCollapse = this.checkNavCollapse.bind(this);
       }
       
-      componentDidMount() {
-        // fetch
-        const book = books;
-        let data = {
-            browseAuthor: true,
-            isNavCollapse: false,
-        };
+    componentDidMount() {
+        fetch('/api/authenticated')
+            .then(handleErrors)
+            .then(data => {
             this.setState({
-              browseAuthor: data.browseAuthor,
-              isNavCollapse: data.isNavCollapse
+                authenticated: data.authenticated,
+                sessionId: data.sessionId,
+                browseAuthor: data.browseAuthor,
+                isNavCollapse: data.isNavCollapse,
             })
-          }
+        })
+    }
 
-      doLogout(e) {
-        doLogOut();
+    doLogout(e) {
+        e.preventDefault(); 
+        fetch(`/api/sessions/${this.state.sessionId}`, {
+            method: 'DELETE',
+        })
+        .then(handleErrors)
+        .then(data => {
+            window.location = '/';
+            this.setState({
+            authenticated: false,
+            sessionId: 0,
+            })
+        });
         return false;
-      }
+    }
 
       handleBrowseAuthor() {
         this.state.browseAuthor = true
@@ -62,9 +72,8 @@ export class Layout extends React.Component {
         }
       }
       
-      
       render() {
-        const authenticated = this.props.authenticated;
+        const { authenticated } = this.state;
         return (
                 <React.Fragment>
                     <header>
@@ -96,7 +105,7 @@ export class Layout extends React.Component {
                                         <li className="nav-item ">
                                             <a href="/about" className="nav--link">About</a>
                                         </li>
-                                        {authenticated ? 
+                                        {authenticated === true ? 
                                         (<li className="nav-item dropdown nav-item-account">
                                                 <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Account <i className="fa fa-caret-down"></i>
@@ -113,7 +122,7 @@ export class Layout extends React.Component {
                                                     <li className="dropdown-item"><a href="/mybooks" className="nav--link">Your Books</a></li>
                                                 </ul>
                                         </li>) : ('')}
-                                        {!authenticated ?
+                                        {authenticated === false ?
                                         (<li className='nav-item log-in' >
                                             <a className="nav--link log-in" href="/login">
                                             Log in

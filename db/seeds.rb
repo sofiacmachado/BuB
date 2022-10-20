@@ -40,7 +40,7 @@ books = Book.create!([{
     Their subsequent affair scandalizes society and family alike and soon brings jealously and bitterness in its wake. 
     Contrasting with this tale of love and self-destruction is the vividly observed story of Levin, 
     a man striving to find contentment and a meaning to his life - and also a self-portrait of Tolstoy himself.",
-    summary: "Like new",
+    condition: "Like new",
     description: "Book is in perfect conditions",
     genre: "Classic",
     price: 8,

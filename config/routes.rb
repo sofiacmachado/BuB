@@ -2,13 +2,13 @@ Rails.application.routes.draw do
 
   root to: 'static_pages#home'
 
+  get '/login' => 'static_pages#login'
   get '/mybooks' => 'static_pages#mybooks'
   get '/mybooks/add' => 'static_pages#add'
   get '/books/:id' => 'static_pages#books'
   get 'mybooks/edit/:id' => 'static_pages#edit'
   get '/about' => 'static_pages#about'
   get '/faqs' => 'static_pages#faqs'
-  get '/login' => 'static_pages#login'
   
   get '/orders/:id/success' => 'static_pages#success'
   get '/sells' => 'static_pages#sells'

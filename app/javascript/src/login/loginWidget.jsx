@@ -1,11 +1,13 @@
 // loginWidget.jsx
 import React from 'react';
-import {doLogIn} from '../login_api';
+import { safeCredentials, handleErrors } from '../utils/fetchHelper';
 
 class LoginWidget extends React.Component {
+  
   state = {
     email: '',
     password: '',
+    error: '',
   }
 
   handleChange = (e) => {
@@ -16,16 +18,11 @@ class LoginWidget extends React.Component {
 
   login = (e) => {
     if (e) { e.preventDefault(); }
-    doLogIn(this.state.email, this.state.password);
-    const params = new URLSearchParams(window.location.search);
-          const redirect_url = params.get('redirect_url') || '/';
-          window.location = redirect_url;
-    /*
     this.setState({
       error: '',
     });
-      
-   fetch('/api/sessions', safeCredentials({
+
+    fetch('/api/sessions', safeCredentials({
       method: 'POST',
       body: JSON.stringify({
         user: {
@@ -46,18 +43,18 @@ class LoginWidget extends React.Component {
         this.setState({
           error: 'Could not log in.',
         })
-      }) */
+      })
   }
 
   render () {
-    const { email, password } = this.state;
+    const { email, password, error } = this.state;
     return (
       <React.Fragment>
         <form onSubmit={this.login}>
           <input name="email" type="text" className="form-control form-control-lg mb-3" placeholder="Email" value={email} onChange={this.handleChange} required />
           <input name="password" type="password" className="form-control form-control-lg mb-3" placeholder="Password" value={password} onChange={this.handleChange} required />
           <button type="submit" className="btn btn-login btn-block btn-lg">Log in</button>
-          {/* {error && <p className="text-danger mt-2">{error}</p>} */}
+          {error && <p className="text-danger mt-2">{error}</p>}
         </form>
         <hr/>
         <p className="mb-0">Don't have an account? <a className="text-primary link" onClick={this.props.toggle}>Sign up</a></p>
