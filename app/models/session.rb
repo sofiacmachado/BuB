@@ -1,5 +1,6 @@
 class Session < ApplicationRecord
     belongs_to :user
+    has_one :cart
   
     validates :user, presence: true
   
