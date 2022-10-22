@@ -5,19 +5,15 @@ import './add.scss';
 import data from "../data.js";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import { getSessionAndCart } from "../cart_api.js";
+import { handleErrors } from '../utils/fetchHelper';
 
 class Edit extends React.Component {
   constructor(props) {
     super(props);
-
-    const url_parts = window.location.href.split('/');
-    const url_id = +url_parts[url_parts.length - 1];
-    const book = data.find(b => b.id === url_id);
-
     this.state = {
-      loading: false,
+      loading: true,
       authenticated: false,
-      book: book,
+      book: {},
       cart: []
     };
 
@@ -84,17 +80,23 @@ class Edit extends React.Component {
   }
 
   componentDidMount() {    
-    const url_parts = window.location.href.split('/');
-    const url_id = +url_parts[url_parts.length - 1];
-    const book = data.find(b => b.id === url_id);
-
     getSessionAndCart()
     .then(data => {
       this.setState({
         authenticated: data.authenticated,
         cart: data.cart,
+      });
+    });
+
+    const url_parts = window.location.href.split('/');
+    const book_id = +url_parts[url_parts.length - 1];
+
+    fetch(`/api/books/${book_id}`)
+    .then(handleErrors)
+    .then(data => {
+      this.setState({
+        book: data.book,
         loading: false,
-        book: book,
       });
     });
   }
