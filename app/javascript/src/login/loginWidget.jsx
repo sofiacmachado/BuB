@@ -1,6 +1,6 @@
 // loginWidget.jsx
 import React from 'react';
-import { safeCredentials, handleErrors } from '../utils/fetchHelper';
+import { doLogIn } from '../login_api';
 
 class LoginWidget extends React.Component {
   
@@ -22,28 +22,17 @@ class LoginWidget extends React.Component {
       error: '',
     });
 
-    fetch('/api/sessions', safeCredentials({
-      method: 'POST',
-      body: JSON.stringify({
-        user: {
-          email: this.state.email,
-          password: this.state.password,
-        }
-      })
-    }))
-      .then(handleErrors)
-      .then(data => {
-        if (data.success) {
-          const params = new URLSearchParams(window.location.search);
-          const redirect_url = params.get('redirect_url') || '/';
-          window.location = redirect_url;
-        }
-      })
-      .catch(error => {
-        this.setState({
-          error: 'Could not log in.',
-        })
-      })
+    doLogIn(this.state.email, this.state.password)
+    .then(data => {
+      if (data.success) {
+        const params = new URLSearchParams(window.location.search);
+        const redirect_url = params.get('redirect_url') || '/';
+        window.location = redirect_url;
+      }
+    })
+    .catch(error => {
+      this.setState({ error: `Could not log in: ${error}` });
+    });
   }
 
   render () {
