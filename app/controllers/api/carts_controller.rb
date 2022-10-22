@@ -33,6 +33,9 @@ module Api
         session = Session.find_by(token: token)
   
         if session
+          if session.cart.nil?
+            session.create_cart(books: [])
+          end
           @cart = session.cart
         else
           render json: { cart: [] }, status: :bad_request
