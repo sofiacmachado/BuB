@@ -3,8 +3,7 @@ import { Layout } from './layout';
 import ReactDOM from 'react-dom';
 import './mybooks.scss'
 import data from "./data.js";
-import {isLoggedIn} from './login_api';
-import { getCartFromServer } from "./cart_api.js";
+import { getSessionAndCart } from "./cart_api.js";
 
 class Mybooks extends React.Component {
     
@@ -19,16 +18,15 @@ class Mybooks extends React.Component {
     
     //fetch
     componentDidMount() {
-        const logIn = isLoggedIn();
-        getCartFromServer()
-        .then((cart) => {
-          this.setState({
-            cart: cart,
-            authenticated: logIn,
-            editing: false,
-          });
+        getSessionAndCart()
+        .then(data => {
+            this.setState({
+                authenticated: data.authenticated,
+                cart: data.cart,
+                editing: false,
+            });
         });
-      }
+    }
 
     render() {
         const { cart, authenticated } = this.state;

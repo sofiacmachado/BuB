@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import './home.scss';
 import heroBackground from "/app/assets/images/hero_background.png";
-import { getCartFromServer } from "./cart_api.js";
-import {isLoggedIn} from './login_api';
+import { getSessionAndCart } from "./cart_api.js";
 
 class Home extends React.Component {
   constructor(props) {
@@ -14,16 +13,17 @@ class Home extends React.Component {
       cart: [],
     };
   }
+
   componentDidMount() {
-    const logIn = isLoggedIn();
-    getCartFromServer()
-    .then((cart) => {
+    getSessionAndCart()
+    .then(data => {
       this.setState({
-        authenticated: logIn,
-        cart: cart,
+        authenticated: data.authenticated,
+        cart: data.cart,
       });
     });
   }
+
   render() {
     const { authenticated, cart } = this.state;
     return (

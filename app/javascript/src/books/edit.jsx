@@ -4,8 +4,7 @@ import  { Layout } from '../layout';
 import './add.scss';
 import data from "../data.js";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-import {isLoggedIn} from '../login_api';
-import { getCartFromServer } from "../cart_api.js";
+import { getSessionAndCart } from "../cart_api.js";
 
 class Edit extends React.Component {
   constructor(props) {
@@ -83,13 +82,13 @@ class Edit extends React.Component {
     const url_parts = window.location.href.split('/');
     const url_id = +url_parts[url_parts.length - 1];
     const book = data.find(b => b.id === url_id);
-    const logIn = isLoggedIn();
-    getCartFromServer()
-    .then((cart) => {
+
+    getSessionAndCart()
+    .then(data => {
       this.setState({
-        cart: cart,
+        authenticated: data.authenticated,
+        cart: data.cart,
         loading: false,
-        authenticated: logIn,
         book: book,
       });
     });

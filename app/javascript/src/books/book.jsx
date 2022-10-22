@@ -2,11 +2,10 @@ import React from 'react';
 import  { Layout } from '../layout';
 import './book.scss';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { addToCart, getCartFromServer } from "../cart_api.js";
+import { addToCart, getSessionAndCart } from "../cart_api.js";
 import { handleErrors } from '../utils/fetchHelper';
 import StarIcon from '@mui/icons-material/Star';
 import Tooltip from "@material-ui/core/Tooltip";
-import { isLoggedIn } from '../login_api';
 
 //removed cart
 class Book extends React.Component {
@@ -23,11 +22,6 @@ class Book extends React.Component {
 
 
   componentDidMount() {
-    isLoggedIn()
-    .then(data => {
-      this.setState({ authenticated: data.authenticated });
-    });
-
     fetch(`/api/books/${this.props.book_id}`)
     .then(handleErrors)
     .then(data => {
@@ -36,10 +30,13 @@ class Book extends React.Component {
         loading: false,
       });
     });
-
-    getCartFromServer()
-    .then((cart) => {
-      this.setState({ cart: cart });
+    
+    getSessionAndCart()
+    .then(data => {
+      this.setState({
+        authenticated: data.authenticated,
+        cart: data.cart,
+      });
     });
   }
   
@@ -50,7 +47,6 @@ class Book extends React.Component {
   }
   
   render () {
-    
       const { cart, book, loading, authenticated } = this.state;
       const {
         title,

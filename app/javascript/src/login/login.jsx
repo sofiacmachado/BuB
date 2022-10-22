@@ -3,18 +3,22 @@ import { Layout } from '../layout';
 import LoginWidget from './loginWidget';
 import SignupWidget from './signupWidget';
 import './login.scss';
-import { isLoggedIn } from '../login_api';
+import { getSessionAndCart } from '../cart_api';
 
 class Login extends React.Component {
   state = {
     authenticated: false,
     show_login: true,
+    cart: [],
   }
 
   componentDidMount() {
-    isLoggedIn()
+    getSessionAndCart()
     .then(data => {
-      this.setState({ authenticated: data.authenticated });
+      this.setState({
+        authenticated: data.authenticated,
+        cart: data.cart,
+      });
     });
   }
   
@@ -25,11 +29,11 @@ class Login extends React.Component {
   };
 
   render () {
-    const { authenticated, show_login } = this.state;
+    const { authenticated, cart, show_login } = this.state;
     
      if (authenticated) {
       return (
-        <Layout>
+        <Layout cartItems={cart.length} authenticated={authenticated}>
           <div className="container mybooks-container">
             <div className="row">
               <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">

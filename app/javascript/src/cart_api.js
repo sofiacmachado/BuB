@@ -1,7 +1,31 @@
+import { isLoggedIn } from "./login_api";
+
 export function getCartFromServer() {
     // returns a Promise
     return fetch('/api/cart')
         .then(handleCartResponse);
+}
+
+export function getSessionAndCart() {
+    // returns a Promise
+    return isLoggedIn()
+        .then(data => {
+            if (data.authenticated) {
+                return getCartFromServer()
+                    .then(cart => {
+                        return {
+                            authenticated: true,
+                            username: data.username,
+                            cart: cart,
+                        };
+                    });
+            } else {
+                return {
+                    authenticated: false,
+                    cart: [],
+                };
+            }
+        });
 }
 
 export function addToCart(bookId) {

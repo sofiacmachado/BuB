@@ -4,8 +4,7 @@ import { Layout } from './layout';
 import "./orders.scss";
 import data from "./data.js";
 import Tooltip from "@material-ui/core/Tooltip";
-import {isLoggedIn} from './login_api';
-import { getCartFromServer } from "./cart_api.js";
+import { getSessionAndCart } from "./cart_api.js";
 
 class Orders extends React.Component {
  
@@ -30,19 +29,18 @@ class Orders extends React.Component {
 
 //fetch
   componentDidMount() {
-    const ordered_books = data; 
-    const logIn = isLoggedIn();
-    getCartFromServer()
-    .then((cart) => {
+    const ordered_books = data;
+    getSessionAndCart()
+    .then(data => {
       this.setState({
+        authenticated: data.authenticated,
+        cart: data.cart,
         ordered_books: ordered_books,
-        cart: cart,
-        authenticated: logIn,
         loading: false,
         editing: false,
       });
     });
-}
+  }
 
   render() {
     const { ordered_books, cart, authenticated } = this.state; 
