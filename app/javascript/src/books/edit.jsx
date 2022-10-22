@@ -9,10 +9,15 @@ import { getSessionAndCart } from "../cart_api.js";
 class Edit extends React.Component {
   constructor(props) {
     super(props);
+
+    const url_parts = window.location.href.split('/');
+    const url_id = +url_parts[url_parts.length - 1];
+    const book = data.find(b => b.id === url_id);
+
     this.state = {
       loading: false,
       authenticated: false,
-      book: {},
+      book: book,
       cart: []
     };
 
@@ -95,10 +100,7 @@ class Edit extends React.Component {
   }
 
   render () {
-    const { cart, loading, authenticated} = this.state;
-    const url_parts = window.location.href.split('/');
-    const url_id = +url_parts[url_parts.length - 1];
-    const book = data.find(b => b.id === url_id);
+    const { cart, loading, authenticated, book } = this.state;
 
     if (loading) {
       return <p>Loading...</p>;
@@ -120,138 +122,138 @@ class Edit extends React.Component {
       );
     } else {
       return (
-            <Layout cartItems={cart.length} authenticated={authenticated}>
-              <div className="container mybooks-container mb-4">
-              <h4 className="mb-4">Edit your book</h4>
-                <form className="col-12" onSubmit={this.updateBook}>
-                    <div className="row">
-                    <div className="form-group d-grid col-md-6">
-                        <label className="label-text" htmlFor="inputTitle">Title</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputTitle"
-                            placeholder={book.title}
-                            value={book.title}
-                            onChange={this.handleTitleChange}
-                            maxLength="70"
-                        />
+        <Layout cartItems={cart.length} authenticated={authenticated}>
+          <div className="container mybooks-container mb-4">
+          <h4 className="mb-4">Edit your book</h4>
+            <form className="col-12" onSubmit={this.updateBook}>
+                <div className="row">
+                <div className="form-group d-grid col-md-6">
+                    <label className="label-text" htmlFor="inputTitle">Title</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="inputTitle"
+                        placeholder={book.title}
+                        value={book.title}
+                        onChange={this.handleTitleChange}
+                        maxLength="70"
+                    />
 
-                        <label className="label-text" htmlFor="inputAuthor">Author</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputAuthor"
-                            placeholder={book.author}
-                            onChange={this.handleAuthorChange}
-                            value={book.author}
-                            maxLength="70"
-                        />
+                    <label className="label-text" htmlFor="inputAuthor">Author</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="inputAuthor"
+                        placeholder={book.author}
+                        onChange={this.handleAuthorChange}
+                        value={book.author}
+                        maxLength="70"
+                    />
 
-                        <label className="label-text" htmlFor="inputGenre">Genre</label>
-                        <select id="inputGenre" onChange={this.handleGenreChange}
-                            value={this.state.genre} className="form-control">
-                            <option hidden className='light'>Select an Option</option> 
-                            <option>Classic</option>
-                            <option>Fantasy</option>
-                            <option>Fiction</option>
-                            <option>Poetry</option>
-                            <option>Non-Fiction</option>
-                        </select>
+                    <label className="label-text" htmlFor="inputGenre">Genre</label>
+                    <select id="inputGenre" onChange={this.handleGenreChange}
+                        value={this.state.genre} className="form-control">
+                        <option hidden className='light'>Select an Option</option> 
+                        <option>Classic</option>
+                        <option>Fantasy</option>
+                        <option>Fiction</option>
+                        <option>Poetry</option>
+                        <option>Non-Fiction</option>
+                    </select>
 
-                        <label className="label-text" htmlFor="inputIsbn">ISBN</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputIsbn"
-                            placeholder={book.isbn}
-                            onChange={this.handleIsbnChange}
-                            value={book.isbn}
-                            maxLength="200"
-                        />
+                    <label className="label-text" htmlFor="inputIsbn">ISBN</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="inputIsbn"
+                        placeholder={book.isbn}
+                        onChange={this.handleIsbnChange}
+                        value={book.isbn}
+                        maxLength="200"
+                    />
 
-                        <label className="mb-1" htmlFor="inputSummary">Summary</label>
-                        <textarea
-                            type="text"
-                            className="form-control"
-                            rows="10"
-                            id="inputSummary"
-                            placeholder={book.summary}
-                            onChange={this.handleSummaryChange}
-                            value={book.summary}
-                            maxLength="2000"
-                        />
-                     
-                    </div>
+                    <label className="mb-1" htmlFor="inputSummary">Summary</label>
+                    <textarea
+                        type="text"
+                        className="form-control"
+                        rows="10"
+                        id="inputSummary"
+                        placeholder={book.summary}
+                        onChange={this.handleSummaryChange}
+                        value={book.summary}
+                        maxLength="2000"
+                    />
+                  
+                </div>
 
-                    <div className="form-group d-grid col-md-6">
+                <div className="form-group d-grid col-md-6">
 
-                        <label className="mb-1" htmlFor="inputPrice">Price</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="inputPrice"
-                            placeholder={`$${book.price}`}
-                            onChange={this.handlePriceChange}
-                            value={book.price}
-                            maxLength="200"
-                        />
+                    <label className="mb-1" htmlFor="inputPrice">Price</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        id="inputPrice"
+                        placeholder={`$${book.price}`}
+                        onChange={this.handlePriceChange}
+                        value={book.price}
+                        maxLength="200"
+                    />
 
-                        <label className="mb-1" htmlFor="inputCondition">
-                            Book Condition
-                        </label>
-                        <select
-                            id="inputCondition"
-                            className="form-control"
-                            onChange={this.handleConditionChange}
-                            value={book.condition}
-                        >
-                            <option>New</option>
-                            <option>Used</option>
-                            <option>Collectible</option>
-                        </select>
-
-                        <label className="label-text" htmlFor="inputDescription">Description</label>
-                        <textarea
-                            type="text"
-                            className="form-control"
-                            rows="8"
-                            id="inputDescription"
-                            placeholder={book.description}
-                            onChange={this.handleDescriptionChange}
-                            value={book.description}
-                            maxLength="800"
-                        />
-                       
-                        <label className="addPhoto mt-3 mb-2" htmlFor="addPhoto">
-                            <span className="addPhotoText">Add book photo
-                                Change Image <AddToPhotosIcon />
-                            </span>
-                        </label>
-                        <input
-                          type="file"
-                          className="form-control-file"
-                          id="addPhoto"
-                          accept="image/*"
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-primary mb-2">
-                        Update book 
-                    </button>
-                    <button className="btn btn-danger mb-2"
-                        onClick={((e) => e, this.removeBook)}
+                    <label className="mb-1" htmlFor="inputCondition">
+                        Book Condition
+                    </label>
+                    <select
+                        id="inputCondition"
+                        className="form-control"
+                        onChange={this.handleConditionChange}
+                        value={book.condition}
                     >
-                        Remove book
-                    </button>
-                    <a href={`/mybooks`} 
-                        className="btn btn-outline-secondary mb-2">
-                        Cancel
-                    </a>
-                    </div>
-                </form>{" "}
-              </div>
-            </Layout>
-          );
+                        <option>New</option>
+                        <option>Used</option>
+                        <option>Collectible</option>
+                    </select>
+
+                    <label className="label-text" htmlFor="inputDescription">Description</label>
+                    <textarea
+                        type="text"
+                        className="form-control"
+                        rows="8"
+                        id="inputDescription"
+                        placeholder={book.description}
+                        onChange={this.handleDescriptionChange}
+                        value={book.description}
+                        maxLength="800"
+                    />
+                    
+                    <label className="addPhoto mt-3 mb-2" htmlFor="addPhoto">
+                        <span className="addPhotoText">Add book photo
+                            Change Image <AddToPhotosIcon />
+                        </span>
+                    </label>
+                    <input
+                      type="file"
+                      className="form-control-file"
+                      id="addPhoto"
+                      accept="image/*"
+                    />
+                </div>
+                <button type="submit" className="btn btn-primary mb-2">
+                    Update book 
+                </button>
+                <button className="btn btn-danger mb-2"
+                    onClick={((e) => e, this.removeBook)}
+                >
+                    Remove book
+                </button>
+                <a href={`/mybooks`} 
+                    className="btn btn-outline-secondary mb-2">
+                    Cancel
+                </a>
+                </div>
+            </form>{" "}
+          </div>
+        </Layout>
+      );
     }
   }
 }
