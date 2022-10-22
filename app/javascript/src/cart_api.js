@@ -30,6 +30,5 @@ function handleCartResponse(response) {
 }
 
 function getArrayOfBooks(data) {
-    console.log("received cart from server:", data.cart);
     return Promise.resolve(data.cart);
 }

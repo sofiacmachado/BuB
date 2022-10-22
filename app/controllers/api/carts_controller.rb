@@ -38,7 +38,7 @@ module Api
           end
           @cart = session.cart
         else
-          render json: { cart: [] }, status: :bad_request
+          render json: { cart: [] }, status: :ok
         end
       end
     end
