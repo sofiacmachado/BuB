@@ -1,25 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './browse.scss';
+import { getSessionAndCart } from './cart_api';
 import { Layout } from './layout';
 import SearchBar from "./searchBar/SearchBarAuthor";
-import {isLoggedIn} from './login_api';
 import { handleErrors } from './utils/fetchHelper';
 
 //removed cart and authenticated boolean
 
 class BrowseAuthor extends React.Component {
   state = {
+    cart: [],
+    authenticated: false,
     books: [],
     total_pages: null,
     next_page: null,
     loading: true,
     nextPageClass: "d-flex justify-content-around",
   }
- 
 
   componentDidMount() {
-   
+    getSessionAndCart()
+    .then(data => {
+      this.setState({
+        authenticated: data.authenticated,
+        cart: data.cart,
+      });
+    });
+
     fetch('/api/books?page=1')
     .then(handleErrors)
       .then(data => {
@@ -48,26 +56,25 @@ class BrowseAuthor extends React.Component {
             loading: false,
           })
         })
-    }
-    
+  }
 
   render() {
-    const {  nextPageClass, books, next_page, loading } = this.state;
+    const { authenticated, cart, nextPageClass, books, next_page, loading } = this.state;
     return (
-      <Layout >
+      <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
-            <div className="row mb-4 d-flex justify-content-center">
-                <div className="col-8 mb-4 mybooks-title">
-                  <h4 className="mb-1">Search</h4>
-                  <div className="col-12 my-4 ">
-                   <SearchBar
-                    placeholder='Enter a Book Author' data={books}/>
-                  </div>
-                </div>
+          <div className="row mb-4 d-flex justify-content-center">
+            <div className="col-8 mb-4 mybooks-title">
+              <h4 className="mb-1">Search</h4>
+              <div className="col-12 my-4 ">
+                <SearchBar
+                placeholder='Enter a Book Author' data={books}/>
+              </div>
             </div>
+          </div>
         </div>
 
-      <div className="container lastbooks-container">
+        <div className="container lastbooks-container">
           <hr />
           {loading && <p>loading...</p>}
           {(loading || next_page === null) ||
@@ -91,10 +98,10 @@ class BrowseAuthor extends React.Component {
               )
             })}
           </div>
-      </div>
+        </div>
       </Layout>
-    )
-    }
+    );
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
