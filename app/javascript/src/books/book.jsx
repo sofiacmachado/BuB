@@ -2,7 +2,7 @@ import React from 'react';
 import  { Layout } from '../layout';
 import './book.scss';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { addToCart } from "../cart_api.js";
+import { addToCart, getCartFromServer } from "../cart_api.js";
 import { handleErrors } from '../utils/fetchHelper';
 import StarIcon from '@mui/icons-material/Star';
 import Tooltip from "@material-ui/core/Tooltip";
@@ -15,6 +15,7 @@ class Book extends React.Component {
       book: {},
       loading: true,
       authenticated: false,
+      cart: [],
     };
     this.onAddToCart = this.onAddToCart.bind(this);
   }
@@ -27,7 +28,7 @@ class Book extends React.Component {
       this.setState({
         authenticated: data.authenticated,
       })
-    })
+    });
     fetch(`/api/books/${this.props.book_id}`)
     .then(handleErrors)
     .then(data => {
@@ -35,7 +36,11 @@ class Book extends React.Component {
         book: data.book,
         loading: false,
       })
-    })
+    });
+    getCartFromServer()
+    .then((cart) => {
+      this.setState({ cart: cart });
+    });
   }
   
   onAddToCart() {
@@ -46,7 +51,7 @@ class Book extends React.Component {
   
   render () {
     
-      const { book, loading, authenticated } = this.state;
+      const { cart, book, loading, authenticated } = this.state;
       const {
         title,
         author,
@@ -66,7 +71,7 @@ class Book extends React.Component {
       }
 
         return (
-            <Layout>
+            <Layout cartItems={cart.length} authenticated={authenticated}>
               <div className="container mybooks-container">
                   <div className="latestbook text-body text-decoration-none" key={book.id}>
                     <div className="row mt-4 mb-4">

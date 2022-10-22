@@ -34,9 +34,13 @@ module Api
         token = cookies.signed[:bub_session_token]
         session = Session.find_by(token: token)
   
-        if session and session.destroy
-          render json: { success: true }, status: :ok
+        #if session and session.destroy
+        #  render json: { success: true }, status: :ok
+        #end
+        if session
+          session.destroy
         end
+        render json: { success: true }, status: :ok
       end
     end
   end
