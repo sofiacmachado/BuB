@@ -23,6 +23,7 @@ module Api
 
       def destroy
         @cart.books.delete_all
+        render 'api/carts/show', status: :ok
       end
 
       private
