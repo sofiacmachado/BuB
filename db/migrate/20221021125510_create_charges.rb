@@ -5,6 +5,8 @@ class CreateCharges < ActiveRecord::Migration[6.1]
       t.string :currency
       t.decimal :amount, precision: 10, scale: 2
       t.boolean :complete, default: false
+
+      t.belongs_to :user, index: true, foreign_key: true
       t.belongs_to :order, index: true, foreign_key: true
 
       t.timestamps

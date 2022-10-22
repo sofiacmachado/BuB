@@ -48,19 +48,28 @@ ActiveRecord::Schema.define(version: 2022_10_21_125510) do
     t.string "currency"
     t.decimal "amount", precision: 10, scale: 2
     t.boolean "complete", default: false
+    t.integer "user_id"
     t.integer "order_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["order_id"], name: "index_charges_on_order_id"
+    t.index ["user_id"], name: "index_charges_on_user_id"
+  end
+
+  create_table "order_statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "orders", force: :cascade do |t|
-    t.boolean "state"
     t.integer "user_id"
     t.integer "book_id"
+    t.integer "order_status_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["book_id"], name: "index_orders_on_book_id"
+    t.index ["order_status_id"], name: "index_orders_on_order_status_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -83,7 +92,9 @@ ActiveRecord::Schema.define(version: 2022_10_21_125510) do
   add_foreign_key "books", "users"
   add_foreign_key "carts", "sessions"
   add_foreign_key "charges", "orders"
+  add_foreign_key "charges", "users"
   add_foreign_key "orders", "books"
+  add_foreign_key "orders", "order_statuses"
   add_foreign_key "orders", "users"
   add_foreign_key "sessions", "users"
 end
