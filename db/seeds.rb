@@ -6,15 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-order_statuses = OrderStatus.create([
-  { name: 'Unpaid' },
-  { name: 'Shipping' },
-  { name: 'Shipped' },
-  { name: 'Received' },
-  { name: 'Cancelled' },
-  { name: 'Returned' },
-])
-
 users = User.create!([
   { username: 'Tommy', email: 'tommy@test.com', password: 'password' },
   { username: 'Bobby', email: 'bobby@test.com', password: 'password' },
