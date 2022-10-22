@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Sells from "./sells";
+import Sales from "./sales";
 
 document.addEventListener("DOMContentLoaded", () => {
-
   ReactDOM.render(
-    <Sells />,
+    <Sales />,
     document.body.appendChild(document.createElement("div"))
   );
 });

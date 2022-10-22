@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get '/faqs' => 'static_pages#faqs'
   
   get '/orders/:id/success' => 'static_pages#success'
-  get '/sells' => 'static_pages#sells'
+  get '/sales' => 'static_pages#sales'
   get '/orders' => 'static_pages#orders'
   get '/cart' => 'static_pages#cart'
   
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resources :sessions, only: [:create]
     resources :books, only: [:index, :show]
-    resources :orders, only: [:create]
+    resources :orders, only: [:create, :index, :show]
 
     get '/authenticated' => 'sessions#authenticated'
     delete '/session' => 'sessions#destroy'

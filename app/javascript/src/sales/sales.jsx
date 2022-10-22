@@ -5,9 +5,9 @@ import data from "../data.js";
 import Tooltip from "@material-ui/core/Tooltip";
 import { getSessionAndCart } from "../cart_api.js";
 
-import "./sells.scss";
+import "./sales.scss";
 
-class Sells extends React.Component {
+class Sales extends React.Component {
   constructor(props) {
     super(props);
     this.state =   {
@@ -134,4 +134,4 @@ class Sells extends React.Component {
   }
 }
 
-export default Sells;
+export default Sales;
