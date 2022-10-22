@@ -13,7 +13,9 @@ module Api
       end
 
       def add_book
-        @cart.books << Book.find(params[:id])
+        unless @cart.books.exists?(params[:id])
+          @cart.books << Book.find(params[:id])
+        end
         render 'api/carts/show', status: :ok
       end
 
