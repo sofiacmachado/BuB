@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_19_193856) do
+ActiveRecord::Schema.define(version: 2022_10_21_125510) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -27,6 +27,24 @@ ActiveRecord::Schema.define(version: 2022_10_19_193856) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_books_on_user_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "session_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_id"], name: "index_carts_on_session_id"
+  end
+
+  create_table "charges", force: :cascade do |t|
+    t.string "checkout_session_id"
+    t.string "currency"
+    t.decimal "amount", precision: 10, scale: 2
+    t.boolean "complete", default: false
+    t.integer "order_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_charges_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -56,6 +74,8 @@ ActiveRecord::Schema.define(version: 2022_10_19_193856) do
   end
 
   add_foreign_key "books", "users"
+  add_foreign_key "carts", "sessions"
+  add_foreign_key "charges", "orders"
   add_foreign_key "orders", "books"
   add_foreign_key "orders", "users"
   add_foreign_key "sessions", "users"
