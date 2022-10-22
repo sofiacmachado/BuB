@@ -14,9 +14,7 @@ module Api
           }
           render 'api/sessions/create', status: :created
         else
-          render json: {
-            success: false, status: :bad_request
-          }
+          render json: { success: false }, status: :bad_request
         end
       end
   
@@ -28,9 +26,7 @@ module Api
           @user = session.user
           render 'api/sessions/authenticated', status: :ok
         else
-          render json: {
-            authenticated: false, status: :bad_request
-          }
+          render json: { authenticated: false }, status: :bad_request
         end
       end
   
