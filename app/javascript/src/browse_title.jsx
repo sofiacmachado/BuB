@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 import './browse.scss';
 import { Layout } from './layout';
 import SearchBar from "./searchBar/SearchBarTitle";
-import {isLoggedIn} from './login_api';
 import { handleErrors } from './utils/fetchHelper';
+import { getSessionAndCart } from './cart_api';
 
 //removed cart and authenticated boolean
 
 class BrowseTitle extends React.Component {
   state = {
+    authenticated: false,
+    cart: [],
     books: [],
     total_pages: null,
     next_page: null,
@@ -17,8 +19,14 @@ class BrowseTitle extends React.Component {
     nextPageClass: "d-flex justify-content-around",
   }
  
-
   componentDidMount() {
+    getSessionAndCart()
+    .then(data => {
+      this.setState({
+        authenticated: data.authenticated,
+        cart: data.cart,
+      });
+    });
    
     fetch('/api/books?page=1')
     .then(handleErrors)
@@ -31,9 +39,9 @@ class BrowseTitle extends React.Component {
           nextPageClass : data.next_page ? "d-flex justify-content-around" : "",
         })
       })
-    }
+  }
 
-    loadMore = () => {
+  loadMore = () => {
       if (this.state.next_page === null) {
         return;
       }
@@ -49,12 +57,12 @@ class BrowseTitle extends React.Component {
             nextPageClass : data.next_page ? "d-flex justify-content-around" : "",
           })
         })
-    }
+  }
 
   render() {
-    const {  nextPageClass, books, next_page, loading } = this.state;
+    const { authenticated, cart, nextPageClass, books, next_page, loading } = this.state;
     return (
-      <Layout>
+      <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
             <div className="row mb-4 d-flex justify-content-center">
                 <div className="col-8 mb-4 mybooks-title">

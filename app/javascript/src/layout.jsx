@@ -5,13 +5,12 @@ import fb_logo from "/app/assets/icons/fb_logo.svg";
 import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
-import { doLogOut, isLoggedIn } from './login_api';
+import { doLogOut } from './login_api';
 
 export class Layout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            authenticated: false,
             browseAuthor: true,
             isNavCollapse: false,
         };
@@ -21,17 +20,6 @@ export class Layout extends React.Component {
         this.handleBrowseTitle = this.handleBrowseTitle.bind(this);
         this.handleNavCollapse = this.handleNavCollapse.bind(this);
         this.checkNavCollapse = this.checkNavCollapse.bind(this);
-      }
-      
-    componentDidMount() {
-        isLoggedIn()
-        .then(data => {
-            this.setState({
-                authenticated: data.authenticated,
-                browseAuthor: data.browseAuthor,
-                isNavCollapse: data.isNavCollapse,
-            });
-        });
     }
 
     logout(e) {
@@ -65,7 +53,7 @@ export class Layout extends React.Component {
     }
 
     render() {
-        const { authenticated } = this.state;
+        const { cartItems, authenticated } = this.props;
         return (
             <React.Fragment>
                 <header>
@@ -104,7 +92,7 @@ export class Layout extends React.Component {
                                             </a>
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                 <li className="dropdown-item"><a href="/cart" className="nav--link">Cart{' '}
-                                                {this.props.cartItems != null && this.props.cartItems > 0 ? (
+                                                {cartItems != null && cartItems > 0 ? (
                                                     <button className="cart-indicator">{this.props.cartItems}</button>
                                                 ) : (
                                                     ''
@@ -114,7 +102,7 @@ export class Layout extends React.Component {
                                                 <li className="dropdown-item"><a href="/mybooks" className="nav--link">Your Books</a></li>
                                             </ul>
                                     </li>) : ('')}
-                                    {authenticated === false ?
+                                    {!authenticated ?
                                     (<li className='nav-item log-in' >
                                         <a className="nav--link log-in" href="/login">
                                         Log in
