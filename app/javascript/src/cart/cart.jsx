@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Layout } from '../layout';
 import './cart.scss';
-import data from "../data";
 import { getDetailedCartFromServer, removeFromCart } from "../cart_api.js";
 
 export class Cart extends React.Component {    
