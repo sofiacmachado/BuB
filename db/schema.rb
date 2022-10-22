@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 2022_10_21_125510) do
     t.index ["user_id"], name: "index_books_on_user_id"
   end
 
+  create_table "books_carts", id: false, force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "cart_id"
+    t.index ["book_id"], name: "index_books_carts_on_book_id"
+    t.index ["cart_id"], name: "index_books_carts_on_cart_id"
+  end
+
   create_table "carts", force: :cascade do |t|
     t.integer "session_id"
     t.datetime "created_at", precision: 6, null: false
