@@ -9,12 +9,16 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 //removed cart
 class Book extends React.Component {
-
-  state = {
-    book: {},
-    loading: true,
-    authenticated: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      book: {},
+      loading: true,
+      authenticated: false,
+    };
+    this.onAddToCart = this.onAddToCart.bind(this);
   }
+
 
   componentDidMount() {
     fetch(`/api/authenticated`)
@@ -37,6 +41,7 @@ class Book extends React.Component {
   onAddToCart() {
     addToCart(this.state.book.id)
     .then((cart) => { this.setState({ cart: cart }); });
+    return false;
   }
   
   render () {
