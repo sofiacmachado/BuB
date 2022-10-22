@@ -3,5 +3,5 @@ class Cart < ApplicationRecord
   has_many :books
 
   validates :session, presence: true
-  validates :book, presence: true
+  #validates :books, presence: true
   end
