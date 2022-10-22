@@ -106,7 +106,7 @@ class Edit extends React.Component {
 
     if (!authenticated) {
       return (
-        <Layout authenticated={authenticated}>
+        <Layout>
           <div className="container mybooks-container">
             <div className="row">
               <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
