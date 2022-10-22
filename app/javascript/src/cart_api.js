@@ -1,4 +1,5 @@
 import { isLoggedIn } from "./login_api";
+import { safeCredentials } from "./utils/fetchHelper";
 
 export function getCartFromServer() {
     // returns a Promise
@@ -30,19 +31,19 @@ export function getSessionAndCart() {
 
 export function addToCart(bookId) {
     // returns a Promise
-    return fetch(`/api/cart/${bookId}`, { method: 'POST' })
+    return fetch(`/api/cart/${bookId}`, safeCredentials({ method: 'POST' }))
         .then(handleCartResponse);
 }
 
 export function removeFromCart(bookId) {
     // returns a Promise
-    return fetch(`/api/cart/${bookId}`, { method: 'DELETE' })
+    return fetch(`/api/cart/${bookId}`, safeCredentials({ method: 'DELETE' }))
         .then(handleCartResponse);
 }
 
 export function emptyCart() {
     // returns a Promise
-    return fetch('/api/cart', { method: 'DELETE' })
+    return fetch('/api/cart', safeCredentials({ method: 'DELETE' }))
         .then(handleCartResponse);
 }
 
