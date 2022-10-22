@@ -2,11 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import './about.scss';
-import { getCartFromServer } from "./cart_api.js";
-import {isLoggedIn} from './login_api';
+import { getSessionAndCart } from "./cart_api.js";
 
 class About extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -14,13 +12,13 @@ class About extends React.Component {
       cart: [],
     };
   }
+
   componentDidMount() {
-    const logIn = isLoggedIn();
-    getCartFromServer()
-    .then((cart) => {
+    getSessionAndCart()
+    .then(data => {
       this.setState({
-        authenticated: logIn,
-        cart: cart,
+        authenticated: data.authenticated,
+        cart: data.cart,
       });
     });
   }

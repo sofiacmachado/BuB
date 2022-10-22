@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import { Layout } from '../layout';
 import './add.scss';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-import {isLoggedIn} from '../login_api';
-import { getCartFromServer } from "../cart_api.js";
+import { getSessionAndCart } from "../cart_api.js";
 
 class Add extends React.Component {
 
@@ -17,12 +16,11 @@ class Add extends React.Component {
   }
 
   componentDidMount() {
-    const logIn = isLoggedIn();
-    getCartFromServer()
-    .then((cart) => {
+    getSessionAndCart()
+    .then(data => {
       this.setState({
-        authenticated: logIn,
-        cart: cart,
+        authenticated: data.authenticated,
+        cart: data.cart,
       });
     });
   }

@@ -3,8 +3,7 @@ import ReactDOM from "react-dom";
 import { Layout } from "../layout";
 import data from "../data.js";
 import Tooltip from "@material-ui/core/Tooltip";
-import {isLoggedIn} from '../login_api';
-import { getCartFromServer } from "../cart_api.js";
+import { getSessionAndCart } from "../cart_api.js";
 
 import "./sells.scss";
 
@@ -35,14 +34,13 @@ class Sells extends React.Component {
 
   componentDidMount() {
     const sold_books = data;
-    const logIn = isLoggedIn();
-    getCartFromServer()
-    .then((cart) => {
+    getSessionAndCart()
+    .then(data => {
       this.setState({
-        cart: cart,
+        authenticated: data.authenticated,
+        cart: data.cart,
         sold_books: sold_books,
         loading: false,
-        authenticated: logIn,
       });
     });
   }
