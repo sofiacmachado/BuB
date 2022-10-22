@@ -26,30 +26,36 @@ class Edit extends React.Component {
     this.handleConditionChange = this.handleConditionChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    
   }
   
   handleTitleChange = (event) => {
     this.setState({ title: event.target.value });
   };
+
   handleAuthorChange = (event) => {
     this.setState({ author: event.target.value });
   };
+
   handleGenreChange = (event) => {
     this.setState({ genre: event.target.value });
   };
+
   handleIsbnChange = (event) => {
     this.setState({ isbn: event.target.value });
   };
+
   handleConditionChange = (event) => {
     this.setState({ condition: event.target.value });
   };
+
   handleDescriptionChange = (event) => {
     this.setState({ description: event.target.value });
   };
+
   handlePriceChange = (event) => {
     this.setState({ price: event.target.value });
   };
+
   handleSummaryChange = (event) => {
     this.setState({ summary: event.target.value });
   };
@@ -72,9 +78,8 @@ class Edit extends React.Component {
     formData.set("book[price]", this.state.price);
     formData.set("book[rating]", this.state.rating);
   }
-  //fetch
-  componentDidMount() {
-    
+
+  componentDidMount() {    
     const url_parts = window.location.href.split('/');
     const url_id = +url_parts[url_parts.length - 1];
     const book = data.find(b => b.id === url_id);
@@ -90,34 +95,32 @@ class Edit extends React.Component {
     });
   }
 
-    render () {
+  render () {
+    const { cart, loading, authenticated} = this.state;
+    const url_parts = window.location.href.split('/');
+    const url_id = +url_parts[url_parts.length - 1];
+    const book = data.find(b => b.id === url_id);
 
-      const { cart, loading, authenticated} = this.state;
+    if (loading) {
+      return <p>Loading...</p>;
+    }
 
-      const url_parts = window.location.href.split('/');
-      const url_id = +url_parts[url_parts.length - 1];
-      const book = data.find(b => b.id === url_id);
-
-      if (loading) {
-        return <p>Loading...</p>;
-      }
-      if (authenticated === false) {
-        return (
-          <Layout authenticated={authenticated}>
-            <div className="container mybooks-container">
-              <div className="row">
-                <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
-                  <div className="border p-4">
-                    <p className="mb-0">You have to be logged in.</p>
-                  </div>
+    if (!authenticated) {
+      return (
+        <Layout authenticated={authenticated}>
+          <div className="container mybooks-container">
+            <div className="row">
+              <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
+                <div className="border p-4">
+                  <p className="mb-0">You have to be logged in.</p>
                 </div>
               </div>
             </div>
-          </Layout>
-        );
-      }
-      if (authenticated === true) {
-        return (
+          </div>
+        </Layout>
+      );
+    } else {
+      return (
             <Layout cartItems={cart.length} authenticated={authenticated}>
               <div className="container mybooks-container mb-4">
               <h4 className="mb-4">Edit your book</h4>
@@ -250,11 +253,11 @@ class Edit extends React.Component {
               </div>
             </Layout>
           );
-        }
-      }
     }
+  }
+}
     
-      ReactDOM.render(
-          <Edit />,
-          document.body.appendChild(document.createElement("div"))
-      );
+ReactDOM.render(
+  <Edit />,
+  document.body.appendChild(document.createElement("div"))
+);
