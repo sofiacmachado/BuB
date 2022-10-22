@@ -1,17 +1,39 @@
+import { handleErrors, safeCredentials } from './utils/fetchHelper';
+
 export function isLoggedIn() {
-    const authenticated = localStorage.getItem("authenticated");
-    if (authenticated === "true") {
-        return true;
-    } else {
-        return false;
-    };
+    // returns a Promise
+    return fetch('/api/authenticated')
+        .then(handleErrors);
 }
 
-export function doLogIn(email, pass) {
-    localStorage.setItem("authenticated", "true");
+export function doSignup(username, email, password) {
+    return fetch('/api/users', safeCredentials({
+        method: 'POST',
+        body: JSON.stringify({
+            user: {
+                username: username,
+                email: email,
+                password: password,
+            }
+        })
+    }))
+        .then(handleErrors);
+}
+
+export function doLogIn(email, password) {
+    return fetch('/api/sessions', safeCredentials({
+        method: 'POST',
+        body: JSON.stringify({
+            user: {
+                email: email,
+                password: password,
+            }
+        }),
+    }))
+        .then(handleErrors);
 }
 
 export function doLogOut() {
-// here we are supposed to communicate with the server to update the session
-    localStorage.setItem("authenticated", "false");
+    return fetch('/api/session', { method: 'DELETE' })
+        .then(handleErrors);
 }

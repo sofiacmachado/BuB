@@ -5,7 +5,8 @@ import fb_logo from "/app/assets/icons/fb_logo.svg";
 import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
-import { handleErrors, logError } from './utils/fetchHelper';
+import { handleErrors } from './utils/fetchHelper';
+import { doLogOut } from './login_api';
 
 export class Layout extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export class Layout extends React.Component {
             isNavCollapse: false,
         };
         
-        this.doLogout = this.doLogout.bind(this);
+        this.logout = this.logout.bind(this);
         this.handleBrowseAuthor = this.handleBrowseAuthor.bind(this);
         this.handleBrowseTitle = this.handleBrowseTitle.bind(this);
         this.handleNavCollapse = this.handleNavCollapse.bind(this);
@@ -35,15 +36,12 @@ export class Layout extends React.Component {
         })
     }
 
-    doLogout(e) {
+    logout(e) {
         e.preventDefault(); 
-        fetch('/api/session', { method: 'DELETE' })
-        .then(handleErrors)
-        .then(data => {
+        doLogOut()
+        .then(() => {
             window.location = '/';
-            this.setState({
-                authenticated: false
-            });
+            this.setState({ authenticated: false });
         });
         return false;
     }
@@ -126,7 +124,7 @@ export class Layout extends React.Component {
                                     </li>
                                     ) : (
                                     <li className='nav-item log-in'>
-                                        <a className="nav--link log-out" href="/" onClick={this.doLogout}>
+                                        <a className="nav--link log-out" href="/" onClick={this.logout}>
                                         Log out
                                     </a>
                                     </li>
