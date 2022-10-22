@@ -98,7 +98,7 @@ export class Layout extends React.Component {
                                                     ''
                                                 )}</a></li>
                                                 <li className="dropdown-item"><a href="/orders" className="nav--link">Orders</a></li>
-                                                <li className="dropdown-item"><a href="/sells" className="nav--link">Sells</a></li>
+                                                <li className="dropdown-item"><a href="/sales" className="nav--link">Sales</a></li>
                                                 <li className="dropdown-item"><a href="/mybooks" className="nav--link">Your Books</a></li>
                                             </ul>
                                     </li>) : ('')}
