@@ -1,5 +1,5 @@
 import { isLoggedIn } from "./login_api";
-import { safeCredentials } from "./utils/fetchHelper";
+import { handleErrors, safeCredentials } from "./utils/fetchHelper";
 
 export function getCartFromServer() {
     // returns a Promise
@@ -27,6 +27,12 @@ export function getSessionAndCart() {
                 };
             }
         });
+}
+
+export function getDetailedCartFromServer() {
+    // returns a Promise
+    return fetch('/api/cart/details')
+        .then(handleErrors);
 }
 
 export function addToCart(bookId) {

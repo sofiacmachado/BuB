@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     get '/books/:id/orders' => 'orders#get_book_orders'
 
     get '/cart' => 'carts#show'
+    get '/cart/details' => 'carts#show_detailed'
     post '/cart/:id' => 'carts#add_book'
     delete '/cart/:id' => 'carts#remove_book'
     delete '/cart' => 'carts#destroy'

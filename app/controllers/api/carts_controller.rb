@@ -7,11 +7,12 @@ module Api
         render 'api/carts/show', status: :ok
       end
 
+      def show_detailed
+        @user = @cart.session.user
+        render 'api/carts/detailed', status: :ok
+      end
+
       def add_book
-        #current_book = @cart.books.find(params[:id])
-        #if !current_book
-        #  cart.books << Book.find(params[:id])
-        #end
         @cart.books << Book.find(params[:id])
         render 'api/carts/show', status: :ok
       end

@@ -3,105 +3,110 @@ import ReactDOM from 'react-dom';
 import { Layout } from '../layout';
 import './cart.scss';
 import data from "../data";
-import { getSessionAndCart, removeFromCart } from "../cart_api.js";
+import { getDetailedCartFromServer, removeFromCart } from "../cart_api.js";
 
-export class Cart extends React.Component {
-    
+export class Cart extends React.Component {    
     constructor(props) {
         super(props);
-        this.onRemoveFromCart = this.onRemoveFromCart.bind(this);
         this.state = {
             loading: true,
             authenticated: false,
-            book: null,
             cart: [],
         };
+        this.onRemoveFromCart = this.onRemoveFromCart.bind(this);
     }
-  
-    //fetch
+
     componentDidMount() {
-        const book = data;
-        getSessionAndCart()
+        getDetailedCartFromServer()
         .then(data => {
             this.setState({
-                authenticated: data.authenticated,
+                authenticated: data.authenticated ? true : false,
                 cart: data.cart,
                 loading: false,
-                book: book,
             });
         });
     }
 
     onRemoveFromCart(bookId) {
         removeFromCart(bookId)
-        .then((cart) => { this.setState({ cart: cart }); });
+        .then(() => {
+            return getDetailedCartFromServer();
+        })
+        .then(data => {
+            this.setState({ cart: data.cart });
+        });
     }
 
     render() {
         const { cart, authenticated } = this.state;
-        const cartBooks = data.filter((book) => cart.includes(book.id));
-        const totalPrice = cartBooks.reduce((prev, book) => prev + book.price, 0);
+        const totalPrice = cart.reduce((prev, book) => prev + book.price, 0);
 
+        if (cart.length == 0) {
             return (
-                <Layout  cartItems={cart.length}  authenticated={authenticated}>
+                <Layout authenticated={authenticated}>
                     <div className="container mybooks-container">
                         <div className="row">
                             <div className="col-4 mybooks-title">
                                 <h4 className="mb-1">My Shopping Cart</h4>
-                                {cart.length === 0 && 
-                                <p className="text-secondary mb-3">
-                                    Cart is empty
-                                </p>}
+                                <p className="text-secondary mb-3">Your cart is empty.</p>
+                                <p>Try <a href="/browse_title">browsing</a> some books first.</p>
                             </div>
-                        </div>
-                        <div className="row mt-4 mb-4">
-
-                                {cartBooks.map((item) => (
-                                     <div key={item.id} className="latestbook text-body text-decoration-none">
-                                     <div className="row mt-4 mb-4 row-item">
-                                        <div className="col-2 col-lg-4">
-                                            <div
-                                            className="book-image my-3"
-                                            style={{ backgroundImage: `url(${item.image})` }}
-                                            />
-                                        </div>
-                                            <div className="col-4">
-                                                <h6 className="mb-2 text-uppercase">"{item.title}"</h6>
-                                                <p className="text-uppercase mb-1 text-secondary">
-                                                    <small>
-                                                    <b>{item.author}</b>
-                                                    </small>
-                                                </p>
-                                            </div>
-                                            <div className="col-2">
-                                                <p className="price-tag">${item.price}
-                                                </p>
-                                            </div>
-                                            <div className="col-2">
-                                                <button onClick={() => this.onRemoveFromCart(item.id)}  className="btn btn-edit remove">
-                                                    x
-                                                </button>
-                                            </div>
-                                    </div>
-                                    </div>
-                                        ))}
-                                        {this.state.cart.length !== 0 && (
-                                            <div className='checkout-row'>
-                                                <div className="col-12 mt-4">
-                                                    <p className="price-total">Total Price: ${totalPrice}</p>
-                                                </div>
-                                                <hr />
-                                                <div className="col-12">
-                                                    <button className="btn btn-add">
-                                                        Checkout
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        )}
                         </div>
                     </div>
                 </Layout>
-            )
+            );
+        } else {
+            return (
+                <Layout cartItems={cart.length} authenticated={authenticated}>
+                    <div className="container mybooks-container">
+                        <div className="row">
+                            <div className="col-4 mybooks-title">
+                                <h4 className="mb-1">My Shopping Cart</h4>
+                            </div>
+                        </div>
+                        <div className="row mt-4 mb-4">
+                            {cart.map((book) => (
+                                <div key={book.id} className="latestbook text-body text-decoration-none">
+                                    <div className="row mt-4 mb-4 row-item">
+                                        <div className="col-2 col-lg-4">
+                                            <div
+                                                className="book-image my-3"
+                                                style={{ backgroundImage: `url(${book.image})` }}
+                                            />
+                                        </div>
+                                        <div className="col-4">
+                                            <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
+                                            <p className="text-uppercase mb-1 text-secondary">
+                                                <small><b>{book.author}</b></small>
+                                            </p>
+                                        </div>
+                                        <div className="col-2">
+                                            <p className="price-tag">${book.price}</p>
+                                        </div>
+                                        <div className="col-2">
+                                            <button onClick={() => this.onRemoveFromCart(book.id)} className="btn btn-edit remove">
+                                                x
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                            <div className='checkout-row'>
+                                <div className="col-12 mt-4">
+                                    <p className="price-total">Total Price: ${totalPrice}</p>
+                                </div>
+                                <hr />
+                                <div className="col-12">
+                                    <button className="btn btn-add">
+                                        Checkout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        }
     }
 }
 
