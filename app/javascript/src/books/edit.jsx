@@ -79,15 +79,15 @@ class Edit extends React.Component {
     const url_id = +url_parts[url_parts.length - 1];
     const book = data.find(b => b.id === url_id);
     const logIn = isLoggedIn();
-    const cart = getCartFromServer();
-
-    this.setState({
-      cart: cart,
-      loading: false,
-      authenticated: logIn,
-      book: book,
+    getCartFromServer()
+    .then((cart) => {
+      this.setState({
+        cart: cart,
+        loading: false,
+        authenticated: logIn,
+        book: book,
+      });
     });
-  
   }
 
     render () {

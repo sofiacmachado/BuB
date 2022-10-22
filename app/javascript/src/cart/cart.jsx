@@ -11,34 +11,33 @@ export class Cart extends React.Component {
     constructor(props) {
         super(props);
         this.onRemoveFromCart = this.onRemoveFromCart.bind(this);
-        this.state =   {
+        this.state = {
             loading: true,
             authenticated: false,
             book: null,
             cart: [],
-            }
-          }
+        };
+    }
   
     //fetch
-      componentDidMount() {
+    componentDidMount() {
         const logIn = isLoggedIn();
-        const cart = getCartFromServer();
         const book = data;
-  
-        this.setState({
-          loading: false,
-          authenticated: logIn,
-          book: book,
-          cart: cart,
+        getCartFromServer()
+        .then((cart) => {
+            this.setState({
+                loading: false,
+                authenticated: logIn,
+                book: book,
+                cart: cart,
+            });
         });
-      }
+    }
 
-      onRemoveFromCart(bookId) {
-        removeFromCart(bookId);
-        const cart = getCartFromServer();
-        this.setState({cart: cart});
-        console.log(bookId);
-      }
+    onRemoveFromCart(bookId) {
+        removeFromCart(bookId)
+        .then((cart) => { this.setState({ cart: cart }); });
+    }
 
     render() {
         const { cart, authenticated } = this.state;

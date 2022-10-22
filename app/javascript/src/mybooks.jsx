@@ -20,12 +20,13 @@ class Mybooks extends React.Component {
     //fetch
     componentDidMount() {
         const logIn = isLoggedIn();
-        const cart = getCartFromServer();
-        this.setState({
-          cart: cart,
-          authenticated: logIn,
-          editing: false,
-  
+        getCartFromServer()
+        .then((cart) => {
+          this.setState({
+            cart: cart,
+            authenticated: logIn,
+            editing: false,
+          });
         });
       }
 
