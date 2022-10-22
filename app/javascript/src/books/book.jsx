@@ -6,6 +6,7 @@ import { addToCart, getCartFromServer } from "../cart_api.js";
 import { handleErrors } from '../utils/fetchHelper';
 import StarIcon from '@mui/icons-material/Star';
 import Tooltip from "@material-ui/core/Tooltip";
+import { isLoggedIn } from '../login_api';
 
 //removed cart
 class Book extends React.Component {
@@ -22,21 +23,20 @@ class Book extends React.Component {
 
 
   componentDidMount() {
-    fetch(`/api/authenticated`)
-    .then(handleErrors)
+    isLoggedIn()
     .then(data => {
-      this.setState({
-        authenticated: data.authenticated,
-      })
+      this.setState({ authenticated: data.authenticated });
     });
+
     fetch(`/api/books/${this.props.book_id}`)
     .then(handleErrors)
     .then(data => {
       this.setState({
         book: data.book,
         loading: false,
-      })
+      });
     });
+
     getCartFromServer()
     .then((cart) => {
       this.setState({ cart: cart });

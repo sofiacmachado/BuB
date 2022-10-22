@@ -5,8 +5,7 @@ import fb_logo from "/app/assets/icons/fb_logo.svg";
 import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
-import { handleErrors } from './utils/fetchHelper';
-import { doLogOut } from './login_api';
+import { doLogOut, isLoggedIn } from './login_api';
 
 export class Layout extends React.Component {
     constructor(props) {
@@ -25,15 +24,14 @@ export class Layout extends React.Component {
       }
       
     componentDidMount() {
-        fetch('/api/authenticated')
-            .then(handleErrors)
-            .then(data => {
+        isLoggedIn()
+        .then(data => {
             this.setState({
                 authenticated: data.authenticated,
                 browseAuthor: data.browseAuthor,
                 isNavCollapse: data.isNavCollapse,
             });
-        })
+        });
     }
 
     logout(e) {
