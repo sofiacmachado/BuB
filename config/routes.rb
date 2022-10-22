@@ -28,6 +28,11 @@ Rails.application.routes.draw do
     get '/authenticated' => 'sessions#authenticated'
     get '/books/:id/orders' => 'orders#get_book_orders'
 
+    get '/cart' => 'carts#show'
+    post '/cart/:id' => 'carts#add_book'
+    delete '/cart/:id' => 'carts#remove_book'
+    delete '/cart' => 'carts#destroy'
+
   end
 
 end
