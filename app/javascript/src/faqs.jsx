@@ -16,11 +16,12 @@ class Faqs extends React.Component {
   }
   componentDidMount() {
     const logIn = isLoggedIn();
-    const cart = getCartFromServer();
-
-    this.setState({
-      authenticated: logIn,
-      cart: cart,
+    getCartFromServer()
+    .then((cart) => {
+      this.setState({
+        authenticated: logIn,
+        cart: cart,
+      });
     });
   }
 

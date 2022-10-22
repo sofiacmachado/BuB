@@ -4,7 +4,6 @@ import './browse.scss';
 import { Layout } from './layout';
 import SearchBar from "./searchBar/SearchBarAuthor";
 import {isLoggedIn} from './login_api';
-import { getCartFromServer } from "./cart_api.js";
 import { handleErrors } from './utils/fetchHelper';
 
 //removed cart and authenticated boolean

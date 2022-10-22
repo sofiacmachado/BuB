@@ -2,7 +2,7 @@ import React from 'react';
 import  { Layout } from '../layout';
 import './book.scss';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { getCartFromServer, addToCart } from "../cart_api.js";
+import { addToCart } from "../cart_api.js";
 import { handleErrors } from '../utils/fetchHelper';
 import StarIcon from '@mui/icons-material/Star';
 import Tooltip from "@material-ui/core/Tooltip";
@@ -35,9 +35,8 @@ class Book extends React.Component {
   }
   
   onAddToCart() {
-    addToCart(this.state.book.id);
-    const cart = getCartFromServer();
-    this.setState({cart: cart});
+    addToCart(this.state.book.id)
+    .then((cart) => { this.setState({ cart: cart }); });
   }
   
   render () {

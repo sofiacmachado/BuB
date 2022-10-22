@@ -18,10 +18,12 @@ class Add extends React.Component {
 
   componentDidMount() {
     const logIn = isLoggedIn();
-    const cart = getCartFromServer();
-    this.setState({
-      cart: cart,
-      authenticated: logIn,
+    getCartFromServer()
+    .then((cart) => {
+      this.setState({
+        authenticated: logIn,
+        cart: cart,
+      });
     });
   }
 

@@ -32,15 +32,15 @@ class Orders extends React.Component {
   componentDidMount() {
     const ordered_books = data; 
     const logIn = isLoggedIn();
-    const cart = getCartFromServer();
-
-    this.setState({
-      ordered_books: ordered_books,
-      cart: cart,
-      authenticated: logIn,
-      loading: false,
-      editing: false,
-
+    getCartFromServer()
+    .then((cart) => {
+      this.setState({
+        ordered_books: ordered_books,
+        cart: cart,
+        authenticated: logIn,
+        loading: false,
+        editing: false,
+      });
     });
 }
 
