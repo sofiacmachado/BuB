@@ -14,5 +14,4 @@ class Order < ApplicationRecord
 
     validates :user, presence: true
     validates :book, presence: true
-    validates :order_status, presence: true
 end
