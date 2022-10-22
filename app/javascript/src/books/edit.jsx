@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import  { Layout } from '../layout';
 import './add.scss';
-import data from "../data.js";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import { getSessionAndCart } from "../cart_api.js";
 import { handleErrors } from '../utils/fetchHelper';
