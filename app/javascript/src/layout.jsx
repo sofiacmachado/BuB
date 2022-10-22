@@ -5,14 +5,13 @@ import fb_logo from "/app/assets/icons/fb_logo.svg";
 import insta_logo from "/app/assets/icons/insta_logo.svg";
 import twitter_logo from "/app/assets/icons/twitter_logo.svg";
 import youtube_logo from "/app/assets/icons/youtube_logo.svg";
-import { handleErrors } from './utils/fetchHelper';
+import { handleErrors, logError } from './utils/fetchHelper';
 
 export class Layout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             authenticated: false,
-            sessionId: 0,
             browseAuthor: true,
             isNavCollapse: false,
         };
@@ -30,117 +29,114 @@ export class Layout extends React.Component {
             .then(data => {
             this.setState({
                 authenticated: data.authenticated,
-                sessionId: data.sessionId,
                 browseAuthor: data.browseAuthor,
                 isNavCollapse: data.isNavCollapse,
-            })
+            });
         })
     }
 
     doLogout(e) {
         e.preventDefault(); 
-        fetch(`/api/sessions/${this.state.sessionId}`, {
-            method: 'DELETE',
-        })
+        fetch('/api/session', { method: 'DELETE' })
         .then(handleErrors)
         .then(data => {
             window.location = '/';
             this.setState({
-            authenticated: false,
-            sessionId: 0,
-            })
+                authenticated: false
+            });
         });
         return false;
     }
 
-      handleBrowseAuthor() {
+    handleBrowseAuthor() {
         this.state.browseAuthor = true
-        };
-        handleBrowseTitle() {
-            this.state.browseAuthor = false
-        };
+    }
 
-      handleNavCollapse() {
+    handleBrowseTitle() {
+        this.state.browseAuthor = false
+    }
+
+    handleNavCollapse() {
         this.state.isNavCollapse = !this.state.isNavCollpase
-      };
+    }
 
-      checkNavCollapse() {
+    checkNavCollapse() {
         if (this.state.isNavCollapse) {
             return 'collapse'
         } else {
             return ''
         }
-      }
-      
-      render() {
+    }
+
+    render() {
         const { authenticated } = this.state;
         return (
-                <React.Fragment>
-                    <header>
-                        <div className="container navbar-container">
-                            <nav className="navbar navbar-expand-sm">
-                                <div className="container-fluid">
-                                    <a href="/" className="site-logo">
-                                        <img src={logo}></img>
+            <React.Fragment>
+                <header>
+                    <div className="container navbar-container">
+                        <nav className="navbar navbar-expand-sm">
+                            <div className="container-fluid">
+                                <a href="/" className="site-logo">
+                                    <img src={logo}></img>
+                                </a>
+                                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded={this.handleNavCollapse} aria-label="Toggle navigation" onClick={this.handleNavCollapse}>
+                                    <span className="navbar-toggler-icon"></span>
+                                </button>
+                                <ul className={`${this.checkNavCollapse()} navbar-collapse`} id="navbarToggleExternalContent">
+                                    <li className="nav-item">
+                                        <a href="/mybooks" className="nav--link">Sell</a>
+                                    </li>
+                                    <li className="nav-item dropdown">
+                                            <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Buy <i className="fa fa-caret-down"></i>
+                                            </a>
+                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <li className="dropdown-item"><a href="/browse_title" onClick={this.handleBrowseTitle} className="nav--link">Browse by Title</a></li>
+                                                <li className="dropdown-item"><a href="/browse_author" onClick={this.handleBrowseAuthor} className="nav--link">Browse by Author</a></li>
+                                            </ul>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a href="/faqs" className="nav--link">FAQS</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a href="/about" className="nav--link">About</a>
+                                    </li>
+                                    {authenticated === true ? 
+                                    (<li className="nav-item dropdown nav-item-account">
+                                            <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Account <i className="fa fa-caret-down"></i>
+                                            </a>
+                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <li className="dropdown-item"><a href="/cart" className="nav--link">Cart{' '}
+                                                {this.props.cartItems != null && this.props.cartItems > 0 ? (
+                                                    <button className="cart-indicator">{this.props.cartItems}</button>
+                                                ) : (
+                                                    ''
+                                                )}</a></li>
+                                                <li className="dropdown-item"><a href="/orders" className="nav--link">Orders</a></li>
+                                                <li className="dropdown-item"><a href="/sells" className="nav--link">Sells</a></li>
+                                                <li className="dropdown-item"><a href="/mybooks" className="nav--link">Your Books</a></li>
+                                            </ul>
+                                    </li>) : ('')}
+                                    {authenticated === false ?
+                                    (<li className='nav-item log-in' >
+                                        <a className="nav--link log-in" href="/login">
+                                        Log in
                                     </a>
-                                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded={this.handleNavCollapse} aria-label="Toggle navigation" onClick={this.handleNavCollapse}>
-                                        <span className="navbar-toggler-icon"></span>
-                                    </button>
-                                    <ul className={`${this.checkNavCollapse()} navbar-collapse`} id="navbarToggleExternalContent">
-                                        <li className="nav-item">
-                                            <a href="/mybooks" className="nav--link">Sell</a>
-                                        </li>
-                                        <li className="nav-item dropdown">
-                                                <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Buy <i className="fa fa-caret-down"></i>
-                                                </a>
-                                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <li className="dropdown-item"><a href="/browse_title" onClick={this.handleBrowseTitle} className="nav--link">Browse by Title</a></li>
-                                                    <li className="dropdown-item"><a href="/browse_author" onClick={this.handleBrowseAuthor} className="nav--link">Browse by Author</a></li>
-                                                </ul>
-                                        </li>
-                                        <li className="nav-item ">
-                                            <a href="/faqs" className="nav--link">FAQS</a>
-                                        </li>
-                                        <li className="nav-item ">
-                                            <a href="/about" className="nav--link">About</a>
-                                        </li>
-                                        {authenticated === true ? 
-                                        (<li className="nav-item dropdown nav-item-account">
-                                                <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Account <i className="fa fa-caret-down"></i>
-                                                </a>
-                                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <li className="dropdown-item"><a href="/cart" className="nav--link">Cart{' '}
-                                                    {this.props.cartItems != null && this.props.cartItems > 0 ? (
-                                                        <button className="cart-indicator">{this.props.cartItems}</button>
-                                                    ) : (
-                                                        ''
-                                                    )}</a></li>
-                                                    <li className="dropdown-item"><a href="/orders" className="nav--link">Orders</a></li>
-                                                    <li className="dropdown-item"><a href="/sells" className="nav--link">Sells</a></li>
-                                                    <li className="dropdown-item"><a href="/mybooks" className="nav--link">Your Books</a></li>
-                                                </ul>
-                                        </li>) : ('')}
-                                        {authenticated === false ?
-                                        (<li className='nav-item log-in' >
-                                            <a className="nav--link log-in" href="/login">
-                                            Log in
-                                        </a>
-                                        </li>
-                                        ) : (
-                                        <li className='nav-item log-in'>
-                                            <a className="nav--link log-out" href="/" onClick={this.doLogout}>
-                                            Log out
-                                        </a>
-                                        </li>
-                                        )}
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </header>
-                    {this.props.children}
+                                    </li>
+                                    ) : (
+                                    <li className='nav-item log-in'>
+                                        <a className="nav--link log-out" href="/" onClick={this.doLogout}>
+                                        Log out
+                                    </a>
+                                    </li>
+                                    )}
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+                {this.props.children}
                 <footer>
                     <div className="container footer">
                         <div className="social-links">
@@ -155,8 +151,8 @@ export class Layout extends React.Component {
                     </div>
                 </footer>
             </React.Fragment>
-            );
-        }
+        );
     }
+}
 
 

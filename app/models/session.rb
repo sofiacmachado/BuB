@@ -1,6 +1,6 @@
 class Session < ApplicationRecord
     belongs_to :user
-    has_one :cart
+    has_one :cart, dependent: :destroy
   
     validates :user, presence: true
   
