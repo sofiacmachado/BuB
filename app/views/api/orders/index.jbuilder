@@ -1,9 +1,6 @@
 json.orders do
   json.array! @orders do |order|
     json.id order.id
-    json.currency order.currency
-    json.amount order.amount
-
     json.books do
       json.array! order.books do |book|
         json.id book.id
