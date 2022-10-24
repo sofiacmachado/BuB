@@ -2,7 +2,6 @@ class User < ApplicationRecord
   has_many :sessions
   has_many :books
   has_many :orders
-  has_many :charges
 
   validates :username, presence: true, length: { minimum: 3, maximum: 64 }
   validates :password, presence: true, length: { minimum: 8, maximum: 64 }
