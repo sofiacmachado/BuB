@@ -29,7 +29,6 @@ export class Cart extends React.Component {
 
         this.getBookOrders();
     }
-
     
     getBookOrders = () => {
         fetch(`/api/books/${this.props.book_id}/orders`)
@@ -40,51 +39,49 @@ export class Cart extends React.Component {
             existingOrders: data.orders,
             })
         })
-    }
+    };
 
     submitOrder = (e) => {
         if (e) { e.preventDefault(); }
     
-        fetch(`/api/orders`, safeCredentials({
-          method: 'POST',
-            body: JSON.stringify({
-              order: {
-                cart_id: this.props.cart_id,
-              }
-            })
-        }))
+        fetch(`/api/orders`, safeCredentials({ method: 'POST' }))
           .then(handleErrors)
           .then(response => {
-            return this.initiateStripeCheckout(response.order.id)
+            return this.initiateStripeCheckout(response.order.id);
           })
           .catch(error => {
             console.log(error);
           })
-      }
+    };
   
-      initiateStripeCheckout = (order_id) => {
-        return fetch(`/api/charges?order_id=${order_id}&cancel_url=${window.location.pathname}`, safeCredentials({
-          method: 'POST',
+    initiateStripeCheckout = (orderId) => {
+        const apiUrl = `/api/charges?order_id=${orderId}&cancel_url=${window.location.pathname}`;
+        const paymentCompleteCallback = this.onPaymentComplete;
+        return fetch(apiUrl, safeCredentials({
+            method: 'POST',
         }))
-          .then(handleErrors)
-          .then(response => {
+        .then(handleErrors)
+        .then(response => {
             const stripe = Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
-    
+
             stripe.redirectToCheckout({
-              // Make the id field from the Checkout Session creation API response
-              // available to this file, so you can provide it as parameter here
-              // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-              sessionId: response.charge.checkout_session_id,
+                // Make the id field from the Checkout Session creation API response
+                // available to this file, so you can provide it as parameter here
+                // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+                sessionId: response.charge.checkout_session_id,
             }).then((result) => {
-              // If `redirectToCheckout` fails due to a browser or network
-              // error, display the localized error message to your customer
-              // using `result.error.message`.
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, display the localized error message to your customer
+                // using `result.error.message`.
+                if (result.error != null && result.error.message != null) {
+                    alert(result.error.message);
+                }
             });
-          })
-          .catch(error => {
+        })
+        .catch(error => {
             console.log(error);
-          })
-      }
+        });
+    };
 
     onRemoveFromCart(bookId) {
         removeFromCart(bookId)

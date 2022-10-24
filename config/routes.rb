@@ -18,14 +18,12 @@ Rails.application.routes.draw do
   get '/browse_author' => 'static_pages#browse_author'
   get '/browse_title' => 'static_pages#browse_title'
   
-  namespace :api do
-    
+  namespace :api do    
     resources :users, only: [:create]
     resources :sessions, only: [:create]
     resources :books, only: [:index, :show]
     resources :orders, only: [:create, :index, :show]
     resources :charges, only: [:create]
-
 
     get '/authenticated' => 'sessions#authenticated'
     delete '/session' => 'sessions#destroy'
@@ -38,9 +36,7 @@ Rails.application.routes.draw do
     delete '/cart/:id' => 'carts#remove_book'
     delete '/cart' => 'carts#destroy'
 
+    # stripe webhook
     post '/charges/mark_complete' => 'charges#mark_complete'
-
-
   end
-
 end
