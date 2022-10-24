@@ -16,7 +16,7 @@ module Api
         end
       end
 
-      @order = Order.create({ user_id: @user.id, books: books, currency: 'usd', amount: total_price })
+      @order = Order.create({ user_id: @user.id, books: books })
       #books.each do |book| 
       #  book.order_id = @order.id
       #  book.save!

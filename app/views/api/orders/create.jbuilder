@@ -1,7 +1,5 @@
 json.order do
   json.id @order.id
-  json.currency @order.currency
-  json.amount @order.amount
 
   json.books do
     json.array! @order.books do |book|
