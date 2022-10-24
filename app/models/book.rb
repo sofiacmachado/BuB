@@ -3,10 +3,9 @@ class Book < ApplicationRecord
   belongs_to :order, optional: true
 
   enum order_status: {
-    available: 0,
-    ordered: 1,
-    shipping: 2,
-    received: 3,
+    ordered: 0,
+    shipping: 1,
+    received: 2,
   }, _prefix: true
 
   validates :title, presence: true, length: { maximum: 70 }

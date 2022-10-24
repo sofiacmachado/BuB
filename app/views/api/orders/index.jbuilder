@@ -1,15 +1,19 @@
 json.orders do
   json.array! @orders do |order|
     json.id order.id
-    json.status order.status
-    json.buyer order.charge.user.username
-    json.book do
-      json.id order.book.id
-      json.title order.book.title
-      json.author order.book.author
-      json.isbn order.book.isbn
-      json.image order.book.image
-      json.price order.book.price
+    json.currency order.currency
+    json.amount order.amount
+
+    json.books do
+      json.array! order.books do |book|
+        json.id book.id
+        json.title book.title
+        json.author book.author
+        json.isbn book.isbn
+        json.image book.image
+        json.seller book.user_id
+        json.price book.price
+      end
     end
   end
 end
