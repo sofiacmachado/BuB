@@ -19,7 +19,7 @@ module Api
             quantity: 1,
           }],
           mode: "payment",
-          success_url: "#{ENV['URL']}/order/#{order.id}/success",
+          success_url: "#{ENV['URL']}/orders/#{order.id}/success",
           cancel_url: "#{ENV['URL']}#{params[:cancel_url]}",
         )
   
