@@ -1,6 +1,7 @@
 module Api
     class ChargesController < ApplicationController
       before_action :ensure_logged_in
+      skip_before_action :verify_authenticity_token, only: [:mark_complete]
 
       def create
         order = Order.find_by(id: params[:order_id])
