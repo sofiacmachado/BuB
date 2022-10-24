@@ -1,7 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { Layout } from "../layout";
-import data from "../data.js";
 import Tooltip from "@material-ui/core/Tooltip";
 import { getSessionAndCart } from "../cart_api.js";
 import { handleErrors } from "../utils/fetchHelper";

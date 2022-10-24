@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     resources :sessions, only: [:create]
     resources :books, only: [:index, :show]
     resources :orders, only: [:create, :index, :show]
+    resources :charges, only: [:create]
+
 
     get '/authenticated' => 'sessions#authenticated'
     delete '/session' => 'sessions#destroy'
@@ -35,6 +37,9 @@ Rails.application.routes.draw do
     post '/cart/:id' => 'carts#add_book'
     delete '/cart/:id' => 'carts#remove_book'
     delete '/cart' => 'carts#destroy'
+
+    post '/charges/mark_complete' => 'charges#mark_complete'
+
 
   end
 

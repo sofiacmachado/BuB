@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Layout } from '../layout';
 import './cart.scss';
 import { getDetailedCartFromServer, removeFromCart } from "../cart_api.js";
+import { handleErrors, safeCredentials } from '../utils/fetchHelper';
+
 
 export class Cart extends React.Component {    
     constructor(props) {
@@ -24,7 +26,65 @@ export class Cart extends React.Component {
                 loading: false,
             });
         });
+
+        this.getBookOrders();
     }
+
+    
+    getBookOrders = () => {
+        fetch(`/api/books/${this.props.book_id}/orders`)
+        .then(handleErrors)
+        .then(data => {
+            console.log(data);
+            this.setState({
+            existingOrders: data.orders,
+            })
+        })
+    }
+
+    submitOrder = (e) => {
+        if (e) { e.preventDefault(); }
+    
+        fetch(`/api/orders`, safeCredentials({
+          method: 'POST',
+            body: JSON.stringify({
+              order: {
+                cart_id: this.props.cart_id,
+              }
+            })
+        }))
+          .then(handleErrors)
+          .then(response => {
+            return this.initiateStripeCheckout(response.order.id)
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      }
+  
+      initiateStripeCheckout = (order_id) => {
+        return fetch(`/api/charges?order_id=${order_id}&cancel_url=${window.location.pathname}`, safeCredentials({
+          method: 'POST',
+        }))
+          .then(handleErrors)
+          .then(response => {
+            const stripe = Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
+    
+            stripe.redirectToCheckout({
+              // Make the id field from the Checkout Session creation API response
+              // available to this file, so you can provide it as parameter here
+              // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+              sessionId: response.charge.checkout_session_id,
+            }).then((result) => {
+              // If `redirectToCheckout` fails due to a browser or network
+              // error, display the localized error message to your customer
+              // using `result.error.message`.
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      }
 
     onRemoveFromCart(bookId) {
         removeFromCart(bookId)
@@ -96,7 +156,7 @@ export class Cart extends React.Component {
                                 </div>
                                 <hr />
                                 <div className="col-12">
-                                    <button className="btn btn-add">
+                                    <button onClick={this.submitOrder} className="btn btn-add">
                                         Checkout
                                     </button>
                                 </div>
