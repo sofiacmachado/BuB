@@ -3,15 +3,26 @@ module Api
     before_action :ensure_logged_in
 
     def create
-      cart = Cart.find_by(id: params[:order][:cart_id])
-      return render json: { error: 'cannot find cart' }, status: :not_found if !cart
+      books = @user.session.cart.books
+      total_price = 0
 
-      begin
-        @order = Order.create({ user_id: session.user.id, cart_id: cart.id})
-        render 'api/orders/create', status: :created
-      rescue ArgumentError => e
-        render json: { error: e.message }, status: :bad_request
+      books.each do |book| 
+        total_price += book.price
+        if !book.order_id.nil?
+          return render json: {
+            error: 'book %d is no longer available' % [book.id],
+            book: book.id,
+          }, status: :gone
+        end
       end
+
+      @order = Order.create({ user_id: @user.id, books: books, currency: 'usd', amount: total_price })
+      #books.each do |book| 
+      #  book.order_id = @order.id
+      #  book.save!
+      #end
+
+      render 'api/orders/create', status: :created
     end
 
     def show
@@ -22,6 +33,7 @@ module Api
     end
 
     def index
+      @orders = @user.orders
       render 'api/orders/index', status: :ok
     end
 
@@ -36,10 +48,6 @@ module Api
     end
 
     private
-
-    def order_params
-      params.require(:order).permit(:cart_id)
-    end
 
     def ensure_logged_in
       token = cookies.signed[:bub_session_token]
