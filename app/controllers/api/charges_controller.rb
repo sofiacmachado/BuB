@@ -1,23 +1,19 @@
 module Api
     class ChargesController < ApplicationController
-      
+      before_action :ensure_logged_in
+
       def create
-        token = cookies.signed[:bub_session_token]
-        session = Session.find_by(token: token)
-        return render json: { error: 'user not logged in' }, status: :unauthorized if !session
-  
         order = Order.find_by(id: params[:order_id])
         return render json: { error: 'cannot find order' }, status: :not_found if !order
   
-        book = cart.book
-        totalPrice = cart.reduce((prev, book) => prev + book.price, 0);
+        amount = order.books.reduce((prev, book) => prev + book.price, 0)
   
         session = Stripe::Checkout::Session.create(
           payment_method_types: ['card'],
           line_items: [{
-            name: "#{cart.book.title}",
-            description: "Your order is being processed.",
-            amount: (amount * 100.0).to_i, # amount in cents
+            name: "BUB Order #{order.id}",
+            description: "Your order of #{order.books.length} books.",
+            amount: (amount * 100.0).to_i,  # amount in cents
             currency: "usd",
             quantity: 1,
           }],
@@ -71,5 +67,17 @@ module Api
         return head :bad_request
       end
 
+      private
+
+      def ensure_logged_in
+        token = cookies.signed[:bub_session_token]
+        session = Session.find_by(token: token)
+  
+        if session
+          @user = session.user
+        else
+          render json: { error: 'user not logged in' }, status: :unauthorized
+        end
+      end
     end
   end
