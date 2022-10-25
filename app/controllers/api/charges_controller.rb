@@ -7,8 +7,8 @@ module Api
         order = Order.find_by(id: params[:order_id])
         return render json: { error: 'cannot find order' }, status: :not_found if !order
   
-        amount = order.books.reduce((prev, book) => prev + book.price, 0)
-  
+        amount = order.books.sum(&:price)
+
         session = Stripe::Checkout::Session.create(
           payment_method_types: ['card'],
           line_items: [{
