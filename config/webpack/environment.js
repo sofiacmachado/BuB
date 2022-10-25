@@ -4,14 +4,13 @@ const path = require('path');
 module.exports = environment
 
 const customConfig = {
-    resolve: {
-      alias: {
-        '@src': path.resolve(__dirname, '..', '..', 'app/javascript/src'),
-        '@utils': path.resolve(__dirname, '..', '..', 'app/javascript/src/utils'),
-      }
+  resolve: {
+    alias: {
+      '@src': path.resolve(__dirname, '..', '..', 'app/javascript/src'),
+      '@utils': path.resolve(__dirname, '..', '..', 'app/javascript/src/utils'),
     }
   }
-  const { environment } = require('@rails/webpacker')
+}
 
 // Add this to choose which .env variables to expose to the frontend
 const webpack = require('webpack')

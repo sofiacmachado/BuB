@@ -28,8 +28,6 @@ Rails.application.routes.draw do
     get '/authenticated' => 'sessions#authenticated'
     delete '/session' => 'sessions#destroy'
 
-    get '/books/:id/orders' => 'orders#get_book_orders'
-
     get '/cart' => 'carts#show'
     get '/cart/details' => 'carts#show_detailed'
     post '/cart/:id' => 'carts#add_book'

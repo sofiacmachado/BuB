@@ -3,7 +3,7 @@ module Api
     before_action :ensure_logged_in
 
     def create
-      books = @user.session.cart.books
+      books = @session.cart.books
       total_price = 0
 
       books.each do |book| 
@@ -51,10 +51,10 @@ module Api
 
     def ensure_logged_in
       token = cookies.signed[:bub_session_token]
-      session = Session.find_by(token: token)
+      @session = Session.find_by(token: token)
 
       if session
-        @user = session.user
+        @user = @session.user
       else
         render json: { error: 'user not logged in' }, status: :unauthorized
       end
