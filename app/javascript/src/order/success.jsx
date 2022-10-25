@@ -2,91 +2,62 @@ import React from "react";
 import { Layout } from "../layout";
 import CheckIcon from '@mui/icons-material/Check';
 import "./success.scss";
+import { handleErrors, safeCredentials } from '../utils/fetchHelper';
 import { getSessionAndCart } from "../cart_api.js";
 
-const BOOKSTORE = [
-  {
-    id: 1,
-    title: 'Anna Karenina',
-    author: "Leo Tolstoy",
-    isbn: '9780140449174',
-    summary: "Anna Karenina seems to have everything - beauty, wealth, popularity and an adored son. But she feels that her life is empty until the moment she encounters the impetuous officer Count Vronsky. Their subsequent affair scandalizes society and family alike and soon brings jealously and bitterness in its wake. Contrasting with this tale of love and self-destruction is the vividly observed story of Levin, a man striving to find contentment and a meaning to his life - and also a self-portrait of Tolstoy himself.",
-    condition: "Used",
-    description: 'Spine has some folds',
-    genre: 'classic',
-    price: 4,
-    rating: 4.08/5,
-    image: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg',
-    user: 1
-  },
-  {
-    id: 2,
-    title: 'Notes from Underground',
-    author: "Fyodor Dostoevsky",
-    isbn: '9780679734529',
-    summary: "Notes from Underground is a novella written in 1864 by Fyodor Dostoevsky, and is considered by many to be one of the first existentialist novels. The novella presents itself as an excerpt from the rambling memoirs of a bitter, isolated, unnamed narrator, who is a retired civil servant living in St. Petersburg.",
-    condition: "Like new",
-    description: 'Book is in perfect conditions',
-    genre: 'classic',
-    price: 8,
-    rating: 4.2/5,
-    image: 'https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg',
-    user: 1
-  }
-];
       
 class Success extends React.Component {
-  constructor(props) {
+ constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      title: '',
-      author: '',
-      summary: '',
-      isbn: '',
-      condition: '',
-      description: '',
-      genre: '',
-      price: '',
-      rating: '',
-      image: '',
-      user: '',
-      paid: false,
-      loading: false,
+      loading: true,
       authenticated: false,
-      cart: [],
+      order: {},
+      cart: []
     };
   }
 
   componentDidMount() {
-    let data = {
-      book:  BOOKSTORE[0],
-    }
     getSessionAndCart()
-    .then(data => {
-      this.setState({
-        authenticated: data.authenticated,
-        cart: data.cart,
-        loading: false,
-        id: data.book.id,
-        author: data.book.author,
-        title: data.book.title,
-        summary: data.book.summary,
-        description: data.book.description,
-        condition: data.book.condition,
-        genre: data.book.genre,
-        price: data.book.price,
-        isbn: data.book.isbn,
-        rating: data.book.rating,
-        image: data.book.image,
-        user: data.book.user,
-        paid: true,
+    fetch(`/api/orders/${this.props.order_id}`)
+      .then(handleErrors)
+      .then((data) => {
+        this.setState({
+          cart: data.cart,
+          authenticated: data.authenticated,
+          order: data.order,
+          loading: false,
+        });
       });
-    });
   }
 
+
+  initiateStripeCheckout = (e, order_id) => {
+    e.preventDefault();
+    return fetch(
+      `/api/charges?order_id=${order_id}&cancel_url=${window.location.pathname}`,
+      safeCredentials({
+        method: "POST",
+      })
+    )
+      .then(handleErrors)
+      .then((response) => {
+        const stripe = Stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
+
+        stripe
+          .redirectToCheckout({
+            sessionId: response.charge.checkout_session_id,
+          })
+          .then((result) => {});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   render() {
-    const { loading, cart, authenticated } = this.state;
+    const { loading, order, authenticated } = this.state;
+    const { id, book, charges } = order;
 
     if (loading) {
       return <p>Loading...</p>;
@@ -104,43 +75,43 @@ class Success extends React.Component {
                 <div className="col col-lg-2 mb-4">
                     <div
                     className="book-image mb-3"
-                    style={{ backgroundImage: `url(${this.state.image})` }}
+                    style={{ backgroundImage: `url(${book.image})` }}
                     />
                 </div>
                     <div className="col-6 col-lg-2 mb-4">
-                    <h6 className="mb-2 text-uppercase">"{this.state.title}"</h6>
+                    <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
                     <p className="text-uppercase mb-1 text-secondary">
                         <small>
-                        <b>{this.state.author}</b>
+                        <b>{book.author}</b>
                         </small>
                     </p>
                     <p className="text-uppercase mb-4 text-secondary">
                         <small>
-                        <b>{this.state.genre}</b>
+                        <b>{book.genre}</b>
                         </small>
                     </p>
                     <p className="text-uppercase mb-4 text-secondary">
                         <small>
-                        <b>ISBN: {this.state.isbn}</b>
+                        <b>ISBN: {book.isbn}</b>
                         </small>
                     </p>
                     <p className="text-uppercase mb-4 text-secondary">
                         <small>
-                        <b>Seller: {this.state.user}</b>
+                        <b>Seller: {book.user}</b>
                         </small>
                     </p>
                     </div>
                     <div className="col-8 col-lg-6 mb-4 third-column">
                     <small className="text-secondary">Book's condition:</small>
                     <p className="text-secondary condition">
-                        {this.state.condition}
+                        {book.condition}
                     </p>
                     <small className="text-secondary">Detailed Condition:</small>
                     <p className="text-secondary condition">
-                        {this.state.description}
+                        {book.description}
                     </p>
                     <p className="mb-0 text-secondary">
-                        {this.state.summary}
+                        {book.summary}
                     </p>
                     </div>
                     <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
@@ -148,7 +119,7 @@ class Success extends React.Component {
                         <p className="text-uppercase d-flex justify-content-center mt-4">
                         Amount: 
                         </p>
-                        <span className='price-tag d-flex justify-content-center mb-4'>{this.state.price}$</span>
+                        <span className='price-tag d-flex justify-content-center mb-4'>{orders[0].total_price}$</span>
                             Payment Status:{" "}
                             {this.state.paid === true ? (
                                 <span className="mb-4 text-success d-flex justify-content-center">Paid <CheckIcon/></span>
@@ -156,7 +127,7 @@ class Success extends React.Component {
                                 <span className="mb-4 text-danger d-flex justify-content-center">Unpaid</span>
                             )}
                             {this.state.paid === true ? (
-                            <a href="#" className="btn btn-success mb-2 d-none disabled pay-btn">
+                            <a href="#" onClick={(e) => this.initiateStripeCheckout(e, id)} className="btn btn-success mb-2 d-none disabled pay-btn">
                                 Pay now
                             </a>
                             ) : (
