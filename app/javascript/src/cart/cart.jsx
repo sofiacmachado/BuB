@@ -26,20 +26,7 @@ export class Cart extends React.Component {
                 loading: false,
             });
         });
-
-        this.getBookOrders();
     }
-    
-    getBookOrders = () => {
-        fetch(`/api/books/${this.props.book_id}/orders`)
-        .then(handleErrors)
-        .then(data => {
-            console.log(data);
-            this.setState({
-            existingOrders: data.orders,
-            })
-        })
-    };
 
     submitOrder = (e) => {
         if (e) { e.preventDefault(); }
