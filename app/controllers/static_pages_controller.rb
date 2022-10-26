@@ -9,4 +9,9 @@ class StaticPagesController < ApplicationController
   def login
     render 'login'
   end
+  
+  def success
+    @data = { order_id: params[:id]}.to_json
+    render 'success'
+  end
 end

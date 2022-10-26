@@ -59,9 +59,6 @@ ActiveRecord::Schema.define(version: 2022_10_24_175558) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string "checkout_session_id"
-    t.string "currency"
-    t.decimal "amount", precision: 10, scale: 2
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

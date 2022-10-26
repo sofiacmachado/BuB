@@ -28,7 +28,6 @@ module Api
     def show
       @order = Order.find_by(id: params[:id])
       return render json: {error: 'cannot find order'}, status: :not_found if !@order
-      @orders = cart.orders
       render 'api/orders/show', status: :ok
     end
 
@@ -48,6 +47,10 @@ module Api
     end
 
     private
+
+    def order_params
+      params.require(:order).permit(:order_id)
+    end
 
     def ensure_logged_in
       token = cookies.signed[:bub_session_token]
