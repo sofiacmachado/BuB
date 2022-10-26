@@ -20,9 +20,9 @@ Rails.application.routes.draw do
   
   namespace :api do    
     resources :users, only: [:create]
-    resources :sessions, only: [:create]
-    resources :books, only: [:index, :show]
-    resources :orders, only: [:create, :index, :show]
+    resources :sessions, only: [:create, :destroy]
+    resources :books, only: [:index, :show, :add, :update, :destroy]
+    resources :orders, only: [:create, :index, :show, :byuser]
     resources :charges, only: [:create]
 
     get '/authenticated' => 'sessions#authenticated'

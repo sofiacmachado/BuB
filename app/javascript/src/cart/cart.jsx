@@ -31,7 +31,7 @@ export class Cart extends React.Component {
     submitOrder = (e) => {
         if (e) { e.preventDefault(); }
     
-        fetch(`/api/orders`, safeCredentials({ method: 'POST' }))
+        fetch(`/api/orders`, safeCredentials({ method: 'POST' ,}))
           .then(handleErrors)
           .then(response => {
             return this.initiateStripeCheckout(response.order.id);
@@ -49,7 +49,7 @@ export class Cart extends React.Component {
         }))
         .then(handleErrors)
         .then(response => {
-            const stripe = Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
+            const stripe = Stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
 
             stripe.redirectToCheckout({
                 // Make the id field from the Checkout Session creation API response
