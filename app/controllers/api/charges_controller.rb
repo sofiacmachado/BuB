@@ -1,6 +1,6 @@
 module Api
     class ChargesController < ApplicationController
-      before_action :ensure_logged_in
+      before_action :ensure_logged_in, except: :mark_complete
       skip_before_action :verify_authenticity_token, only: [:mark_complete]
 
       def create
