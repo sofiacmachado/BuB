@@ -10,11 +10,14 @@ json.order do
             json.image book.image
             json.seller book.user_id
             json.price book.price
+            
         end
     end
+
+    json.paid @order.paid
 
     json.user do
         json.username @order.user.username
     end
-
+    json.charges @order.charges
   end

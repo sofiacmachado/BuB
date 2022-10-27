@@ -63,7 +63,9 @@ class Success extends React.Component {
     if (loading) {
       return <p>Loading...</p>;
     }
-    const { id, books, user } = order;
+    const { id, paid, books, user } = order;
+    const total_price = books.reduce((p, c) => p + c.price, 0)
+    console.log(order)
 
     return (
       <Layout cartItems={cart.length} authenticated={authenticated}>
@@ -109,24 +111,17 @@ class Success extends React.Component {
                         <p className="text-uppercase d-flex justify-content-center mt-4">
                         Amount:  
                         </p>
-                        <span className='price-tag d-flex justify-content-center mb-4'>{order.total_price}$</span>
+                        <span className='price-tag d-flex justify-content-center mb-4'>{total_price}$</span>
                             Payment Status:{" "}
-                            {this.state.paid === true ? (
-                                <span className="mb-4 text-success d-flex justify-content-center">Paid <CheckIcon/></span>
+                            {paid === true ? (
+                              <span className="mb-4 text-success d-flex justify-content-center">Paid <CheckIcon/></span>
                             ) : (
+                              <span>
                                 <span className="mb-4 text-danger d-flex justify-content-center">Unpaid</span>
-                            )}
-                            {this.state.paid === true ? (
-                            <a href="#" onClick={(e) => this.initiateStripeCheckout(e, id)} className="btn btn-success mb-2 d-none disabled pay-btn">
+                                <a href="#" onClick={(e) => this.initiateStripeCheckout(e, id)} className="btn btn-danger mb-2 pay-btn">
                                 Pay now
-                            </a>
-                            ) : (
-                            <a
-                                href=""
-                                className="btn btn-add mb-4 text-white pay-btn"
-                            >
-                                Pay now
-                            </a>
+                                </a>
+                              </span>
                             )}
                         </p>
                 </div>

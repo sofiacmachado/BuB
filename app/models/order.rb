@@ -4,4 +4,9 @@ class Order < ApplicationRecord
     has_many :charges
 
     validates :user, presence: true
+
+    def paid
+        self.charges.pluck(:complete).include?(true)
+    end
+
 end

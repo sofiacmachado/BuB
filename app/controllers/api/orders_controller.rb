@@ -46,6 +46,8 @@ module Api
       render 'api/orders/byuser'
     end
 
+    
+
     private
 
     def order_params
