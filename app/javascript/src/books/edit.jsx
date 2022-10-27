@@ -16,7 +16,7 @@ class Edit extends React.Component {
       cart: []
     };
 
-    //this.removeBook = this.removeBook.bind(this);
+    this.removeBook = this.removeBook.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleGenreChange = this.handleGenreChange.bind(this);
@@ -59,25 +59,6 @@ class Edit extends React.Component {
     this.setState({ summary: event.target.value });
   };
 
-  submitEdit() {
-    const formData = new FormData();
-    const image = document.getElementById("addPhoto");
-    
-    for (let i = 0; i < image.files.length; i++) {
-      formData.append("book[image]", this.state.image.files[i]);
-    }
-
-    formData.set("book[title]", this.state.title);
-    formData.set("book[auhtor]", this.state.auhtor);
-    formData.set("book[isbn]", this.state.isbn);
-    formData.set("book[summary]", this.state.summary);
-    formData.set("book[condition]", this.state.condition);
-    formData.set("book[description]", this.state.description);
-    formData.set("book[genre]", this.state.genre);
-    formData.set("book[price]", this.state.price);
-    formData.set("book[rating]", this.state.rating);
-  }
-
   componentDidMount() {    
     getSessionAndCart()
     .then(data => {
@@ -99,6 +80,75 @@ class Edit extends React.Component {
       });
     });
   }
+
+  /* submitEdit() {
+    const formData = new FormData();
+    const image = document.getElementById("addPhoto");
+    
+    for (let i = 0; i < image.files.length; i++) {
+      formData.append("book[image]", this.state.image.files[i]);
+    } */
+
+    updateBook = (e) => {
+      const {
+        title,
+        author,
+        isbn,
+        genre,
+        rating,
+        summary,
+        condition,
+        description,
+        price,
+        image,
+      } = this.state;
+  
+      if (e) {
+        e.preventDefault();
+      }
+  
+      let formData = new FormData();
+  
+
+    formData.set("book[title]", title);
+    formData.set("book[auhtor]", auhtor);
+    formData.set("book[isbn]", isbn);
+    formData.set("book[summary]", summary);
+    formData.set("book[condition]", condition);
+    formData.set("book[description]", description);
+    formData.set("book[genre]", genre);
+    formData.set("book[price]", price);
+    formData.set("book[rating]", rating);
+
+  fetch(
+    `/api/books/${this.props.book_id}/update/`,
+    safeCredentialsForm({
+      method: "PUT",
+      body: formData,
+    })
+  )
+    .then(handleErrors)
+    .then((response) => {
+      console.log(response);
+      window.location = `/book/${response.book.id}`;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+  removeBook = (e) => {
+    e.preventDefault(); 
+    fetch(`/api/books/${this.props.book_id}`, {
+      method: 'DELETE',
+    })
+    .then(handleErrors)
+    .then(data => {
+      window.location = '/mybooks';
+    });
+    return false;
+  };
+
 
   render () {
     const { cart, loading, authenticated, book } = this.state;

@@ -1,53 +1,75 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import "./orders.scss";
-import data from "./data.js";
-import Tooltip from "@material-ui/core/Tooltip";
 import { getSessionAndCart } from "./cart_api.js";
+import { handleErrors } from "./utils/fetchHelper";
+
+import Tooltip from "@material-ui/core/Tooltip";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 class Orders extends React.Component {
- 
   constructor(props) {
     super(props);
     this.state =   {
       cart: [],
       loading: true,
       authenticated: false,
-      editing: false,
-      }
-
-    this.handleCompleteChange = this.handleCompleteChange.bind(this);
+      orders: [],
+      open: false,
+    }
+    
+     this.handleCompleteChange = this.handleCompleteChange.bind(this);
+     this.handleClickOpen = this.handleClickOpen.bind(this);
+     this.handleClose = this.handleClose.bind(this);
 
     }
-
     handleCompleteChange(book) {
       book.order_status = 'Complete';
       this.forceUpdate();
-      //this.setState({ sold_books: this.state.sold_books });
-    };
+      //this.setState({ sold_books: this.state.sold_books }); */
+    }
+    
+    handleClickOpen = () => {
+       this.state.open = true;
+     };
+   
+     handleClose = () => {
+       this.state.open = false;
+     };
 
-//fetch
+
   componentDidMount() {
-    const ordered_books = data;
+    getSessionAndCart()
+    fetch(`/api/orders`)
+    .then(handleErrors)
+    .then(data => {
+      this.setState({
+        orders: data.orders,
+        loading: false,
+      });
+    });
     getSessionAndCart()
     .then(data => {
       this.setState({
         authenticated: data.authenticated,
         cart: data.cart,
-        ordered_books: ordered_books,
-        loading: false,
-        editing: false,
       });
     });
   }
 
   render() {
-    const { ordered_books, cart, authenticated } = this.state; 
+    const { orders, cart, authenticated, open } = this.state; 
 
     if (this.state.loading) {
       return <p>Loading...</p>;
     }
+    console.log(orders);
 
     return (
       <Layout cartItems={cart.length} authenticated={authenticated}>
@@ -57,8 +79,9 @@ class Orders extends React.Component {
                             <h4 className="mb-1">Orders</h4>
                         </div>
                     </div>
-            {ordered_books.length !== 0 ? (
-              ordered_books.map((book) => {
+            {orders.length !== 0 ? (
+              orders.map((order) => {
+              return order.books.map((book) => {
                 return (
                 <div  className="row mt-4 mb-4">
                   <div className="col col-lg-2 mb-4">
@@ -86,7 +109,7 @@ class Orders extends React.Component {
                       <div className="col-8 col-lg-6 mb-4 d-grid for-sale-container">
                           <p className="for-sale rounded">
                           <p className="text-uppercase d-flex justify-content-center mt-4">
-                          Amount: 
+                          Price: 
                           </p>
                           <span className='price-tag d-flex justify-content-center mb-4'>{book.price}$</span>
                               <span className='d-flex justify-content-center'>Order status:{" "}</span>
@@ -108,17 +131,47 @@ class Orders extends React.Component {
                                         <a className="dropdown-item disabled" role="button" aria-disabled="true" value={book.order_status}>Delivering</a>
                                       </span>  
                                     </Tooltip>
-                                    <a className="dropdown-item" role="button" value={book.order_status} onClick={() => this.handleCompleteChange(book)}>Complete</a>
+                                    <Tooltip title="Select this state if you have received the order." placement="left">
+                                      <span>
+                                      <Button onClick={this.handleClickOpen}>
+                                        <a className="dropdown-item" role="button" value={book.order_status} onClick={() => this.handleCompleteChange(book)}>Complete</a>
+                                      </Button> 
+                                        {/* <a className="dropdown-item" role="button" value={book.order_status} onClick={() => this.handleCompleteChange(book)}>Complete</a> */}
+                                        <Dialog
+                                          open={open}
+                                          onClose={this.handleClose}
+                                          aria-labelledby="alert-dialog-title"
+                                          aria-describedby="alert-dialog-description"
+                                        >
+                                          <DialogTitle id="alert-dialog-title">
+                                            {"Use Google's location service?"}
+                                          </DialogTitle>
+                                          <DialogContent>
+                                            <DialogContentText id="alert-dialog-description">
+                                              Only set the order's state to "COMPLETE" if you already received it and everything is as you expected.
+                                            </DialogContentText>
+                                          </DialogContent>
+                                          <DialogActions>
+                                            <Button onClick={this.handleClose}>COMPLETE</Button>
+                                            <Button onClick={this.handleClose} autoFocus>
+                                              NOT COMPLETE
+                                            </Button>
+                                          </DialogActions>
+                                        </Dialog>
+                                      </span>  
+                                    </Tooltip>
+                                    
                                   </div>
                               </div>
                           </p>
                    </div>
                   </div>
-              )
+                );
+               });
             })
               ) : (
                 <div className="col-12 my-4 ">
-                    <p>You haven't sold any books.</p>
+                    <p>You haven't bought any books.</p>
                   </div>
               )}
             </div>
