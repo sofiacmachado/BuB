@@ -129,11 +129,14 @@ class Sales extends React.Component {
                         </button>
                       </Tooltip>
                       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Unpaid</a>
                         <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 1)}>Shipping</a>
                         <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 2)}>Shipped</a>
+                        <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 4)}>Cancelled</a>
                         <Tooltip title="Only the buyer can complete the order" placement="left">
                           <span>
-                            <a className="dropdown-item disabled" role="button" aria-disabled="true">Complete</a>
+                          <a className="dropdown-item disabled" role="button" aria-disabled="true">Received</a>
+                          <a className="dropdown-item disabled" role="button" aria-disabled="true">Returned</a>
                           </span>
                         </Tooltip>
                       </div>

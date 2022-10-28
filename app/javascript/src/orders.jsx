@@ -6,12 +6,6 @@ import { getSessionAndCart } from "./cart_api.js";
 import { handleErrors } from "./utils/fetchHelper";
 
 import Tooltip from "@material-ui/core/Tooltip";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 class Orders extends React.Component {
   constructor(props) {
@@ -21,28 +15,30 @@ class Orders extends React.Component {
       loading: true,
       authenticated: false,
       orders: [],
-      open: false,
     }
     
-     this.handleCompleteChange = this.handleCompleteChange.bind(this);
-     this.handleClickOpen = this.handleClickOpen.bind(this);
-     this.handleClose = this.handleClose.bind(this);
+    this.handleStatusChange = this.handleStatusChange.bind(this);
+    this.getOrderStatusString = this.getOrderStatusString.bind(this);
+  }
 
+  getOrderStatusString(status) {
+    switch (status) {
+      case 0: return 'Unpaid';
+      case 1: return 'Shipping';
+      case 2: return 'Shipped';
+      case 3: return 'Received';
+      case 4: return 'Cancelled';
+      case 5: return 'Returned';
+      default: return 'Unknown';
     }
-    handleCompleteChange(book) {
-      book.order_status = 'Complete';
-      this.forceUpdate();
-      //this.setState({ sold_books: this.state.sold_books }); */
-    }
-    
-    handleClickOpen = () => {
-       this.state.open = true;
-     };
-   
-     handleClose = () => {
-       this.state.open = false;
-     };
-
+  }
+  
+  handleStatusChange(book, status) {
+    book.order_status =  this.getOrderStatusString(status);
+    console.log(book.order_status);
+    this.forceUpdate();
+    //this.setState({ sold_books: this.state.sold_books });
+  }
 
   componentDidMount() {
     getSessionAndCart()
@@ -64,9 +60,9 @@ class Orders extends React.Component {
   }
 
   render() {
-    const { orders, cart, authenticated, open } = this.state; 
+    const { orders, cart, authenticated, loading } = this.state;
 
-    if (this.state.loading) {
+    if (loading) {
       return <p>Loading...</p>;
     }
     console.log(orders);
@@ -113,7 +109,7 @@ class Orders extends React.Component {
                           </p>
                           <span className='price-tag d-flex justify-content-center mb-4'>{book.price}$</span>
                               <span className='d-flex justify-content-center'>Order status:{" "}</span>
-                              <span className="mb-4 text-danger d-flex justify-content-center">{book.order_status}</span>
+                              <span className="mb-4 text-danger d-flex justify-content-center">{ book.order_status }</span>
                               <div className="dropdown">
                                   <Tooltip title="Tell the seller that your order has arrived" placement="top">
                                     <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,46 +117,27 @@ class Orders extends React.Component {
                                     </button>
                                   </Tooltip>
                                   <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <Tooltip title="Only the seller can change the status before completion" placement="left">
+                                    <Tooltip title="Only the seller can change to this status before completion" placement="left">
                                       <span>
-                                        <a className="dropdown-item disabled" role="button" aria-disabled="true" value={book.order_status}>Shipping</a>
+                                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Shipping</a>
                                         </span>
                                     </Tooltip>
-                                    <Tooltip title="Only the seller can change the status before completion" placement="left">
+                                    <Tooltip title="Only the seller can change to this status before completion" placement="left">
                                       <span>
-                                        <a className="dropdown-item disabled" role="button" aria-disabled="true" value={book.order_status}>Delivering</a>
+                                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Shipped</a>
                                       </span>  
                                     </Tooltip>
-                                    <Tooltip title="Select this state if you have received the order." placement="left">
+                                    <Tooltip title="Only the seller can change to this status before completion" placement="left">
                                       <span>
-                                      <Button onClick={this.handleClickOpen}>
-                                        <a className="dropdown-item" role="button" value={book.order_status} onClick={() => this.handleCompleteChange(book)}>Complete</a>
-                                      </Button> 
-                                        {/* <a className="dropdown-item" role="button" value={book.order_status} onClick={() => this.handleCompleteChange(book)}>Complete</a> */}
-                                        <Dialog
-                                          open={open}
-                                          onClose={this.handleClose}
-                                          aria-labelledby="alert-dialog-title"
-                                          aria-describedby="alert-dialog-description"
-                                        >
-                                          <DialogTitle id="alert-dialog-title">
-                                            {"Use Google's location service?"}
-                                          </DialogTitle>
-                                          <DialogContent>
-                                            <DialogContentText id="alert-dialog-description">
-                                              Only set the order's state to "COMPLETE" if you already received it and everything is as you expected.
-                                            </DialogContentText>
-                                          </DialogContent>
-                                          <DialogActions>
-                                            <Button onClick={this.handleClose}>COMPLETE</Button>
-                                            <Button onClick={this.handleClose} autoFocus>
-                                              NOT COMPLETE
-                                            </Button>
-                                          </DialogActions>
-                                        </Dialog>
-                                      </span>  
+                                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Cancelled</a>
+                                        </span>
                                     </Tooltip>
-                                    
+                                      <span>
+                                        <a className="dropdown-item" onClick={() => this.handleStatusChange(book, 3)}>Received</a>
+                                      </span>
+                                      <span>
+                                        <a className="dropdown-item" onClick={() => this.handleStatusChange(book, 5)}>Returned</a>
+                                      </span>
                                   </div>
                               </div>
                           </p>
