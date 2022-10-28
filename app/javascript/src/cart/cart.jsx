@@ -49,7 +49,7 @@ export class Cart extends React.Component {
         }))
         .then(handleErrors)
         .then(response => {
-            const stripe = Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
+            const stripe = Stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
 
             stripe.redirectToCheckout({
                 sessionId: response.charge.checkout_session_id,
