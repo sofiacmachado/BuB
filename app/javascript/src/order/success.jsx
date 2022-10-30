@@ -82,7 +82,7 @@ class Success extends React.Component {
                   <div className="">
                       <div
                       className="book-image mb-3"
-                      style={{ backgroundImage: `url(${book.image})` }}
+                      style={{ backgroundImage: `url(${book.image_url})` }}
                       />
                   </div>
                       <div className="">

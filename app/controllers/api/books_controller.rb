@@ -1,5 +1,8 @@
 module Api
     class BooksController < ApplicationController
+
+      include ActiveStorage::SetCurrent
+
       def index
         @books = Book.order(created_at: :desc).page(params[:page]).per(6)
         return render json: { error: 'not_found' }, status: :not_found if !@books

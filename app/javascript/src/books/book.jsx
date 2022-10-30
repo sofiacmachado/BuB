@@ -58,7 +58,7 @@ class Book extends React.Component {
         condition,
         description,
         price,
-        image,
+        image_url,
         user,
         } = book;
 
@@ -74,7 +74,7 @@ class Book extends React.Component {
                     <div className="col col-lg-2 mb-4">
                         <div
                         className="book-image mb-3"
-                        style={{ backgroundImage: `url(${image})` }}
+                        style={{ backgroundImage: `url(${image_url})` }}
                         />
                     </div>
                         <div className="col-6 col-lg-2 mb-4">

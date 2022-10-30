@@ -28,7 +28,7 @@ books = Book.create!([{
     genre: "Classic",
     price: 4,
     rating: 4.08,
-    image: "https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg",
+    image_url: "https://images-na.ssl-images-amazon.com/images/I/41kxGhOH0vL._SX322_BO1,204,203,200_.jpg",
     user: users.first
   },
   {
@@ -45,7 +45,7 @@ books = Book.create!([{
     genre: "Classic",
     price: 8,
     rating: 4.2,
-    image: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg",
+    image_url: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1426930853l/153.jpg",
     user: users.second
   },{
     title: "Crying in H Mart",
@@ -64,7 +64,7 @@ books = Book.create!([{
     genre: "Non-Fiction",
     price: 5,
     rating: 4.3,
-    image: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1601937850l/54814676.jpg",
+    image_url: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1601937850l/54814676.jpg",
     user: users.second
   },{
     title: "Shuggie Bain",
@@ -89,7 +89,7 @@ books = Book.create!([{
     genre: "Fiction",
     price: 5,
     rating: 4.3,
-    image: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1602094778l/52741293._SY475_.jpg",
+    image_url: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1602094778l/52741293._SY475_.jpg",
     user: users.second
   },{
     title: "Envelope Poems",
@@ -108,7 +108,7 @@ books = Book.create!([{
     genre: "Poetry",
     price: 8,
     rating: 4.2,
-    image: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1455903993l/29082576.jpg",
+    image_url: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1455903993l/29082576.jpg",
     user: users.third
   },{
     title: "Portnoy's Complaint",
@@ -128,7 +128,7 @@ books = Book.create!([{
     genre: "Fiction",
     price: 6,
     rating: 3.7,
-    image: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1663597516l/43945._SY475_.jpg",
+    image_url: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1663597516l/43945._SY475_.jpg",
     user: users.first
   },{
     title: "The Corrections",
@@ -149,7 +149,7 @@ books = Book.create!([{
     genre: "Fiction",
     price: 7,
     rating: 3.8,
-    image: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1355011305l/3805.jpg",
+    image_url: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1355011305l/3805.jpg",
     user: users.third
   },
 ])

@@ -10,7 +10,7 @@ class CreateBooks < ActiveRecord::Migration[6.1]
       t.string :condition
       t.string :description
       t.integer :price
-      t.string :image
+      t.string :image_url
       t.integer :order_status, index: true, default: 0
 
       t.belongs_to :user, index: true, foreign_key: true

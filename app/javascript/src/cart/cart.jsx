@@ -26,6 +26,7 @@ export class Cart extends React.Component {
                 loading: false,
             });
         });
+        
     }
 
     submitOrder = (e) => {
@@ -108,7 +109,7 @@ export class Cart extends React.Component {
                                         <div className="col-2 col-lg-4">
                                             <div
                                                 className="book-image my-3"
-                                                style={{ backgroundImage: `url(${book.image})` }}
+                                                style={{ backgroundImage: `url(${book.image_url})` }}
                                             />
                                         </div>
                                         <div className="col-4">

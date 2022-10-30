@@ -61,24 +61,6 @@ class Sales extends React.Component {
     if (loading) {
       return <p>Loading...</p>;
     }
-
-    if (orders.length == 0) {
-      return (
-        <Layout cartItems={cart.length} authenticated={authenticated}>
-          <div className="container mybooks-container">
-            <div className="row">
-              <div className="col-4 mybooks-title">
-                <h4 className="mb-1">Sold Books</h4>
-              </div>
-            </div>
-            <div className="col-12 my-4 ">
-              <p>You haven't sold any books.</p>
-            </div>
-          </div>
-        </Layout>
-      );
-    }
-
     return (
       <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
@@ -87,65 +69,74 @@ class Sales extends React.Component {
               <h4 className="mb-1">Sold Books</h4>
             </div>
           </div>
-          { orders.map((order) => {
-            return (
-              <div className="row mt-4 mb-4">
-                <div className="col col-lg-2 mb-4">
-                  <div
-                    className="book-image mb-3"
-                    style={{ backgroundImage: `url(${order.book.image})` }}
-                  />
-                </div>
-                <div className="col-8 col-lg-4 mb-4">
-                  <h6 className="mb-2 text-uppercase">"{order.book.title}"</h6>
-                  <p className="text-uppercase mb-1 text-secondary">
-                    <small>
-                      <b>{order.book.author}</b>
-                    </small>
-                  </p>
-                  <p className="text-uppercase mb-4 text-secondary">
-                    <small>
-                      <b>ISBN: {order.book.isbn}</b>
-                    </small>
-                  </p>
-                  <p className="text-uppercase mb-4 text-secondary">
-                    <b>Bought by: {order.buyer}</b>
-                  </p>
-                </div>
-                <div className="col-8 col-lg-6 mb-4 d-grid for-sale-container">
-                  <p className="for-sale rounded">
-                    <p className="text-uppercase d-flex justify-content-center mt-4">
-                      Amount: 
+           {orders.length !== 0 ? (
+            orders.map((order) => {
+              return order.books.map((book) => {
+              return (
+                <div className="row mt-4 mb-4">
+                  <div className="col col-lg-2 mb-4">
+                    <div
+                      className="book-image mb-3"
+                      style={{ backgroundImage: `url(${order.book.image_url})` }}
+                    />
+                  </div>
+                  <div className="col-8 col-lg-4 mb-4">
+                    <h6 className="mb-2 text-uppercase">"{order.book.title}"</h6>
+                    <p className="text-uppercase mb-1 text-secondary">
+                      <small>
+                        <b>{order.book.author}</b>
+                      </small>
                     </p>
-                    <span className='price-tag d-flex justify-content-center mb-4'>{order.book.price}$</span>
-                    <span className='d-flex justify-content-center'>Order status: {" "}</span>
-                    <span className="mb-4 text-danger d-flex justify-content-center">
-                      { this.getOrderStatusString(order.status) }
-                    </span>
-                    <div className="dropdown">
-                      <Tooltip title="Let the buyer know how is the order processing" placement="top">
-                        <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Change Order Status
-                        </button>
-                      </Tooltip>
-                      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Unpaid</a>
-                        <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 1)}>Shipping</a>
-                        <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 2)}>Shipped</a>
-                        <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 4)}>Cancelled</a>
-                        <Tooltip title="Only the buyer can complete the order" placement="left">
-                          <span>
-                          <a className="dropdown-item disabled" role="button" aria-disabled="true">Received</a>
-                          <a className="dropdown-item disabled" role="button" aria-disabled="true">Returned</a>
-                          </span>
+                    <p className="text-uppercase mb-4 text-secondary">
+                      <small>
+                        <b>ISBN: {order.book.isbn}</b>
+                      </small>
+                    </p>
+                    <p className="text-uppercase mb-4 text-secondary">
+                      <b>Bought by: {order.buyer}</b>
+                    </p>
+                  </div>
+                  <div className="col-8 col-lg-6 mb-4 d-grid for-sale-container">
+                    <p className="for-sale rounded">
+                      <p className="text-uppercase d-flex justify-content-center mt-4">
+                        Amount: 
+                      </p>
+                      <span className='price-tag d-flex justify-content-center mb-4'>{order.book.price}$</span>
+                      <span className='d-flex justify-content-center'>Order status: {" "}</span>
+                      <span className="mb-4 text-danger d-flex justify-content-center">
+                        { book.order_status }
+                      </span>
+                      <div className="dropdown">
+                        <Tooltip title="Let the buyer know how is the order processing" placement="top">
+                          <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Change Order Status
+                          </button>
                         </Tooltip>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a className="dropdown-item disabled" role="button" aria-disabled="true">Unpaid</a>
+                          <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 1)}>Shipping</a>
+                          <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 2)}>Shipped</a>
+                          <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(order, 4)}>Cancelled</a>
+                          <Tooltip title="Only the buyer can complete the order" placement="left">
+                            <span>
+                            <a className="dropdown-item disabled" role="button" aria-disabled="true">Received</a>
+                            <a className="dropdown-item disabled" role="button" aria-disabled="true">Returned</a>
+                            </span>
+                          </Tooltip>
+                        </div>
                       </div>
-                    </div>
-                  </p>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+          });
+          })
+          ) : (
+            
+            <div className="col-12 my-4 ">
+              <p>You haven't sold any books.</p>
+            </div>
+          )}
         </div>
       </Layout>
     );

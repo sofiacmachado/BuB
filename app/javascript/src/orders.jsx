@@ -83,7 +83,7 @@ class Orders extends React.Component {
                   <div className="col col-lg-2 mb-4">
                       <div
                       className="book-image mb-3"
-                      style={{ backgroundImage: `url(${book.image})` }}
+                      style={{ backgroundImage: `url(${book.image_url})` }}
                       />
                   </div>
                       <div className="col-8 col-lg-4 mb-4">
