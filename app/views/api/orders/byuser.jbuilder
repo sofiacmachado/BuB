@@ -8,6 +8,11 @@ json.orders do
         json.image @order.book.image
         json.seller @order.book.user_id
         json.price @order.book.price
+        if @order.book.image.attached?
+            json.image_url @order.book.image.blob.service_url
+          else
+            json.image_url @order.book.image_url
+        end
     end
 
 end

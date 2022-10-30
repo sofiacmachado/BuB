@@ -89,7 +89,7 @@ class BrowseAuthor extends React.Component {
             return(
               <div key={book.id} className="col-2 mb-4 d-inline-flex justify-content-center">
                 <a href={`/book/${book.id}`} className="text-body text-decoration-none">
-                  <div className="book-image mb-1 rounded" style={{ backgroundImage: `url(${book.image})` }} />
+                  <div className="book-image mb-1 rounded" style={{ backgroundImage: `url(${book.image_url})` }} />
                   <p className="text-uppercase mb-0 text-secondary"><small><b>{book.author}</b></small></p>
                   <h6 className="mb-0">{book.title}</h6>
                   <p className="mb-0"><small>${book.price}</small></p>

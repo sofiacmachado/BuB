@@ -100,7 +100,7 @@ class Edit extends React.Component {
         condition,
         description,
         price,
-        image,
+        image_url,
       } = this.state;
   
       if (e) {

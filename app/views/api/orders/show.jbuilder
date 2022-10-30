@@ -1,7 +1,8 @@
 json.order do
     json.id @order.id
-
     json.books do
+        json.paid @order.paid
+        json.charges @order.charges
         json.array! @order.books do |book|
             json.id book.id
             json.title book.title
@@ -10,14 +11,14 @@ json.order do
             json.image book.image
             json.seller book.user_id
             json.price book.price
-            
-        end
+            if book.image.attached?
+                json.image_url book.image.blob.service_url
+                else
+                json.image_url book.image_url
+            end
+        end 
     end
-
-    json.paid @order.paid
-
     json.user do
         json.username @order.user.username
     end
-    json.charges @order.charges
   end
