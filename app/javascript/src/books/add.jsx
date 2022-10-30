@@ -9,11 +9,113 @@ class Add extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state =   {
-        authenticated: false,
-        cart: [],
+    this.state = {
+      title: "",
+      author: "",
+      isbn: "",
+      genre: "",
+      rating: "",
+      summary: "",
+      condition: "",
+      description: "",
+      price: "",
+      image_url: "",
+      user: "",
+
+      loading: true,
+      authenticated: false,
+      editing: false,
+      cart: []
+    };
+    
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleGenreChange = this.handleGenreChange.bind(this);
+    this.handleIsbnChange = this.handleIsbnChange.bind(this);
+    this.handleSummaryChange = this.handleSummaryChange.bind(this);
+    this.handleConditionChange = this.handleConditionChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+  };
+
+  handleTitleChange = (event) => {
+    this.setState({ title: event.target.value });
+  };
+
+  handleAuthorChange = (event) => {
+    this.setState({ author: event.target.value });
+  };
+
+  handleGenreChange = (event) => {
+    this.setState({ genre: event.target.value });
+  };
+
+  handleIsbnChange = (event) => {
+    this.setState({ isbn: event.target.value });
+  };
+
+  handleConditionChange = (event) => {
+    this.setState({ condition: event.target.value });
+  };
+
+  handleDescriptionChange = (event) => {
+    this.setState({ description: event.target.value });
+  };
+
+  handlePriceChange = (event) => {
+    this.setState({ price: event.target.value });
+  };
+
+  handleSummaryChange = (event) => {
+    this.setState({ summary: event.target.value });
+  };
+
+  submitBook = (e) => {
+    const {
+      title,
+      author,
+      isbn,
+      genre,
+      rating,
+      summary,
+      condition,
+      description,
+      price,
+    } = this.state;
+
+    if (e) {
+      e.preventDefault();
     }
-  }
+
+    
+    let formData = new FormData();
+  
+    formData.set("book[title]", title);
+    formData.set("book[author]", author);
+    formData.set("book[isbn]", isbn);
+    formData.set("book[summary]", summary);
+    formData.set("book[condition]", condition);
+    formData.set("book[description]", description);
+    formData.set("book[genre]", genre);
+    formData.set("book[price]", price);
+    formData.set("book[rating]", rating);
+
+    fetch(
+      `/api/books/add`,
+      safeCredentialsForm({
+        method: "POST",
+        body: formData,
+      })
+    )
+    .then(handleErrors)
+    .then((response) => {
+      console.log(response);
+      window.location = `/book/${response.book.id}`;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  };
 
   componentDidMount() {
     getSessionAndCart()
@@ -58,6 +160,8 @@ class Add extends React.Component {
                       id="inputTitle"
                       placeholder="ex: Black Tulip"
                       maxLength="70"
+                      value={this.state.title}
+                      onChange={this.handleTitleChange}
                       />
                       
                       <label className="label-text" htmlFor="inputAuthor">Author's Name</label>
@@ -73,6 +177,8 @@ class Add extends React.Component {
                       <select
                       id="inputGenre"
                       className="form-control"
+                      onChange={this.handleGenreChange}
+                      value={this.state.genre}
                       >
                       <option hidden className='light'>Select an Option</option> 
                       <option>Classic</option>
@@ -88,6 +194,8 @@ class Add extends React.Component {
                           className="form-control"
                           id="inputIsbn"
                           placeholder="ex: 9789725647417"
+                          onChange={this.handleIsbnChange}
+                          value={this.state.isbn}
                           />
 
                       <label className="label-text" htmlFor="inputSummary">Summary</label>
@@ -98,6 +206,8 @@ class Add extends React.Component {
                       id="inputSummary"
                       placeholder="ex: Cornelius von Baerle, a respectable tulip-grower, lives only to cultivate the elusive black tulip and win a magnificent prize for its creation. But after his powerful godfat..."
                       maxLength="2000"
+                      onChange={this.handleSummaryChange}
+                      value={this.state.summary}
                       />
                       
                   </div>
@@ -108,6 +218,8 @@ class Add extends React.Component {
                       className="form-control"
                       id="inputPrice"
                       placeholder="ex: 9 $"
+                      onChange={this.handlePriceChange}
+                      value={this.state.price}
                       />
 
                       <label className="label-text" htmlFor="inputBookCondition">Book's Condition</label>
@@ -115,6 +227,8 @@ class Add extends React.Component {
                       id="inputBookCondition"
                       className="form-control"
                       type="text"
+                      onChange={this.handleConditionChange}
+                      value={this.state.condition}
                       >
                       <option hidden className='light'>Select an Option</option> 
                       <option>New</option>
@@ -132,6 +246,8 @@ class Add extends React.Component {
                       id="inputDescription"
                       placeholder="ex: Read once, corners are a little bent"
                       maxLength="200"
+                      onChange={this.handleDescriptionChange}
+                      value={this.state.description}
                       />
                       
                       
