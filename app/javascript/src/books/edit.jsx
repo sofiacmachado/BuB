@@ -10,12 +10,25 @@ class Edit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: "",
+      author: "",
+      isbn: "",
+      genre: "",
+      rating: "",
+      summary: "",
+      condition: "",
+      description: "",
+      price: "",
+      image_url: "",
+      user: "",
+
       loading: true,
       authenticated: false,
-      book: {},
+      editing: false,
       cart: []
     };
 
+    this.cancelEdit = this.cancelEdit.bind(this);
     this.removeBook = this.removeBook.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
@@ -26,6 +39,11 @@ class Edit extends React.Component {
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
   }
+
+  cancelEdit = (e) => {
+    e.preventDefault();
+    this.setState({ editing: false });
+  };
   
   handleTitleChange = (event) => {
     this.setState({ title: event.target.value });
@@ -64,19 +82,31 @@ class Edit extends React.Component {
     .then(data => {
       this.setState({
         authenticated: data.authenticated,
-        cart: data.cart,
+        book: data.book,
       });
     });
-
+/* 
     const url_parts = window.location.href.split('/');
     const book_id = +url_parts[url_parts.length - 1];
-
-    fetch(`/api/books/${book_id}`)
+ */
+    fetch(`/api/books/${this.props.book_id}`)
     .then(handleErrors)
     .then(data => {
       this.setState({
-        book: data.book,
         loading: false,
+
+        id: data.book.id,
+        title: data.book.title,
+        author: data.book.author,
+        isbn: data.book.isbn,
+        genre: data.book.genre,
+        rating: data.book.rating,
+        summary: data.book.summary,
+        condition: data.book.condition,
+        description: data.book.description,
+        price: data.book.price,
+        image_url: data.book.image_url,
+        user: data.book.user,
       });
     });
   }
@@ -89,29 +119,27 @@ class Edit extends React.Component {
       formData.append("book[image]", this.state.image.files[i]);
     } */
 
-    updateBook = (e) => {
-      const {
-        title,
-        author,
-        isbn,
-        genre,
-        rating,
-        summary,
-        condition,
-        description,
-        price,
-        image_url,
-      } = this.state;
-  
-      if (e) {
-        e.preventDefault();
-      }
-  
-      let formData = new FormData();
-  
+  updateBook = (e) => {
+    const {
+      title,
+      author,
+      isbn,
+      genre,
+      rating,
+      summary,
+      condition,
+      description,
+      price,
+    } = this.state;
 
+    if (e) {
+      e.preventDefault();
+    }
+
+    let formData = new FormData();
+  
     formData.set("book[title]", title);
-    formData.set("book[auhtor]", auhtor);
+    formData.set("book[author]", author);
     formData.set("book[isbn]", isbn);
     formData.set("book[summary]", summary);
     formData.set("book[condition]", condition);
@@ -288,7 +316,7 @@ class Edit extends React.Component {
                       accept="image/*"
                     />
                 </div>
-                <button type="submit" className="btn btn-primary mb-2">
+                <button type="submit" className="btn btn-primary mb-2" onClick={((e) => e, this.editMode)}>
                     Update book 
                 </button>
                 <button className="btn btn-danger mb-2"
@@ -296,7 +324,7 @@ class Edit extends React.Component {
                 >
                     Remove book
                 </button>
-                <a href={`/mybooks`} 
+                <a href={`/book/${book.id}`} 
                     className="btn btn-outline-secondary mb-2">
                     Cancel
                 </a>
