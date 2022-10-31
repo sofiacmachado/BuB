@@ -4,6 +4,7 @@ import { Layout } from '../layout';
 import './add.scss';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import { getSessionAndCart } from "../cart_api.js";
+import { handleErrors, safeCredentialsForm } from '../utils/fetchHelper';
 
 class Add extends React.Component {
 
@@ -34,6 +35,7 @@ class Add extends React.Component {
     this.handleIsbnChange = this.handleIsbnChange.bind(this);
     this.handleSummaryChange = this.handleSummaryChange.bind(this);
     this.handleConditionChange = this.handleConditionChange.bind(this);
+    this.handleRatingChange = this.handleRatingChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
   };
@@ -58,6 +60,9 @@ class Add extends React.Component {
     this.setState({ condition: event.target.value });
   };
 
+  handleRatingChange = (event) => {
+    this.setState({ rating: event.target.value });
+  };
   handleDescriptionChange = (event) => {
     this.setState({ description: event.target.value });
   };
@@ -69,6 +74,16 @@ class Add extends React.Component {
   handleSummaryChange = (event) => {
     this.setState({ summary: event.target.value });
   };
+  
+  componentDidMount() {
+    getSessionAndCart()
+    .then(data => {
+      this.setState({
+        authenticated: data.authenticated,
+        cart: data.cart,
+      });
+    });
+  }
 
   submitBook = (e) => {
     const {
@@ -86,9 +101,14 @@ class Add extends React.Component {
     if (e) {
       e.preventDefault();
     }
-
     
     let formData = new FormData();
+
+    var image = document.getElementById("addPhoto");
+
+    for (let i = 0; i < image.files.length; i++) {
+      formData.append("book[image]", image.files[i]);
+    }
   
     formData.set("book[title]", title);
     formData.set("book[author]", author);
@@ -101,7 +121,7 @@ class Add extends React.Component {
     formData.set("book[rating]", rating);
 
     fetch(
-      `/api/books/add`,
+      `/api/mybooks/add`,
       safeCredentialsForm({
         method: "POST",
         body: formData,
@@ -117,15 +137,7 @@ class Add extends React.Component {
     });
   };
 
-  componentDidMount() {
-    getSessionAndCart()
-    .then(data => {
-      this.setState({
-        authenticated: data.authenticated,
-        cart: data.cart,
-      });
-    });
-  }
+
 
   render() {
     const { cart, authenticated } = this.state;
@@ -171,10 +183,13 @@ class Add extends React.Component {
                       id="inputAuthor"
                       placeholder="ex: Alexandre Dumas"
                       maxLength="70"
+                      onChange={this.handleAuthorChange}
+                      value={this.state.author}
                       />
 
                       <label className="label-text" htmlFor="inputGenre">Genre</label>
                       <select
+                      type='text'
                       id="inputGenre"
                       className="form-control"
                       onChange={this.handleGenreChange}
@@ -238,6 +253,22 @@ class Add extends React.Component {
                       <option>Refurbished</option>
                       </select>
 
+                      <label className="label-text" htmlFor="inputRating">Rating</label>
+                      <select
+                      id="inputRating"
+                      className="form-control"
+                      type="number"
+                      onChange={this.handleRatingChange}
+                      value={this.state.rating}
+                      >
+                      <option hidden className='light'>Select an Option</option> 
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      </select>
+
                       <label className="label-text" htmlFor="inputDescription">Detailed Condition</label>
                       <textarea
                       type="text"
@@ -277,6 +308,8 @@ class Add extends React.Component {
 
 
 ReactDOM.render(
-    <Add />,
+  <React.StrictMode>
+  <Add />
+</React.StrictMode>,
   document.body.appendChild(document.createElement("div"))
   );

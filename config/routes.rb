@@ -21,12 +21,13 @@ Rails.application.routes.draw do
   namespace :api do    
     resources :users, only: [:create]
     resources :sessions, only: [:create, :destroy]
-    resources :books, only: [:index, :show, :add, :update, :destroy]
+    resources :books, only: [:index, :show, :add, :mybooks, :update, :destroy]
     resources :orders, only: [:create, :index, :show, :byuser]
     resources :charges, only: [:create]
 
     get '/authenticated' => 'sessions#authenticated'
     delete '/session' => 'sessions#destroy'
+    post '/mybooks/add' => 'books#add'
 
     get '/cart' => 'carts#show'
     get '/cart/details' => 'carts#show_detailed'

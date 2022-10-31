@@ -9,7 +9,7 @@ json.orders do
         json.title book.title
         json.author book.author
         json.isbn book.isbn
-        json.image book.image
+        json.image_url book.image_url
         json.seller book.user_id
         json.price book.price
       end
