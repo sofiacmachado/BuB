@@ -106,18 +106,18 @@ export class Cart extends React.Component {
                             {cart.map((book) => (
                                 <div key={book.id} className="latestbook text-body text-decoration-none">
                                     <div className="row mt-4 mb-4 row-item">
-                                        <div className="col-2 col-lg-4">
+                                        <a href={`/book/${book.id}`} className="col-2 col-lg-4 anchor">
                                             <div
                                                 className="book-image my-3"
                                                 style={{ backgroundImage: `url(${book.image_url})` }}
                                             />
-                                        </div>
-                                        <div className="col-4">
+                                        </a>
+                                        <a href={`/book/${book.id}`} className="col-4 anchor">
                                             <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
                                             <p className="text-uppercase mb-1 text-secondary">
                                                 <small><b>{book.author}</b></small>
                                             </p>
-                                        </div>
+                                        </a>
                                         <div className="col-2">
                                             <p className="price-tag">${book.price}</p>
                                         </div>

@@ -6,6 +6,10 @@ json.cart do
         json.title book.title
         json.author book.author
         json.price book.price
-        json.image_url book.image_url
+        if book.image.attached?
+            json.image_url book.image.blob.service_url
+          else
+            json.image_url book.image_url
+          end
     end
 end
