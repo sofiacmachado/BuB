@@ -22,6 +22,8 @@ module Api
       #  book.save!
       #end
 
+      @session.cart.books.delete_all
+
       render 'api/orders/create', status: :created
     end
 
