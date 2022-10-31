@@ -1,8 +1,8 @@
 json.order do
     json.id @order.id
+    json.paid @order.paid
+    json.charges @order.charges
     json.books do
-        json.paid @order.paid
-        json.charges @order.charges
         json.array! @order.books do |book|
             json.id book.id
             json.title book.title
