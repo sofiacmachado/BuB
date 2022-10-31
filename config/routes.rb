@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     delete '/session' => 'sessions#destroy'
     post '/mybooks/add' => 'books#add'
 
+    get '/sales' => 'books#my_sales'
     get '/cart' => 'carts#show'
     get '/cart/details' => 'carts#show_detailed'
     post '/cart/:id' => 'carts#add_book'

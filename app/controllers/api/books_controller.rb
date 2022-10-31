@@ -20,15 +20,16 @@ module Api
         render 'api/books/show', status: :ok
       end
 
-      def mybooks
+      def my_sales
         token = cookies.signed[:bub_session_token]
         session = Session.find_by(token: token)
         return render json: { error: 'user is not logged in'}, status: :unauthorized if !session
 
-        @books = Book.where(user_id: session.user.id)
+        @books = Book.where(user_id: session.user.id).where.not(order_id: nil)
         return render json: {error: 'no books found'}, status: :not_found if !@books
+        @books = Book.order(created_at: :desc).page(0).per(6)
 
-        render 'api/books/mybooks'
+        render 'api/books/sales', status: :ok
       end
 
       def add 
@@ -39,7 +40,7 @@ module Api
         begin
           puts params[:book][:title]
             @book = Book.create!({user_id: session.user.id, title: params[:book][:title], author: params[:book][:author], isbn: params[:book][:isbn], genre: params[:book][:genre], rating: params[:book][:rating], summary: params[:book][:summary], condition: params[:book][:condition], description: params[:book][:description], price: params[:book][:price], image: params[:book][:image] })
-
+          
             render 'api/books/add', status: :created
         rescue ArgumentError => e
             render json: {error: e.message}, status: :bad_request 

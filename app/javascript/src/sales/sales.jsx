@@ -45,18 +45,18 @@ class Sales extends React.Component {
       });
     });
 
-    fetch('/api/orders')
+    fetch('/api/sales')
     .then(handleErrors)
     .then(data => {
       this.setState({
         loading: false,
-        orders: data.orders,
+        books: data.books,
       });
     });
   }
 
   render() {    
-    const {orders, cart, authenticated, loading } = this.state; 
+    const {books, cart, authenticated, loading } = this.state; 
 
     if (loading) {
       return <p>Loading...</p>;
@@ -69,31 +69,30 @@ class Sales extends React.Component {
               <h4 className="mb-1">Sold Books</h4>
             </div>
           </div>
-           {orders.length !== 0 ? (
-            orders.map((order) => {
-              return order.books.map((book) => {
+           {books.length !== 0 ? (
+            books.map((book) => {
               return (
                 <div className="row mt-4 mb-4">
                   <div className="col col-lg-2 mb-4">
                     <div
                       className="book-image mb-3"
-                      style={{ backgroundImage: `url(${order.book.image_url})` }}
+                      style={{ backgroundImage: `url(${book.image_url})` }}
                     />
                   </div>
                   <div className="col-8 col-lg-4 mb-4">
-                    <h6 className="mb-2 text-uppercase">"{order.book.title}"</h6>
+                    <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
                     <p className="text-uppercase mb-1 text-secondary">
                       <small>
-                        <b>{order.book.author}</b>
+                        <b>{book.author}</b>
                       </small>
                     </p>
                     <p className="text-uppercase mb-4 text-secondary">
                       <small>
-                        <b>ISBN: {order.book.isbn}</b>
+                        <b>ISBN: {book.isbn}</b>
                       </small>
                     </p>
                     <p className="text-uppercase mb-4 text-secondary">
-                      <b>Bought by: {order.buyer}</b>
+                      <b>Bought by: {book.buyer}</b>
                     </p>
                   </div>
                   <div className="col-8 col-lg-6 mb-4 d-grid for-sale-container">
@@ -101,7 +100,7 @@ class Sales extends React.Component {
                       <p className="text-uppercase d-flex justify-content-center mt-4">
                         Amount: 
                       </p>
-                      <span className='price-tag d-flex justify-content-center mb-4'>{order.book.price}$</span>
+                      <span className='price-tag d-flex justify-content-center mb-4'>{book.price}$</span>
                       <span className='d-flex justify-content-center'>Order status: {" "}</span>
                       <span className="mb-4 text-danger d-flex justify-content-center">
                         { book.order_status }
@@ -129,8 +128,7 @@ class Sales extends React.Component {
                   </div>
                 </div>
               );
-          });
-          })
+            })
           ) : (
             
             <div className="col-12 my-4 ">
