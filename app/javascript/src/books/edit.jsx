@@ -4,7 +4,7 @@ import  { Layout } from '../layout';
 import './add.scss';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import { getSessionAndCart } from "../cart_api.js";
-import { handleErrors } from '../utils/fetchHelper';
+import { handleErrors, safeCredentialsForm } from '../utils/fetchHelper';
 
 class Edit extends React.Component {
   constructor(props) {
