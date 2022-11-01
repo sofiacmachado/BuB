@@ -151,7 +151,7 @@ class Edit extends React.Component {
 
 
   fetch(
-    `/api/books/${this.state.book_id}/update/`,
+    `/api/books/${this.state.book_id}`,
     safeCredentialsForm({
       method: "PUT",
       body: formData,
