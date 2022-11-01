@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
 
   get '/login' => 'static_pages#login'
-  get '/mybooks' => 'static_pages#mybooks'
   get '/mybooks/add' => 'static_pages#add'
   get '/book/:id' => 'static_pages#book'
   get 'mybooks/edit/:id' => 'static_pages#edit'
@@ -13,6 +12,7 @@ Rails.application.routes.draw do
   get '/orders/:id/success' => 'static_pages#success'
   get '/sales' => 'static_pages#sales'
   get '/orders' => 'static_pages#orders'
+  get '/mybooks' => 'static_pages#mybooks'
   get '/cart' => 'static_pages#cart'
   
   get '/browse_author' => 'static_pages#browse_author'
@@ -21,13 +21,14 @@ Rails.application.routes.draw do
   namespace :api do    
     resources :users, only: [:create]
     resources :sessions, only: [:create, :destroy]
-    resources :books, only: [:index, :show, :add, :mybooks, :update, :destroy]
+    resources :books, only: [:index, :show, :add, :update, :destroy]
     resources :orders, only: [:create, :index, :show, :byuser]
     resources :charges, only: [:create]
 
     get '/authenticated' => 'sessions#authenticated'
     delete '/session' => 'sessions#destroy'
     post '/mybooks/add' => 'books#add'
+    get '/mybooks' => 'books#my_books'
 
     get '/sales' => 'books#my_sales'
     get '/cart' => 'carts#show'

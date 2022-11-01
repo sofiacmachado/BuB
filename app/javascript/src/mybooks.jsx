@@ -2,17 +2,18 @@ import React from 'react';
 import { Layout } from './layout';
 import ReactDOM from 'react-dom';
 import './mybooks.scss'
-import data from "./data.js";
 import { getSessionAndCart } from "./cart_api.js";
+import { handleErrors, safeCredentials } from "./utils/fetchHelper";
+
 
 class Mybooks extends React.Component {
     
     constructor(props) {
         super(props);
         this.state =   {
-            authenticated: false,
-            editing: false,
             cart: [],
+            books: [],
+            authenticated: false,
         }
     }
     
@@ -23,14 +24,19 @@ class Mybooks extends React.Component {
             this.setState({
                 authenticated: data.authenticated,
                 cart: data.cart,
-                editing: false,
             });
         });
+        fetch('/api/mybooks/')
+        .then(handleErrors)
+          .then(data => {
+            this.setState({
+              books: data.books,
+            })
+          })
     }
 
     render() {
-        const { cart, authenticated } = this.state;
-        const book = data;
+        const { cart, authenticated, books } = this.state;
 
         if (authenticated === false) {
             return (
@@ -72,63 +78,65 @@ class Mybooks extends React.Component {
                             </a>
                         </div>
                     </div>
-                    <div key={book.id} className="row mt-4 mb-4">
-                        {book.map((book) => {
+                    <div className="row mt-4 mb-4">
+                        {books.map((book) => {
                             return(
-                                <a href={`/book/${book.id}`} className="latestbook text-body text-decoration-none">
-                                    <div className="row mt-4 mb-4">
-                                    <div className="col col-lg-2 mb-4">
-                                        <div
-                                        className="book-image mb-3"
-                                        style={{ backgroundImage: `url(${book.image_url})` }}
-                                        />
-                                    </div>
-                                        <div className="col-6 col-lg-2 mb-4">
-                                        <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
-                                        <p className="text-uppercase mb-1 text-secondary">
-                                            <small>
-                                            <b>{book.author}</b>
-                                            </small>
-                                        </p>
-                                        <p className="text-uppercase mb-4 text-secondary">
-                                            <small>
-                                            <b>{book.genre}</b>
-                                            </small>
-                                        </p>
-                                        <p className="text-uppercase mb-4 text-secondary">
-                                            <small>
-                                            <b>ISBN: {book.isbn}</b>
-                                            </small>
-                                        </p>
-                                        <p className="text-uppercase mb-4 price-tag-title">
-                                            Price: <span className='price-tag'>{book.price}$</span>
-                                            </p>
+                                <div key={book.id}>
+                                    <a href={`/book/${book.id}`} className="latestbook text-body text-decoration-none">
+                                        <div className="row mt-4 mb-4">
+                                        <div className="col col-lg-2 mb-4">
+                                            <div
+                                            className="book-image mb-3"
+                                            style={{ backgroundImage: `url(${book.image_url})` }}
+                                            />
                                         </div>
-                                        <div className="col-8 col-lg-6 mb-4 third-column">
-                                        <small className="text-secondary">Book's condition:</small>
-                                        <p className="text-secondary condition">
-                                            {book.condition}
-                                        </p>
-                                        <small className="text-secondary">Detailed Condition:</small>
-                                        <p className="text-secondary condition">
-                                            {book.description}
-                                        </p>
-                                        <p className="mb-0 text-secondary">
-                                            {book.summary}
-                                        </p>
-                                        </div>
-                                        <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
-                                            <p className="for-sale rounded">
-                                                For Sale
+                                            <div className="col-6 col-lg-2 mb-4">
+                                            <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
+                                            <p className="text-uppercase mb-1 text-secondary">
+                                                <small>
+                                                <b>{book.author}</b>
+                                                </small>
                                             </p>
-                                            <a href={`mybooks/edit/${book.id}`} 
-                                            className="btn btn-edit  mt-3"
-                                            >
-                                            Edit book
-                                            </a>
-                                    </div>
-                                    </div>
-                                </a>
+                                            <p className="text-uppercase mb-4 text-secondary">
+                                                <small>
+                                                <b>{book.genre}</b>
+                                                </small>
+                                            </p>
+                                            <p className="text-uppercase mb-4 text-secondary">
+                                                <small>
+                                                <b>ISBN: {book.isbn}</b>
+                                                </small>
+                                            </p>
+                                            <p className="text-uppercase mb-4 price-tag-title">
+                                                Price: <span className='price-tag'>{book.price}$</span>
+                                                </p>
+                                            </div>
+                                            <div className="col-8 col-lg-6 mb-4 third-column">
+                                            <small className="text-secondary">Book's condition:</small>
+                                            <p className="text-secondary condition">
+                                                {book.condition}
+                                            </p>
+                                            <small className="text-secondary">Detailed Condition:</small>
+                                            <p className="text-secondary condition">
+                                                {book.description}
+                                            </p>
+                                            <p className="mb-0 text-secondary">
+                                                {book.summary}
+                                            </p>
+                                            </div>
+                                            <div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
+                                                <p className="for-sale rounded">
+                                                    For Sale
+                                                </p>
+                                                <a href={`mybooks/edit/${book.id}`} 
+                                                className="btn btn-edit  mt-3"
+                                                >
+                                                Edit book
+                                                </a>
+                                        </div>
+                                        </div>
+                                    </a>
+                                </div>
                             )})}
                     </div>
                     <hr />
