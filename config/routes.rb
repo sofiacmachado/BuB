@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     get '/authenticated' => 'sessions#authenticated'
     delete '/session' => 'sessions#destroy'
     post '/mybooks/add' => 'books#add'
+
     get '/mybooks' => 'books#my_books'
 
     get '/sales' => 'books#my_sales'
@@ -37,7 +38,9 @@ Rails.application.routes.draw do
     delete '/cart/:id' => 'carts#remove_book'
     delete '/cart' => 'carts#destroy'
     put '/orders/book/:id' => 'books#update_buyer_status'
+    put '/books/:id/update/' => 'books#update'
 
+    
     # stripe webhook
     post '/charges/mark_complete' => 'charges#mark_complete'
   end
