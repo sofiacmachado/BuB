@@ -50,12 +50,12 @@ module Api
 
       def update 
         begin
-            user = @user
-            @book = user.books.find_by(id: params[:id])
-            
-            return render json: { error: 'not_found' }, status: :not_found if not @book
-            return render json: { error: 'bad_request' }, status: :bad_request if not @book.update(book_params)
-            render 'api/books/show', status: :ok
+          @book = @user.books.find(params[:id])
+          return render json: { error: 'not_found' }, status: :not_found if not @book
+          return render json: { error: 'unauthorized' }, status: :unauthorized if not @book.order.nil?
+          return render json: { error: 'bad_request' }, status: :bad_request if not @book.update(book_params)
+          
+          render 'api/books/show', status: :ok
         rescue ArgumentError => e
             render json: {error: e.message}, status: :bad_request 
         end
@@ -93,14 +93,13 @@ module Api
         book = Book.find_by(id: params[:id])
   
         if book
-         # orders = Order.where(book_id:book.id)
-          #orders.each do |b|
-           # Charge.where(order_id:b.id).destroy_all
-            #b.destroy
-          #end
+          if !book.order.nil?
+            return render json: { error: 'unauthorized' }, status: :unauthorized
+          end
           book.destroy
-          render json: { success: true }, status: :ok
+          return render json: { success: true }, status: :ok
         end
+        render json: { error: 'not found' }, status: :not_found
       end
 
       private
