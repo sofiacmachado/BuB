@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Layout } from './layout';
 import "./orders.scss";
 import { getSessionAndCart } from "./cart_api.js";
-import { handleErrors } from "./utils/fetchHelper";
+import { handleErrors, safeCredentials } from "./utils/fetchHelper";
 
 import Tooltip from "@material-ui/core/Tooltip";
 
@@ -18,26 +18,23 @@ class Orders extends React.Component {
     }
     
     this.handleStatusChange = this.handleStatusChange.bind(this);
-    this.getOrderStatusString = this.getOrderStatusString.bind(this);
   }
 
-  getOrderStatusString(status) {
-    switch (status) {
-      case 0: return 'Unpaid';
-      case 1: return 'Shipping';
-      case 2: return 'Shipped';
-      case 3: return 'Received';
-      case 4: return 'Cancelled';
-      case 5: return 'Returned';
-      default: return 'Unknown';
-    }
-  }
   
   handleStatusChange(book, status) {
-    book.order_status =  this.getOrderStatusString(status);
-    console.log(book.order_status);
-    this.forceUpdate();
-    //this.setState({ sold_books: this.state.sold_books });
+    book.order_status = status;
+    fetch(`/api/orders/book/${book.id}`, safeCredentials({
+      method: "PUT",
+      body: JSON.stringify({
+        book: {
+          order_status: book.order_status
+        }
+      })
+    }))
+    .then(handleErrors)
+    .then(() => {
+      this.forceUpdate();
+    });
   }
 
   componentDidMount() {
@@ -58,6 +55,10 @@ class Orders extends React.Component {
       });
     });
   }
+
+ /*  titleCase(str) {
+    return str.replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });
+  } */
 
   render() {
     const { orders, cart, authenticated, loading } = this.state;
@@ -119,24 +120,16 @@ class Orders extends React.Component {
                                   <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <Tooltip title="Only the seller can change to this status before completion" placement="left">
                                       <span>
-                                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Shipping</a>
+                                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Ordered</a>
                                         </span>
                                     </Tooltip>
                                     <Tooltip title="Only the seller can change to this status before completion" placement="left">
                                       <span>
-                                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Shipped</a>
+                                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Shipping</a>
                                       </span>  
                                     </Tooltip>
-                                    <Tooltip title="Only the seller can change to this status before completion" placement="left">
                                       <span>
-                                        <a className="dropdown-item disabled" role="button" aria-disabled="true">Cancelled</a>
-                                        </span>
-                                    </Tooltip>
-                                      <span>
-                                        <a className="dropdown-item" onClick={() => this.handleStatusChange(book, 3)}>Received</a>
-                                      </span>
-                                      <span>
-                                        <a className="dropdown-item" onClick={() => this.handleStatusChange(book, 5)}>Returned</a>
+                                        <a className="dropdown-item" onClick={() => this.handleStatusChange(book, "Received")}>Received</a>
                                       </span>
                                   </div>
                               </div>

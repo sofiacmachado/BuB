@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     post '/cart/:id' => 'carts#add_book'
     delete '/cart/:id' => 'carts#remove_book'
     delete '/cart' => 'carts#destroy'
+    put '/orders/book/:id' => 'books#update_buyer_status'
 
     # stripe webhook
     post '/charges/mark_complete' => 'charges#mark_complete'
