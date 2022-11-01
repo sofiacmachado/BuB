@@ -71,7 +71,7 @@ export class Layout extends React.Component {
                                         <a href="/mybooks" className="nav--link">Sell</a>
                                     </li>
                                     <li className="nav-item dropdown">
-                                            <a href="" className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <a href="/browse_title" onClick={this.handleBrowseTitle} className="nav--link dropbtn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Buy <i className="fa fa-caret-down"></i>
                                             </a>
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -99,7 +99,7 @@ export class Layout extends React.Component {
                                                 )}</a></li>
                                                 <li className="dropdown-item"><a href="/orders" className="nav--link">Orders</a></li>
                                                 <li className="dropdown-item"><a href="/sales" className="nav--link">Sales</a></li>
-                                                <li className="dropdown-item"><a href="/mybooks" className="nav--link">Your Books</a></li>
+                                                <li className="dropdown-item"><a href="/mybooks" className="nav--link">My Books</a></li>
                                             </ul>
                                     </li>) : ('')}
                                     {!authenticated ?

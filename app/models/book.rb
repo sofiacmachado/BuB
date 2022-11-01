@@ -13,7 +13,7 @@ class Book < ApplicationRecord
   validates :author, presence: true, length: { maximum: 70 }
   validates :isbn, presence: true, numericality: { only_integer: true }
   validates :genre, presence: true
-  validates :rating, presence: true, numericality: { less_than: 5 }
+  validates :rating, presence: true, numericality: { less_than: 6 }
   validates :summary, presence: true, length: { maximum: 2000 }
   validates :condition, presence: true
   validates :description, presence: true, length: { maximum: 800 }
