@@ -110,7 +110,7 @@ class Orders extends React.Component {
                           </p>
                           <span className='price-tag d-flex justify-content-center mb-4'>{book.price}$</span>
                               <span className='d-flex justify-content-center'>Order status:{" "}</span>
-                              <span className="mb-4 text-danger d-flex justify-content-center">{ book.order_status }</span>
+                              <span className="mb-2 text-danger d-flex justify-content-center">{ book.order_status }</span>
                               <div className="dropdown">
                                   <Tooltip title="Tell the seller that your order has arrived" placement="top">
                                     <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
