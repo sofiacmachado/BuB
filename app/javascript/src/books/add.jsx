@@ -76,6 +76,15 @@ class Add extends React.Component {
   };
   
   componentDidMount() {
+    fetch(`/api/books/${this.props.book_id}`)
+    .then(handleErrors)
+    .then(data => {
+      this.setState({
+        book: data.book,
+        loading: false,
+      });
+    });
+    
     getSessionAndCart()
     .then(data => {
       this.setState({

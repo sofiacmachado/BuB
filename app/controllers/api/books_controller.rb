@@ -50,7 +50,7 @@ module Api
 
       def update 
         begin
-            user = session.user
+            user = @user
             @book = user.books.find_by(id: params[:id])
             
             return render json: { error: 'not_found' }, status: :not_found if not @book
@@ -93,11 +93,11 @@ module Api
         book = Book.find_by(id: params[:id])
   
         if book
-          orders = Order.where(book_id:book.id)
-          orders.each do |b|
-            Charge.where(order_id:b.id).destroy_all
-            b.destroy
-          end
+         # orders = Order.where(book_id:book.id)
+          #orders.each do |b|
+           # Charge.where(order_id:b.id).destroy_all
+            #b.destroy
+          #end
           book.destroy
           render json: { success: true }, status: :ok
         end

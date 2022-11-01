@@ -9,6 +9,8 @@ import { handleErrors, safeCredentialsForm } from '../utils/fetchHelper';
 class Edit extends React.Component {
   constructor(props) {
     super(props);
+    const url_parts = window.location.href.split('/');
+    const book_id = +url_parts[url_parts.length - 1];
     this.state = {
       title: "",
       author: "",
@@ -21,6 +23,7 @@ class Edit extends React.Component {
       price: "",
       image_url: "",
       user: "",
+      book_id: book_id,
 
       loading: true,
       authenticated: false,
@@ -82,18 +85,16 @@ class Edit extends React.Component {
     .then(data => {
       this.setState({
         authenticated: data.authenticated,
-        book: data.book,
+        cart: data.cart,
       });
     });
-/* 
-    const url_parts = window.location.href.split('/');
-    const book_id = +url_parts[url_parts.length - 1];
- */
-    fetch(`/api/books/${this.props.book_id}`)
+ 
+    fetch(`/api/books/${this.state.book_id}`)
     .then(handleErrors)
     .then(data => {
       this.setState({
         loading: false,
+        book: data.book,
 
         id: data.book.id,
         title: data.book.title,
@@ -148,8 +149,9 @@ class Edit extends React.Component {
     formData.set("book[price]", price);
     formData.set("book[rating]", rating);
 
+
   fetch(
-    `/api/books/${this.props.book_id}/update/`,
+    `/api/books/${this.state.book_id}/update/`,
     safeCredentialsForm({
       method: "PUT",
       body: formData,
@@ -158,7 +160,7 @@ class Edit extends React.Component {
     .then(handleErrors)
     .then((response) => {
       console.log(response);
-      window.location = `/book/${response.book.id}`;
+      window.location = `/mybooks`;
     })
     .catch((error) => {
       console.log(error);
@@ -167,7 +169,7 @@ class Edit extends React.Component {
 
   removeBook = (e) => {
     e.preventDefault(); 
-    fetch(`/api/books/${this.props.book_id}`, {
+    fetch(`/api/books/${this.state.book_id}`, {
       method: 'DELETE',
     })
     .then(handleErrors)
@@ -213,7 +215,7 @@ class Edit extends React.Component {
                         className="form-control"
                         id="inputTitle"
                         placeholder={book.title}
-                        value={book.title}
+                        value={this.state.title}
                         onChange={this.handleTitleChange}
                         maxLength="70"
                     />
@@ -225,7 +227,7 @@ class Edit extends React.Component {
                         id="inputAuthor"
                         placeholder={book.author}
                         onChange={this.handleAuthorChange}
-                        value={book.author}
+                        value={this.state.author}
                         maxLength="70"
                     />
 
@@ -247,7 +249,7 @@ class Edit extends React.Component {
                         id="inputIsbn"
                         placeholder={book.isbn}
                         onChange={this.handleIsbnChange}
-                        value={book.isbn}
+                        value={this.state.isbn}
                         maxLength="200"
                     />
 
@@ -259,7 +261,7 @@ class Edit extends React.Component {
                         id="inputSummary"
                         placeholder={book.summary}
                         onChange={this.handleSummaryChange}
-                        value={book.summary}
+                        value={this.state.summary}
                         maxLength="2000"
                     />
                   
@@ -274,7 +276,7 @@ class Edit extends React.Component {
                         id="inputPrice"
                         placeholder={`$${book.price}`}
                         onChange={this.handlePriceChange}
-                        value={book.price}
+                        value={this.state.price}
                         maxLength="200"
                     />
 
@@ -285,7 +287,7 @@ class Edit extends React.Component {
                         id="inputCondition"
                         className="form-control"
                         onChange={this.handleConditionChange}
-                        value={book.condition}
+                        value={this.state.condition}
                     >
                         <option>New</option>
                         <option>Used</option>
@@ -300,7 +302,7 @@ class Edit extends React.Component {
                         id="inputDescription"
                         placeholder={book.description}
                         onChange={this.handleDescriptionChange}
-                        value={book.description}
+                        value={this.state.description}
                         maxLength="800"
                     />
                     
@@ -324,7 +326,7 @@ class Edit extends React.Component {
                 >
                     Remove book
                 </button>
-                <a href={`/book/${book.id}`} 
+                <a href={`/mybooks`} 
                     className="btn btn-outline-secondary mb-2">
                     Cancel
                 </a>
