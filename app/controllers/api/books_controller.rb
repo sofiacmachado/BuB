@@ -27,7 +27,7 @@ module Api
 
         @books = Book.where(user_id: session.user.id).where.not(order_id: nil)
         return render json: {error: 'no books found'}, status: :not_found if !@books
-        @books = Book.order(created_at: :desc).page(0).per(6)
+        @books = @books.order(created_at: :desc).page(0).per(6)
 
         render 'api/books/sales', status: :ok
       end
@@ -57,16 +57,46 @@ module Api
             user = session.user
             @book = user.books.find_by(id: params[:id])
             
-            return render 'not_found', status: :not_found if not @book
-            return render 'bad_request', status: :bad_request if not @book.update(book_params)
-            render 'api/book/show', status: :ok
+            return render json: { error: 'not_found' }, status: :not_found if not @book
+            return render json: { error: 'bad_request' }, status: :bad_request if not @book.update(book_params)
+            render 'api/books/show', status: :ok
         rescue ArgumentError => e
             render json: {error: e.message}, status: :bad_request 
         end
     end
 
+    def update_buyer_status
+      token = cookies.signed[:bub_session_token]
+      session = Session.find_by(token: token)
+      
+      return render json: { error: 'user is not logged in'}, status: :unauthorized if !session
+      
+      user = session.user
+      @book = Book.find(params[:id])
+
+      return render json: { error: 'not_found' }, status: :not_found if not @book
+
+      if @book.order.nil?
+        return render json: { error: 'bad_request' }, status: :bad_request
+      end
+      if @book.order.user_id != user.id
+        return render json: { error: 'unauthorized' }, status: :unauthorized
+      end
+      if @book.order_status != :Shipping
+        return render json: { error: 'unauthorized' }, status: :unauthorized
+      end
+
+      return render json: { error: 'bad_request' }, status: :bad_request if not @book.update(book_buyer_params)
+      render 'api/books/show', status: :ok
+
+    end
+
+    def book_buyer_params
+      params.require(:book).permit(:order_status)
+    end
+
     def book_params
-      params.require(:book).permit(:title, :author, :isbn, :genre, :rating, :summary, :condition, :description, :price, :image)
+      params.require(:book).permit(:title, :author, :isbn, :genre, :rating, :summary, :condition, :description, :price, :image, :order_status)
     end
 
       def destroy

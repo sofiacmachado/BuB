@@ -10,6 +10,7 @@ json.order do
       json.image_url book.image_url
       json.seller book.user_id
       json.price book.price
+      json.order_status book.order_status
     end
   end
 end

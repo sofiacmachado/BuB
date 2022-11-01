@@ -11,6 +11,7 @@ json.order do
             json.image book.image
             json.seller book.user_id
             json.price book.price
+            json.order_status book.order_status
             if book.image.attached?
                 json.image_url book.image.blob.service_url
                 else

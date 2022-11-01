@@ -7,6 +7,7 @@ json.books do
     json.title book.title
     json.author book.author
     json.price book.price
+    json.order_status book.order_status
     json.buyer book.order.user.username
     if book.image.attached?
       json.image_url book.image.blob.service_url

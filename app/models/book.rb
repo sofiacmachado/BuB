@@ -4,9 +4,9 @@ class Book < ApplicationRecord
   has_one_attached :image
 
   enum order_status: {
-    ordered: 0,
-    shipping: 1,
-    received: 2,
+    Ordered: 0,
+    Shipping: 1,
+    Received: 2,
   }, _prefix: true
 
   validates :title, presence: true, length: { maximum: 70 }
