@@ -5,12 +5,20 @@ import './add.scss';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import { getSessionAndCart } from "../cart_api.js";
 import { handleErrors, safeCredentialsForm } from '../utils/fetchHelper';
+import  GoogleSearch from '../books/googleSearch/GoogleSearch';  
+import request from 'superagent';
+import GoogleSearchPop from './googleSearch/GoogleSearchPop';
 
 class Add extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+
+      popUpVisible: false,
+      books: [],
+      searchField: '',
+
       title: "",
       author: "",
       isbn: "",
@@ -38,6 +46,7 @@ class Add extends React.Component {
     this.handleRatingChange = this.handleRatingChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.setGoogleData = this.setGoogleData.bind(this);
   };
 
   handleTitleChange = (event) => {
@@ -76,21 +85,57 @@ class Add extends React.Component {
   };
   
   componentDidMount() {
-    fetch(`/api/books/${this.props.book_id}`)
-    .then(handleErrors)
-    .then(data => {
-      this.setState({
-        book: data.book,
-        loading: false,
-      });
-    });
-    
+
     getSessionAndCart()
     .then(data => {
       this.setState({
         authenticated: data.authenticated,
         cart: data.cart,
+        loading: false,
       });
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    request
+        .get("https://www.googleapis.com/books/v1/volumes")
+        .query({ q: this.state.searchField })
+        .then((data) => {
+            console.log(data);
+            this.setState({ 
+              books: [...data.body.items],
+              popUpVisible: true,
+            })
+    })
+  }
+
+  handleChange = (e) => {
+    this.setState({ searchField: e.target.value })
+  }
+
+  setGoogleData = (e, i) => {
+    const googleBook = this.state.books[i];
+    const isbn = (googleBook.volumeInfo.industryIdentifiers != null 
+    && googleBook.volumeInfo.industryIdentifiers.length > 0)
+    ? googleBook.volumeInfo.industryIdentifiers[0].identifier
+    : ''; 
+    const summary = (googleBook.volumeInfo.description != null 
+      && googleBook.volumeInfo.description.length > 500)
+    ? googleBook.volumeInfo.description.substring(0, 500) + '...'
+    : googleBook.volumeInfo.description || '';
+    const image_url = googleBook.volumeInfo.hasOwnProperty('imageLinks') == false ?
+   "https://vignette.wikia.nocookie.net/pandorahearts/images/a/ad/Not_available.jpg/revision/latest?cb=20141028171337" 
+   : googleBook.volumeInfo.imageLinks.thumbnail;
+    this.setState({
+      popUpVisible: false,
+      title: googleBook.volumeInfo.title,
+      author: googleBook.volumeInfo.authors,
+      rating: googleBook.volumeInfo.averageRating,
+      genre: googleBook.volumeInfo.categories,
+      summary: summary,
+      isbn: isbn,
+      image_url: image_url, 
     });
   }
 
@@ -149,7 +194,7 @@ class Add extends React.Component {
 
 
   render() {
-    const { cart, authenticated } = this.state;
+    const { cart, authenticated, data, books, popUpVisible } = this.state;
 
     if (authenticated === false) {
       return (
@@ -171,6 +216,15 @@ class Add extends React.Component {
         <Layout cartItems={cart.length} authenticated={authenticated}>
           <div className="container mybooks-container mb-4">
             <h4 className="mb-4">Add a new book</h4>
+            <GoogleSearch 
+              data={this.state} 
+              handleSubmit={this.handleSubmit} 
+              handleChange={this.handleChange} >  
+            </GoogleSearch>
+            { popUpVisible === true ?
+              <GoogleSearchPop books={books} onSelect={this.setGoogleData}>
+              </GoogleSearchPop> : null
+            }
             <form onSubmit={this.submitBook}>
               <div className="row">
                   <div className="form-group d-grid col-md-6">
