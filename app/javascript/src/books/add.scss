@@ -28,7 +28,7 @@ header {
 }
 
 .medium {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -38,7 +38,7 @@ header {
 }
 
 .small {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
 }
 
@@ -46,16 +46,21 @@ header {
   font-size: 11px;
 }
 
+.summary {
+  font-size: 12px;
+}
+
 .text-field {
   max-width: 250px;
 }
+
 
 .input {
   background-color: beige;
   border: 0;
   border-radius: 25px;
   padding: 15px;
-  width: 300px;
+  width: 325px;
 }
 
 input:focus {
