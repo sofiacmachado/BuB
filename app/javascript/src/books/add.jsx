@@ -140,8 +140,8 @@ class Add extends React.Component {
     ? googleBook.volumeInfo.industryIdentifiers[0].identifier
     : ''; 
     const summary = (googleBook.volumeInfo.description != null 
-      && googleBook.volumeInfo.description.length > 500)
-    ? googleBook.volumeInfo.description.substring(0, 500) + '...'
+      && googleBook.volumeInfo.description.length > 250)
+    ? googleBook.volumeInfo.description.substring(0, 250) + '...'
     : googleBook.volumeInfo.description || '';
     const image_url = (googleBook.volumeInfo.hasOwnProperty('imageLinks') == false) ?
    "https://vignette.wikia.nocookie.net/pandorahearts/images/a/ad/Not_available.jpg/revision/latest?cb=20141028171337" 
