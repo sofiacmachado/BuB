@@ -9,5 +9,9 @@ json.book do
     json.condition @book.condition
     json.description @book.description
     json.price @book.price
-    json.image_url @book.image.blob.service_url
+    if @book.image.attached?
+        json.image_url @book.image.blob.service_url
+    else
+        json.image_url @book.image_url
+    end
 end
