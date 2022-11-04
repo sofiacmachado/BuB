@@ -16,25 +16,26 @@ const GoogleSearchPop = (props) => {
             { props.books.map((book, i) => {
                 const {title, authors, averageRating, categories, description, industryIdentifiers} = book.volumeInfo;
                 const book_number = (industryIdentifiers != null && industryIdentifiers.length > 0)
-                    ? (<h5>{industryIdentifiers[0].type}: {industryIdentifiers[0].identifier}</h5>)
+                    ? (<p className="mb-0 small"><small>{industryIdentifiers[0].type}: {industryIdentifiers[0].identifier}</small></p>)
                     : ''; 
                 const image_url = book.volumeInfo.hasOwnProperty('imageLinks') == false ? "https://vignette.wikia.nocookie.net/pandorahearts/images/a/ad/Not_available.jpg/revision/latest?cb=20141028171337" : book.volumeInfo.imageLinks.thumbnail;
-                const summary = (description != null && description.length > 500)
-                    ? description.substring(0, 500) + '...'
+                const summary = (description != null && description.length > 250)
+                    ? description.substring(0, 250) + '...'
                     : description || '';
 
                 return (
-                    <a className="card-container" key={`g_result_${i}`} onClick={(e) => {onSelect(e, i)}}>
-                        <img src={image_url} alt=""/>
-                        <div className="desc">
-                            <h4>{title}</h4>
-                            <h4>Author: {authors}</h4>
-                            <h5>{categories}</h5>
-                            {book_number}
-                            <h5>Summary:</h5>
-                            <p>{summary}</p>
-                        </div>
-                    </a>
+                    <div  className="col-3 mb-4 d-inline-flex justify-content-center searchResults">
+                        <a className="text-body text-decoration-none" key={`g_result_${i}`} onClick={(e) => {onSelect(e, i)}}>
+                            <div className="google-book-image mb-1 rounded" style={{ backgroundImage: `url(${image_url})` }} />
+                            <div className="me-4 text-field">
+                                <h6 className="title">"{title}"</h6>
+                                <p className="text-uppercase mb-0 text-secondary medium"><b>{authors}</b></p>
+                                <h6 className="mb-0 small">{categories}</h6>
+                                {book_number}
+                                <p className="mb-0 extra-small">{summary}</p>
+                            </div>
+                        </a>
+                    </div>
                 );
             })}
         </div>

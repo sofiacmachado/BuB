@@ -1,17 +1,14 @@
 import React  from 'react';
+import SearchIcon from "@mui/icons-material/Search"; 
+
 
 const GoogleSearch = (props) => {
 
     return (
-        <div className="search-area">
+        <div className="row col-8 mb-4 mb-4 d-flex justify-content-center">
         <form onSubmit={props.handleSubmit}>
-            <input onChange={props.handleChange} placeholder="Search books" type="text"/>
-            <button type="submit">Search</button>
-            {/* <select value={props.sort} onChange={props.handleSort} >
-                <option value="" disabled selected>Sort</option>
-                <option value="Newest">Newest</option>
-                <option value="Oldest">Oldest</option>
-            </select> */}
+            <input className=" input" onChange={props.handleChange} placeholder="Search title book" type="text"/>
+            <button className=" btn-search" type="submit"><SearchIcon /></button>
         </form>
         </div>
     )

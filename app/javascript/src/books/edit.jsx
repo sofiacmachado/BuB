@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import  { Layout } from '../layout';
 import './add.scss';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { getSessionAndCart } from "../cart_api.js";
 import { handleErrors, safeCredentialsForm } from '../utils/fetchHelper';
 
@@ -80,6 +81,24 @@ class Edit extends React.Component {
     this.setState({ summary: event.target.value });
   };
 
+  imageHandler = (e) => {
+    const reader = new FileReader();
+    reader.onload = () =>{
+      if(reader.readyState === 2){
+        this.setState({
+          image_url: reader.result,
+        })
+      }
+    }
+    reader.readAsDataURL(e.target.files[0])
+  };
+
+  deleteImage = () => {
+    this.setState({
+      image_url: "",
+    })
+  }
+
   componentDidMount() {    
     getSessionAndCart()
     .then(data => {
@@ -112,14 +131,6 @@ class Edit extends React.Component {
     });
   }
 
-  /* submitEdit() {
-    const formData = new FormData();
-    const image = document.getElementById("addPhoto");
-    
-    for (let i = 0; i < image.files.length; i++) {
-      formData.append("book[image]", this.state.image.files[i]);
-    } */
-
   updateBook = (e) => {
     const {
       title,
@@ -131,6 +142,7 @@ class Edit extends React.Component {
       condition,
       description,
       price,
+      image_url,
     } = this.state;
 
     if (e) {
@@ -138,6 +150,12 @@ class Edit extends React.Component {
     }
 
     let formData = new FormData();
+
+    var image = document.getElementById("addPhoto");
+
+    for (let i = 0; i < image.files.length; i++) {
+      formData.append("book[image]", image.files[i]);
+    }
   
     formData.set("book[title]", title);
     formData.set("book[author]", author);
@@ -147,7 +165,9 @@ class Edit extends React.Component {
     formData.set("book[description]", description);
     formData.set("book[genre]", genre);
     formData.set("book[price]", price);
-    formData.set("book[rating]", rating);
+    formData.set("book[rating]", rating);    
+    formData.set("book[image_url]", image_url);
+
 
 
   fetch(
@@ -181,7 +201,7 @@ class Edit extends React.Component {
 
 
   render () {
-    const { cart, loading, authenticated, book } = this.state;
+    const { cart, loading, authenticated, book, image_url } = this.state;
 
     if (loading) {
       return <p>Loading...</p>;
@@ -307,15 +327,25 @@ class Edit extends React.Component {
                     />
                     
                     <label className="addPhoto mt-3 mb-2" htmlFor="addPhoto">
-                        <span className="addPhotoText">Add book photo
-                            Change Image <AddToPhotosIcon />
-                        </span>
+                      { (image_url == "" || image_url == null) ?
+                        (<a className="addPhotoText" >
+                            Change Image
+                          <AddToPhotosIcon />
+                          <img src={image_url} alt="" id="img" className="img" />
+                        </a>) :
+                        (<a className="addPhotoText" onClick={this.deleteImage}>
+                            Remove book image
+                          <RemoveIcon />
+                          <img src={image_url} alt="" id="img" className="img" />
+                        </a>)
+                      }
                     </label>
                     <input
                       type="file"
                       className="form-control-file"
                       id="addPhoto"
                       accept="image/*"
+                      onChange={this.imageHandler} 
                     />
                 </div>
                 <button type="submit" className="btn btn-primary mb-2" onClick={((e) => e, this.editMode)}>
