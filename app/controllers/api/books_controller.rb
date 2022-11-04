@@ -40,7 +40,7 @@ module Api
       def add
         begin
           puts params[:book][:title]
-            @book = Book.create!({user_id: @user.id, title: params[:book][:title], author: params[:book][:author], isbn: params[:book][:isbn], genre: params[:book][:genre], rating: params[:book][:rating], summary: params[:book][:summary], condition: params[:book][:condition], description: params[:book][:description], price: params[:book][:price], image: params[:book][:image] })
+            @book = Book.create!({user_id: @user.id, title: params[:book][:title], author: params[:book][:author], isbn: params[:book][:isbn], genre: params[:book][:genre], rating: params[:book][:rating], summary: params[:book][:summary], condition: params[:book][:condition], description: params[:book][:description], price: params[:book][:price], image: params[:book][:image], image_url: params[:book][:image_url] })
           
             render 'api/books/add', status: :created
         rescue ArgumentError => e
@@ -86,7 +86,7 @@ module Api
       end
 
       def book_params
-        params.require(:book).permit(:title, :author, :isbn, :genre, :rating, :summary, :condition, :description, :price, :image, :order_status)
+        params.require(:book).permit(:title, :author, :isbn, :genre, :rating, :summary, :condition, :description, :price, :image, :image_url, :order_status)
       end
 
       def destroy

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Layout } from '../layout';
 import './add.scss';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { getSessionAndCart } from "../cart_api.js";
 import { handleErrors, safeCredentialsForm } from '../utils/fetchHelper';
 import  GoogleSearch from '../books/googleSearch/GoogleSearch';  
@@ -14,7 +15,7 @@ class Add extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      
       popUpVisible: false,
       books: [],
       searchField: '',
@@ -84,6 +85,24 @@ class Add extends React.Component {
     this.setState({ summary: event.target.value });
   };
   
+  imageHandler = (e) => {
+    const reader = new FileReader();
+    reader.onload = () =>{
+      if(reader.readyState === 2){
+        this.setState({
+          image_url: reader.result,
+        })
+      }
+    }
+    reader.readAsDataURL(e.target.files[0])
+  };
+
+  deleteImage = () => {
+    this.setState({
+      image_url: "",
+    })
+  }
+  
   componentDidMount() {
 
     getSessionAndCart()
@@ -124,9 +143,10 @@ class Add extends React.Component {
       && googleBook.volumeInfo.description.length > 500)
     ? googleBook.volumeInfo.description.substring(0, 500) + '...'
     : googleBook.volumeInfo.description || '';
-    const image_url = googleBook.volumeInfo.hasOwnProperty('imageLinks') == false ?
+    const image_url = (googleBook.volumeInfo.hasOwnProperty('imageLinks') == false) ?
    "https://vignette.wikia.nocookie.net/pandorahearts/images/a/ad/Not_available.jpg/revision/latest?cb=20141028171337" 
    : googleBook.volumeInfo.imageLinks.thumbnail;
+
     this.setState({
       popUpVisible: false,
       title: googleBook.volumeInfo.title,
@@ -135,8 +155,8 @@ class Add extends React.Component {
       genre: googleBook.volumeInfo.categories,
       summary: summary,
       isbn: isbn,
-      image_url: image_url, 
-    });
+      image_url: image_url,
+    })
   }
 
   submitBook = (e) => {
@@ -150,6 +170,7 @@ class Add extends React.Component {
       condition,
       description,
       price,
+      image_url,
     } = this.state;
 
     if (e) {
@@ -173,6 +194,7 @@ class Add extends React.Component {
     formData.set("book[genre]", genre);
     formData.set("book[price]", price);
     formData.set("book[rating]", rating);
+    formData.set("book[image_url]", image_url);
 
     fetch(
       `/api/mybooks/add`,
@@ -194,7 +216,7 @@ class Add extends React.Component {
 
 
   render() {
-    const { cart, authenticated, data, books, popUpVisible } = this.state;
+    const { cart, authenticated, data, books, popUpVisible, image_url } = this.state;
 
     if (authenticated === false) {
       return (
@@ -346,15 +368,24 @@ class Add extends React.Component {
                       
                       
                   <label className="addPhoto mt-3 mb-2" htmlFor="addPhoto">
-                    <span className="addPhotoText">Add book photo
+                    { (image_url == "" || image_url == null) ?
+                    (<a className="addPhotoText" >Add book image
                     <AddToPhotosIcon />
-                    </span>
+                    <img src={image_url} alt="" id="img" className="img" />
+                    </a>) :
+                     (<a className="addPhotoText" onClick={this.deleteImage}>Remove book image
+                    <RemoveIcon />
+                    <img src={image_url} alt="" id="img" className="img" />
+                    </a>)
+                  }
+                    
                   </label>
                   <input
                       type="file"
                       className="form-control form-control-file"
                       id="addPhoto"
                       accept="image/*"
+                      onChange={this.imageHandler} 
                       />
                   </div>
                   <button type="submit" className="btn btn-add">

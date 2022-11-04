@@ -229,6 +229,15 @@ header {
     height: 200px;
 }
 
+.img {
+  border: 0;
+  border-radius: 25px;
+  padding: 10px;  
+  cursor: pointer;
+  color: gray;
+  height: 200px;
+}
+
 
 .addPhoto:hover {
   color: #416165;
