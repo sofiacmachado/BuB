@@ -309,9 +309,11 @@ class Edit extends React.Component {
                         onChange={this.handleConditionChange}
                         value={this.state.condition}
                     >
-                        <option>New</option>
-                        <option>Used</option>
-                        <option>Collectible</option>
+                         <option>New</option>
+                      <option>Used (like new)</option>
+                      <option>Used (good)</option>
+                      <option>Used (fair)</option>
+                      <option>Refurbished</option>
                     </select>
 
                     <label className="label-text" htmlFor="inputDescription">Description</label>
