@@ -14,7 +14,10 @@ module Api
 
       def add_book
         unless @cart.books.exists?(params[:id])
-          @cart.books << Book.find(params[:id])
+          book = Book.find(params[:id])
+          if not book.nil? and book.user_id != @cart.session.user.id 
+            @cart.books << book 
+          end
         end
         render 'api/carts/show', status: :ok
       end
