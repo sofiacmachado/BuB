@@ -6,21 +6,21 @@ module Api
       books = @session.cart.books
       total_price = 0
 
-      books.each do |book| 
+      books.each do |book|
         total_price += book.price
-        if !book.order_id.nil?
+        unless book.order_id.nil?
           return render json: {
-            error: 'book %d is no longer available' % [book.id],
-            book: book.id,
+            error: format('book %d is no longer available', book.id),
+            book: book.id
           }, status: :gone
         end
       end
 
       @order = Order.create({ user_id: @user.id, books: books })
-      #books.each do |book| 
+      # books.each do |book|
       #  book.order_id = @order.id
       #  book.save!
-      #end
+      # end
 
       @session.cart.books.delete_all
 
@@ -29,7 +29,8 @@ module Api
 
     def show
       @order = Order.find_by(id: params[:id])
-      return render json: {error: 'cannot find order'}, status: :not_found if !@order
+      return render json: { error: 'cannot find order' }, status: :not_found unless @order
+
       render 'api/orders/show', status: :ok
     end
 
@@ -40,31 +41,18 @@ module Api
 
     def byuser
       carts = Cart.where(user_id: session.user.id)
-      return render json: {error: 'no books ordered'}, status: :not_found if !carts
-      
+      return render json: { error: 'no books ordered' }, status: :not_found unless carts
+
       @orders = Order.where(cart: carts)
-      return render json: {error: 'cart does not have any books'}, status: :not_found if !@orders
+      return render json: { error: 'cart does not have any books' }, status: :not_found unless @orders
 
       render 'api/orders/byuser'
     end
-
-    
 
     private
 
     def order_params
       params.require(:order).permit(:order_id)
-    end
-
-    def ensure_logged_in
-      token = cookies.signed[:bub_session_token]
-      @session = Session.find_by(token: token)
-
-      if @session
-        @user = @session.user
-      else
-        render json: { error: 'user not logged in' }, status: :unauthorized
-      end
     end
   end
 end
