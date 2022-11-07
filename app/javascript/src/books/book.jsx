@@ -123,24 +123,32 @@ class Book extends React.Component {
                     {summary}
                 </p>
               </div>
-              {authenticated === true && user.username !== myUsername ? 
-              (<div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
+    
+        {cart.includes(book.id) ?
+          (<div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
+            <button
+            className="btn btn-edit mt-3" disabled>
+            <ShoppingCartIcon/> On your Cart
+            </button>
+          </div>) :
+          authenticated === true && user.username !== myUsername ? 
+          (<div className="col-4 col-lg-2 mb-4 d-grid for-sale-container">
+            <button
+            className="btn btn-edit mt-3" onClick={this.onAddToCart}>
+            <ShoppingCartIcon/> Add to Cart
+            </button>
+          </div>) : 
+          (<div className="col-4 col-lg-2 mb-4 d-grid add-btn">
+            <Tooltip title={addErrorMessage} placement="top">
+              <div>
                 <button
-                className="btn btn-edit mt-3" onClick={this.onAddToCart}>
+                className="btn btn-edit mt-3" disabled>
                 <ShoppingCartIcon/> Add to Cart
                 </button>
-              </div>) : 
-              (<div className="col-4 col-lg-2 mb-4 d-grid add-btn">
-                <Tooltip title={addErrorMessage} placement="top">
-                  <div>
-                    <button
-                    className="btn btn-edit mt-3" disabled>
-                    <ShoppingCartIcon/> Add to Cart
-                    </button>
-                  </div>
-                </Tooltip>
-              </div>)
-              }
+              </div>
+            </Tooltip>
+          </div>)
+          }
             </div>
           </div>
         </div>
