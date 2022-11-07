@@ -1,12 +1,13 @@
 class Book < ApplicationRecord
   belongs_to :user
-  belongs_to :order, optional: true
+  has_many :book_orders
+  has_many :orders, through: :book_orders
   has_one_attached :image
 
   enum order_status: {
     Ordered: 0,
     Shipping: 1,
-    Received: 2,
+    Received: 2
   }, _prefix: true
 
   validates :title, presence: true, length: { maximum: 70 }
@@ -16,6 +17,6 @@ class Book < ApplicationRecord
   validates :summary, presence: true, length: { maximum: 2000 }
   validates :condition, presence: true
   validates :description, presence: true, length: { maximum: 800 }
-  validates :price, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 99999 } # in EUR
+  validates :price, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 99_999 } # in EUR
   validates :user, presence: true
 end
