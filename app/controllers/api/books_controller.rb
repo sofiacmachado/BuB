@@ -81,19 +81,6 @@ module Api
       render json: { error: 'not found' }, status: :not_found
     end
 
-    private
-
-    def ensure_logged_in
-      token = cookies.signed[:bub_session_token]
-      @session = Session.find_by(token: token)
-
-      if @session
-        @user = @session.user
-      else
-        render json: { error: 'user not logged in' }, status: :unauthorized
-      end
-    end
-
     def book_params
       params.require(:book).permit(:title, :author, :isbn, :genre, :rating, :summary, :condition, :description,
                                    :price, :image, :image_url, :order_status)
