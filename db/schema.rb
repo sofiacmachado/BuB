@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_07_160118) do
+ActiveRecord::Schema.define(version: 2022_10_30_135126) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -38,15 +38,6 @@ ActiveRecord::Schema.define(version: 2022_11_07_160118) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
-  create_table "book_orders", force: :cascade do |t|
-    t.integer "book_id", null: false
-    t.integer "order_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["book_id"], name: "index_book_orders_on_book_id"
-    t.index ["order_id"], name: "index_book_orders_on_order_id"
   end
 
   create_table "books", force: :cascade do |t|
@@ -120,8 +111,6 @@ ActiveRecord::Schema.define(version: 2022_11_07_160118) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "book_orders", "books"
-  add_foreign_key "book_orders", "orders"
   add_foreign_key "books", "orders"
   add_foreign_key "books", "users"
   add_foreign_key "carts", "sessions"

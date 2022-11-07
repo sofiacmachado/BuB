@@ -1,7 +1,6 @@
 class Book < ApplicationRecord
   belongs_to :user
-  has_many :book_orders
-  has_many :orders, through: :book_orders
+  belongs_to :order, optional: true
   has_one_attached :image
 
   enum order_status: {
