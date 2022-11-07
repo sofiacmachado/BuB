@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :user
-  has_many :books
+  has_many :book_orders
+  has_many :books, through: :book_orders
   has_many :charges
 
   validates :user, presence: true
