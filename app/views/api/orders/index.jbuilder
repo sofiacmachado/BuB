@@ -11,9 +11,9 @@ json.orders do
         json.isbn book.isbn
         if book.image.attached?
           json.image_url book.image.blob.service_url
-          else
+        else
           json.image_url book.image_url
-      end
+        end
         json.seller book.user_id
         json.price book.price
         json.order_status book.order_status
