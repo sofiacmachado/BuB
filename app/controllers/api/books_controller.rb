@@ -2,7 +2,7 @@ module Api
   class BooksController < ApplicationController
     protect_from_forgery with: :null_session
     skip_before_action :verify_authenticity_token
-    before_action :ensure_logged_in, except: %i[index show book_buyer_params book_params]
+    before_action :ensure_logged_in, except: %i[index show]
 
     include ActiveStorage::SetCurrent
 
@@ -21,7 +21,7 @@ module Api
     end
 
     def my_sales
-      @books = Book.where(user_id: @user.id).where.not(order_id: nil)
+      @books = @user.books.where.not(order_id: nil)
       return render json: { error: 'no books found' }, status: :not_found unless @books
 
       @books = @books.order(created_at: :desc).page(0).per(6)
@@ -30,16 +30,14 @@ module Api
     end
 
     def my_books
-      @books = Book.where(user_id: @user.id).where(order_id: nil)
+      @books = @user.books.where(order_id: nil)
       return render json: { error: 'no books found' }, status: :not_found unless @books
 
       render 'api/books/mybooks', status: :ok
     end
 
     def add
-      puts params[:book][:title]
-      @book = Book.create!({ user_id: @user.id, title: params[:book][:title], author: params[:book][:author],
-                             isbn: params[:book][:isbn], genre: params[:book][:genre], rating: params[:book][:rating], summary: params[:book][:summary], condition: params[:book][:condition], description: params[:book][:description], price: params[:book][:price], image: params[:book][:image], image_url: params[:book][:image_url] })
+      @book = @user.books.create!(book_params)
 
       render 'api/books/add', status: :created
     rescue ArgumentError => e
@@ -71,15 +69,6 @@ module Api
       render 'api/books/show', status: :ok
     end
 
-    def book_buyer_params
-      params.require(:book).permit(:order_status)
-    end
-
-    def book_params
-      params.require(:book).permit(:title, :author, :isbn, :genre, :rating, :summary, :condition, :description,
-                                   :price, :image, :image_url, :order_status)
-    end
-
     def destroy
       book = Book.find_by(id: params[:id])
 
@@ -103,6 +92,15 @@ module Api
       else
         render json: { error: 'user not logged in' }, status: :unauthorized
       end
+    end
+
+    def book_params
+      params.require(:book).permit(:title, :author, :isbn, :genre, :rating, :summary, :condition, :description,
+                                   :price, :image, :image_url, :order_status)
+    end
+
+    def book_buyer_params
+      params.require(:book).permit(:order_status)
     end
   end
 end
