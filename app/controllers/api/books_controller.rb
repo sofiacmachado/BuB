@@ -7,7 +7,7 @@ module Api
     include ActiveStorage::SetCurrent
 
     def index
-      @books = Book.order(created_at: :desc).page(params[:page]).per(6)
+      @books = Book.where(order_id: nil).order(created_at: :desc).page(params[:page]).per(6)
       return render json: { error: 'not_found' }, status: :not_found unless @books
 
       render 'api/books/index', status: :ok
