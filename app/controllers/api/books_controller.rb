@@ -58,6 +58,7 @@ module Api
     def update_order_status
       @book = @user.books.find(params[:id])
       return render json: { error: 'not_found' }, status: :not_found unless @book
+      return render json: { error: 'unauthorized' }, status: :unauthorized if @book.order_status_Shipping?
       return render json: { error: 'bad_request' }, status: :bad_request unless @book.update(book_buyer_params)
 
       render 'api/books/show', status: :ok
