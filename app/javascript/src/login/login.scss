@@ -48,3 +48,10 @@ header {
   input[type=text] {
     color: rgb(51, 51, 51);
   } 
+
+  @media only screen and (max-width: 576px) {
+
+    .mybooks-container {
+      padding-top: 250px; 
+    }
+  }

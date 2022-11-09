@@ -84,7 +84,7 @@ export class Cart extends React.Component {
                 <Layout authenticated={authenticated}>
                     <div className="container mybooks-container">
                         <div className="row">
-                            <div className="col-4 mybooks-title">
+                            <div className="col col-md-4 mybooks-title">
                                 <h4 className="mb-1">My Shopping Cart</h4>
                                 <p className="text-secondary mb-3">Your cart is empty.</p>
                                 <p>Try <a href="/browse_title">browsing</a> some books first.</p>
@@ -98,8 +98,8 @@ export class Cart extends React.Component {
                 <Layout cartItems={cart.length} authenticated={authenticated}>
                     <div className="container mybooks-container">
                         <div className="row">
-                            <div className="col-4 mybooks-title">
-                                <h4 className="mb-1">My Shopping Cart</h4>
+                            <div className="col mybooks-title">
+                                <h4 className="">My Shopping Cart</h4>
                             </div>
                         </div>
                         <div className="row mt-4 mb-4">
