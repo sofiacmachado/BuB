@@ -2,7 +2,7 @@ module Api
   class BooksController < ApplicationController
     protect_from_forgery with: :null_session
     skip_before_action :verify_authenticity_token
-    before_action :ensure_logged_in, except: %i[index show]
+    before_action :ensure_logged_in, except: %i[index show ]
 
     include ActiveStorage::SetCurrent
 
@@ -49,6 +49,16 @@ module Api
       return render json: { error: 'not_found' }, status: :not_found unless @book
       return render json: { error: 'unauthorized' }, status: :unauthorized unless @book.order.nil?
       return render json: { error: 'bad_request' }, status: :bad_request unless @book.update(book_params)
+
+      render 'api/books/show', status: :ok
+    rescue ArgumentError => e
+      render json: { error: e.message }, status: :bad_request
+    end
+    
+    def update_order_status
+      @book = @user.books.find(params[:id])
+      return render json: { error: 'not_found' }, status: :not_found unless @book
+      return render json: { error: 'bad_request' }, status: :bad_request unless @book.update(book_buyer_params)
 
       render 'api/books/show', status: :ok
     rescue ArgumentError => e
