@@ -1,0 +1,57 @@
+header {
+    background-color: #f6f4d2;
+  }
+
+  .mybooks-container {
+    padding-top: 150px;
+  }
+  
+  .mybooks-title {
+    font-family: 'Trirong', serif;
+    color: #795454;
+  }
+  
+  #link {
+    text-decoration: none !important;
+    color: #fa824c !important;
+  }
+
+  #link:hover {
+    text-decoration: none !important;
+    color: #795454 !important;
+  }
+
+  h4 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+  }
+  
+  p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+  }
+  
+  .btn-login {
+    background-color: #fa824c !important;
+    color:#f6f4d2 !important;
+  }
+
+    
+  .btn-login:hover {
+    background-color: #ff5b0f !important;
+    transition: background-color .1s ease-in-out;
+    -moz-transition: background-color .1s ease-out;
+    -webkit-transition: background-color .1s ease-out;
+    -o-transition: background-color .1s ease-out;
+  }
+  
+  input[type=text] {
+    color: rgb(51, 51, 51);
+  } 
+
+  @media only screen and (max-width: 576px) {
+
+    .mybooks-container {
+      padding-top: 250px; 
+    }
+  }
