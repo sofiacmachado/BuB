@@ -20,7 +20,7 @@ class Sales extends React.Component {
 
   handleStatusChange(book, status) {
     book.order_status = status;
-    fetch(`/api/books/${book.id}`, safeCredentials({
+    fetch(`/api/sales/book/${book.id}`, safeCredentials({
       method: "PUT",
       body: JSON.stringify({
         book: {
