@@ -41,7 +41,7 @@ export class Layout extends React.Component {
     }
 
     handleNavCollapse() {
-        this.state.isNavCollapse = !this.state.isNavCollpase
+        this.state.isNavCollapse = !this.state.isNavCollapse
     }
 
     checkNavCollapse() {

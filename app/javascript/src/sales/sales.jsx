@@ -67,7 +67,7 @@ class Sales extends React.Component {
       <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="container mybooks-container">
           <div className="row">
-            <div className="col-4 mybooks-title">
+            <div className="col mybooks-title">
               <h4 className="mb-1">Sold Books</h4>
             </div>
           </div>

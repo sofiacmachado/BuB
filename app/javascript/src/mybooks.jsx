@@ -66,13 +66,13 @@ class Mybooks extends React.Component {
             <Layout cartItems={cart.length} authenticated={authenticated}>
                 <div className="container mybooks-container">
                     <div className="row">
-                        <div className="col-4 mybooks-title">
+                        <div className="col-md-6 col-md-4 mybooks-title">
                             <h4 className="mb-1">My Books</h4>
                             <p className="text-secondary mb-3">
                                 Sell your stories to someone who will read them
                             </p>
                         </div>
-                        <div className="col-2">
+                        <div className="col-md-4 col-md-2">
                             <a href="/mybooks/add" className="btn btn-add mt-3">
                                 Add book
                             </a>

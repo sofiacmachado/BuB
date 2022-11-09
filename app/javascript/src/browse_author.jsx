@@ -16,7 +16,7 @@ class BrowseAuthor extends React.Component {
     total_pages: null,
     next_page: null,
     loading: true,
-    nextPageClass: "d-flex justify-content-around",
+    nextPageClass: "lastbooks-container d-inline-flex justify-content-between",
   }
 
   componentDidMount() {
@@ -36,7 +36,7 @@ class BrowseAuthor extends React.Component {
           total_pages: data.total_pages,
           next_page: data.next_page,
           loading: false,
-          nextPageClass : data.next_page ? "d-flex justify-content-around" : "",
+          nextPageClass : data.next_page ? "lastbooks-container d-inline-flex justify-content-between" : "ms-4",
         })
       })
     }
@@ -54,6 +54,7 @@ class BrowseAuthor extends React.Component {
             total_pages: data.total_pages,
             next_page: data.next_page,
             loading: false,
+            nextPageClass : data.next_page ? "lastbooks-container d-inline-flex justify-content-between" : "ms-4",
           })
         })
   }
@@ -87,7 +88,7 @@ class BrowseAuthor extends React.Component {
         <div className={nextPageClass}>
           {books.map((book) => {
             return(
-              <div key={book.id} className="col-2 mb-4 d-inline-flex justify-content-center">
+              <div key={book.id} className="col-2 mb-4 d-inline-flex justify-content-center latestbooks">
                 <a href={`/book/${book.id}`} className="text-body text-decoration-none">
                   <div className="book-image mb-1 rounded" style={{ backgroundImage: `url(${book.image_url})` }} />
                   <p className="text-uppercase mb-0 text-secondary"><small><b>{book.author}</b></small></p>
