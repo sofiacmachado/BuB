@@ -72,7 +72,7 @@ module Api
 
       return render json: { error: 'bad_request' }, status: :bad_request if @book.order.nil?
       return render json: { error: 'unauthorized' }, status: :unauthorized if @book.order.user_id != @user.id
-      return render json: { error: 'unauthorized' }, status: :unauthorized if @book.order_status != :Shipping
+      return render json: { error: 'unauthorized' }, status: :unauthorized unless @book.order_status_Shipping?
 
       return render json: { error: 'bad_request' }, status: :bad_request unless @book.update(book_buyer_params)
 
