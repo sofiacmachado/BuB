@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     delete '/cart/:id' => 'carts#remove_book'
     delete '/cart' => 'carts#destroy'
     put '/orders/book/:id' => 'books#update_buyer_status'
+    put '/sales/book/:id' => 'books#update_order_status'
     put '/books/:id/update/' => 'books#update'
 
     
