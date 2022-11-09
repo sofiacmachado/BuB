@@ -107,22 +107,25 @@ class Sales extends React.Component {
                       <span className="mb-2 text-danger d-flex justify-content-center">
                         { book.order_status }
                       </span>
-                      <div className="dropdown">
-                        <Tooltip title="Let the buyer know how is the order processing" placement="top">
-                          <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Change Order Status
-                          </button>
-                        </Tooltip>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a className="dropdown-item disabled" role="button" aria-disabled="true">Ordered</a>
-                          <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(book, "Shipping")}>Shipping</a>
-                          <Tooltip title="Only the buyer can complete the order" placement="left">
-                            <span>
-                            <a className="dropdown-item disabled" role="button" aria-disabled="true">Received</a>
-                            </span>
+                      {book.order_status === 'Received' ? 
+                                (<div></div>) :
+                        (<div className="dropdown">
+                          <Tooltip title="Let the buyer know how is the order processing" placement="top">
+                            <button className="btn btn-add dropdown-toggle mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Change Order Status
+                            </button>
                           </Tooltip>
-                        </div>
-                      </div>
+                          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a className="dropdown-item disabled" role="button" aria-disabled="true">Ordered</a>
+                            <a className="dropdown-item" role="button" onClick={() => this.handleStatusChange(book, "Shipping")}>Shipping</a>
+                            <Tooltip title="Only the buyer can complete the order" placement="left">
+                              <span>
+                              <a className="dropdown-item disabled" role="button" aria-disabled="true">Received</a>
+                              </span>
+                            </Tooltip>
+                          </div>
+                        </div>)
+                      }
                     </p>
                   </div>
                 </div>
