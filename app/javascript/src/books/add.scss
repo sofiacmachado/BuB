@@ -333,3 +333,21 @@ input[type="file"] {
   border-radius: 25px;
   padding: 10px;
 }
+
+@media only screen and (max-width: 576px) {
+  .mybooks-container {
+    padding-top: 300px; 
+  }
+
+  .img {
+    max-height: 150px;
+    width: auto;
+  }
+
+  .addPhotoText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+}

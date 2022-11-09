@@ -148,3 +148,21 @@ a:hover {
     }
   }
 } 
+
+@media only screen and (max-width: 576px) {
+
+  .mybooks-container {
+    padding-top: 300px; 
+  }
+
+  .row-item {
+    max-width: 500px;
+  }
+
+  .anchor {
+    margin-left: 30px;
+  }
+  .price-total {
+    margin-right: 10px;
+  }
+}

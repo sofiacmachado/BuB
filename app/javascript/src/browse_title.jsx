@@ -16,7 +16,7 @@ class BrowseTitle extends React.Component {
     total_pages: null,
     next_page: null,
     loading: true,
-    nextPageClass: "d-flex justify-content-around",
+    nextPageClass: "lastbooks-container d-inline-flex justify-content-between",
   }
  
   componentDidMount() {
@@ -36,7 +36,7 @@ class BrowseTitle extends React.Component {
           total_pages: data.total_pages,
           next_page: data.next_page,
           loading: false,
-          nextPageClass : data.next_page ? "d-flex justify-content-around" : "",
+          nextPageClass : data.next_page ? "lastbooks-container d-inline-flex justify-content-between" : "ms-4",
         })
       })
   }
@@ -54,7 +54,7 @@ class BrowseTitle extends React.Component {
             total_pages: data.total_pages,
             next_page: data.next_page,
             loading: false,
-            nextPageClass : data.next_page ? "d-flex justify-content-around" : "",
+            nextPageClass : data.next_page ? "lastbooks-container d-inline-flex justify-content-between" : "ms-4",
           })
         })
   }
@@ -75,7 +75,7 @@ class BrowseTitle extends React.Component {
             </div>
         </div>
 
-      <div className="container lastbooks-container">
+      <div className="container">
           <hr />
           {loading && <p>loading...</p>}
           {(loading || next_page === null) ||

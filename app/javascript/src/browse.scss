@@ -55,18 +55,7 @@ input:focus {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 576px) {
-  .searchInputs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-  }
 
-  .data-result {
-    width: 200px;
-  }
-}
 
 header {
     background-color: #f6f4d2;
@@ -121,20 +110,16 @@ header {
     font-weight: 300;
   }
   
-  
-  @media only screen and (max-width: 576px) {
-    .mybooks-container {
-      padding-top: 80px;
-      min-height: 200px;
-    }
-  }
-
   .book-image {
     padding: 120px 80px;
     background-size: auto;
     background-repeat: round;
     max-width: 80px;
 
+  }
+
+  .latestbooks {
+    margin-right: 20px;
   }
 
 .see-more {
@@ -144,3 +129,87 @@ header {
   border: none;
 }
 
+@media only screen and (max-width: 992px) {
+
+  .book-image {
+    padding: 100px 65px;
+    background-size: auto;
+    background-repeat: round;
+    max-width: 65px;
+  }
+
+  .latestbooks {
+    margin-right: 40px;
+  }
+
+  .lastbooks-container {
+    max-width: 960px;
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+  .latestbooks {
+    margin-right: 60px;
+  }
+  .book-image {
+    padding: 90px 60px;
+    background-size: auto;
+    background-repeat: round;
+    max-width: 60px;
+  }
+  
+  .lastbooks-container {
+    max-width: 680px;
+  }
+
+  h2, .see-more {
+    font-size: 16px !important;
+  }
+
+  h3, .see-more {
+    font-size: 12px;
+  }
+
+}
+
+@media only screen and (max-width: 576px) {
+  .searchInputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .lastbooks-container {
+    max-width: 500px;
+  }
+
+  h2, .see-more {
+    font-size: 16px !important;
+  }
+
+  h3, .see-more {
+    font-size: 12px;
+  }
+
+  .mybooks-container {
+    padding-top: 300px;
+    min-height: 200px;
+  }
+  .book-image {
+    padding: 80px 50px;
+    background-size: auto;
+    background-repeat: round;
+    max-width: 50px;
+  }
+
+  .latestbooks {
+    margin-right: 40px;
+  }
+
+  .data-result {
+    width: 200px;
+  }
+}

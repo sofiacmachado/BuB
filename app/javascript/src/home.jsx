@@ -29,7 +29,7 @@ class Home extends React.Component {
     return (
       <Layout cartItems={cart.length} authenticated={authenticated}>
         <div className="intro-section" style={{ backgroundImage: `url(${heroBackground})`}}>
-            <div className="container">
+            <div className="container mybooks-container">
                 <div className="row align-items-center justify-content-center">
                     <div className="col-md-7 mx-auto text-center slogan-text" data-aos="fade-up">
                         <h1>Discover your next read</h1>
