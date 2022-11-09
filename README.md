@@ -73,7 +73,7 @@ $ rails s
   - Add books to the cart and proceed to checkout;
   - After the order is placed the user can see how it is in the "orders" tab;
   - The user can also add books of his own, either by manually inserting every parameter or by searching in the Google Books database;
-  - Once the user adds any book, he can edit some of the parameters or delete it;
+  - Once the user adds any book, he can edit it or delete it;
   - If the user sells any book he can change the state of the order on the "sales" tab.
 
 #watch the video [here](https://www.loom.com/share/979e2be0196443aba4f05b2ff5e21baa)
