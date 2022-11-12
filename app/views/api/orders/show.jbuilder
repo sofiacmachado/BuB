@@ -23,4 +23,5 @@ json.order do
   json.user do
     json.username @order.user.username
   end
+  json.timestamp @order.created_at
 end
