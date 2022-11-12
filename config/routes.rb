@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     delete '/cart/:id' => 'carts#remove_book'
     delete '/cart' => 'carts#destroy'
 
-    get '/checkout/success' => 'orders#success'
+    get '/checkout/success' => 'orders#latest'
     put '/orders/book/:id' => 'books#update_buyer_status'
 
     # stripe webhook
