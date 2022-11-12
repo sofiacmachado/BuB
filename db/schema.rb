@@ -68,6 +68,13 @@ ActiveRecord::Schema.define(version: 2022_10_30_135126) do
     t.index ["cart_id"], name: "index_books_carts_on_cart_id"
   end
 
+  create_table "books_checkouts", id: false, force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "checkout_id"
+    t.index ["book_id"], name: "index_books_checkouts_on_book_id"
+    t.index ["checkout_id"], name: "index_books_checkouts_on_checkout_id"
+  end
+
   create_table "carts", force: :cascade do |t|
     t.integer "session_id"
     t.datetime "created_at", precision: 6, null: false
@@ -75,15 +82,15 @@ ActiveRecord::Schema.define(version: 2022_10_30_135126) do
     t.index ["session_id"], name: "index_carts_on_session_id"
   end
 
-  create_table "charges", force: :cascade do |t|
+  create_table "checkouts", force: :cascade do |t|
     t.decimal "amount", precision: 10, scale: 2
     t.string "currency"
     t.string "checkout_session_id"
-    t.boolean "complete", default: false
-    t.integer "order_id"
+    t.datetime "expires_at"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["order_id"], name: "index_charges_on_order_id"
+    t.index ["user_id"], name: "index_checkouts_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -114,7 +121,7 @@ ActiveRecord::Schema.define(version: 2022_10_30_135126) do
   add_foreign_key "books", "orders"
   add_foreign_key "books", "users"
   add_foreign_key "carts", "sessions"
-  add_foreign_key "charges", "orders"
+  add_foreign_key "checkouts", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "sessions", "users"
 end
