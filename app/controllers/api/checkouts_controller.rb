@@ -1,24 +1,25 @@
 module Api
   class CheckoutsController < ApplicationController
-    before_action :ensure_logged_in, except: [:webhook_on_complete, :webhook_on_expired]
-    skip_before_action :verify_authenticity_token, only: [:webhook_on_complete, :webhook_on_expired]
+    before_action :ensure_logged_in, except: [:checkout_webhook]
+    skip_before_action :verify_authenticity_token, only: [:checkout_webhook]
 
     def create
-      previous = @user.checkout
-      if not previous.nil?
-        if previous.has_expired?
-          previous.destroy
-        else
-          return render json: {error: 'another checkout is in progress'}, status: :conflict
-        end
-      end
-
       books = @session.cart.books
       return render json: {error: 'the cart is empty'}, status: :bad_request if books.empty?
 
       amount = 0
+      line_items = []
+
       books.each do |book|
         amount += book.price
+        line_items.push({
+          name: "BUB Book #{book.id}",
+          description: "#{book.title}. #{book.author}",
+          amount: (book.price * 100.0).to_i,  # amount in cents
+          currency: 'usd',
+          quantity: 1
+        })
+
         unless book.order_id.nil?
           # remove unavailable book from cart
           books.delete(book.id)
@@ -30,22 +31,21 @@ module Api
         end
       end
 
+      expire_previous_checkout
+
       # Time limit to complete the checkout
       expires_at = Time.now + 31.minutes
 
+      # {
+      #   name: "BUB Order",
+      #   description: "Your order of #{books.length} books.",
+      #   amount: (amount * 100.0).to_i,  # amount in cents
+      #   currency: 'usd',
+      #   quantity: 1
+      # }
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
-        line_items: [{
-          name: "BUB Order",
-          description: "Your order of #{books.length} books.",
-          amount: (amount * 100.0).to_i,  # amount in cents
-          currency: 'usd',
-          quantity: 1
-        }],
-        metadata: {
-          user_id: @user.id.to_s,
-          session_id: @session.id.to_s
-        },
+        line_items: line_items,
         mode: 'payment',
         success_url: "#{ENV['URL']}/orders/success",
         cancel_url: "#{ENV['URL']}/cart",
@@ -57,7 +57,7 @@ module Api
         currency: 'usd',
         amount: amount,
         expires_at: expires_at.utc.to_datetime,
-        book_ids: books.pluck(:id)
+        books: books
       })
       return render json: { error: 'checkout could not be created' }, status: :bad_request if not @checkout
 
@@ -121,16 +121,8 @@ module Api
       return head :bad_request unless checkout
 
       # Replace the checkout with an actual order
-      order = checkout.user.orders.create({ books: checkout.books })
-
-      # Empty the user's cart and store order id
-      user_id = session.metadata['user_id'].to_i
-      session_id = session.metadata['session_id'].to_i
-      user_session = Session.find(session_id)
-      unless user_session.nil? or user_session.user_id != user_id
-        user_session.cart.books.delete_all
-        user_session.update({success_order_id: order.id})
-      end
+      order = checkout.user.orders.create!({ books: checkout.books })
+      checkout.destroy
       return head :ok
     end
 
