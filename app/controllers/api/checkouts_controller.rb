@@ -48,7 +48,7 @@ module Api
         },
         mode: 'payment',
         success_url: "#{ENV['URL']}/orders/success",
-        cancel_url: "#{ENV['URL']}#{params[:cancel_url]}",
+        cancel_url: "#{ENV['URL']}/cart",
         expires_at: expires_at.to_i
       )
 
