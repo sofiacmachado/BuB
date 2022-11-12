@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/about' => 'static_pages#about'
   get '/faqs' => 'static_pages#faqs'
   
-  get '/orders/:id/success' => 'static_pages#success'
+  get '/orders/success' => 'static_pages#success'
   get '/sales' => 'static_pages#sales'
   get '/orders' => 'static_pages#orders'
   get '/mybooks' => 'static_pages#mybooks'
@@ -22,27 +22,28 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resources :sessions, only: [:create, :destroy]
     resources :books, only: [:index, :show, :add, :update, :destroy]
-    resources :orders, only: [:create, :index, :show, :byuser]
-    resources :charges, only: [:create]
+    resources :orders, only: [:index, :show]
+    resources :checkouts, only: [:create]
 
     get '/authenticated' => 'sessions#authenticated'
     delete '/session' => 'sessions#destroy'
-    post '/mybooks/add' => 'books#add'
 
     get '/mybooks' => 'books#my_books'
+    post '/mybooks/add' => 'books#add'
 
     get '/sales' => 'books#my_sales'
+    put '/sales/book/:id' => 'books#update_order_status'
+
     get '/cart' => 'carts#show'
     get '/cart/details' => 'carts#show_detailed'
     post '/cart/:id' => 'carts#add_book'
     delete '/cart/:id' => 'carts#remove_book'
     delete '/cart' => 'carts#destroy'
-    put '/orders/book/:id' => 'books#update_buyer_status'
-    put '/sales/book/:id' => 'books#update_order_status'
-    put '/books/:id/update/' => 'books#update'
 
-    
+    put '/orders/book/:id' => 'books#update_buyer_status'
+
     # stripe webhook
-    post '/charges/mark_complete' => 'charges#mark_complete'
+    post '/checkouts/complete' => 'checkouts#checkout_webhook'
+    post '/checkouts/expired' => 'checkouts#checkout_webhook'
   end
 end
