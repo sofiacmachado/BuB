@@ -100,7 +100,7 @@ class Orders extends React.Component {
                           </small>
                       </p>
                       <p className="text-uppercase mb-4 text-secondary">
-                          <b>Sold by: {book.user}</b>
+                          <b>Sold by: {book.seller.username}</b>
                       </p>
                       </div>
                       <div className="col-8 col-lg-6 mb-4 d-grid for-sale-container">
