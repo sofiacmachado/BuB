@@ -21,44 +21,34 @@ export class Cart extends React.Component {
         getDetailedCartFromServer()
         .then(data => {
             this.setState({
-                authenticated: data.authenticated ? true : false,
+                authenticated: data.authenticated,
                 cart: data.cart,
                 loading: false,
             });
         });
-        
     }
 
     submitOrder = (e) => {
         if (e) { e.preventDefault(); }
     
-        fetch(`/api/orders`, safeCredentials({ method: 'POST' ,}))
-          .then(handleErrors)
-          .then(response => {
-            return this.initiateStripeCheckout(response.order.id);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-    };
-  
-    initiateStripeCheckout = (order_id) => {
-        const apiUrl = `/api/charges?order_id=${order_id}&cancel_url=${window.location.pathname}`;
-        const paymentCompleteCallback = this.onPaymentComplete;
-        return fetch(apiUrl, safeCredentials({
-            method: 'POST',
-        }))
+        fetch('/api/checkouts', safeCredentials({ method: 'POST' }))
         .then(handleErrors)
         .then(response => {
-            const stripe = Stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
+            this.initiateStripeCheckout(response.checkout.session_id);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    };
+  
+    initiateStripeCheckout = (sessionId) => {
+        const stripe = Stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
 
-            stripe.redirectToCheckout({
-                sessionId: response.charge.checkout_session_id,
-            }).then((result) => {
-                if (result.error != null && result.error.message != null) {
-                    alert(result.error.message);
-                }
-            });
+        stripe.redirectToCheckout({ sessionId: sessionId })
+        .then(response => {
+            if (response.error != null && response.error.message != null) {
+                alert(response.error.message);
+            }
         })
         .catch(error => {
             console.log(error);
@@ -149,9 +139,8 @@ export class Cart extends React.Component {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-
     ReactDOM.render(
-      <Cart />,
-      document.body.appendChild(document.createElement('div')),
+        <Cart />,
+        document.body.appendChild(document.createElement('div')),
     )
-  })
+});
