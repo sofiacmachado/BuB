@@ -252,6 +252,7 @@ class Add extends React.Component {
                   <div className="form-group d-grid col-md-6">
                       <label className="label-text" htmlFor="inputTitle">Book Title</label>
                       <input
+                      required
                       type="text"
                       className="form-control"
                       id="inputTitle"
@@ -263,6 +264,7 @@ class Add extends React.Component {
                       
                       <label className="label-text" htmlFor="inputAuthor">Author's Name</label>
                       <input
+                      required
                       type="text"
                       className="form-control"
                       id="inputAuthor"
@@ -274,6 +276,7 @@ class Add extends React.Component {
 
                       <label className="label-text" htmlFor="inputGenre">Genre</label>
                       <select
+                      required
                       type='text'
                       id="inputGenre"
                       className="form-control"
@@ -300,6 +303,7 @@ class Add extends React.Component {
 
                       <label className="label-text" htmlFor="inputSummary">Summary</label>
                       <textarea
+                      required
                       type="text"
                       className="form-control"
                       rows="6"
@@ -314,6 +318,7 @@ class Add extends React.Component {
                   <div className="form-group d-grid col-md-6">
                       <label className="label-text" htmlFor="inputPrice">Price</label>
                       <input
+                      required
                       type="number"
                       className="form-control"
                       id="inputPrice"
@@ -324,6 +329,7 @@ class Add extends React.Component {
 
                       <label className="label-text" htmlFor="inputBookCondition">Book's Condition</label>
                       <select
+                      required
                       id="inputBookCondition"
                       className="form-control"
                       type="text"

@@ -42,9 +42,9 @@ class SignupWidget extends React.Component {
     return (
       <React.Fragment>
         <form onSubmit={this.signup}>
-          <input name="username" type="text" className="form-control form-control-lg mb-3" placeholder="Username" value={username} onChange={this.handleChange} required />
+          <input name="username" type="text" className="form-control form-control-lg mb-3" placeholder="Username" value={username} onChange={this.handleChange} minlength="3" maxlength="15" required />
           <input name="email" type="text" className="form-control form-control-lg mb-3" placeholder="Email" value={email} onChange={this.handleChange} required />
-          <input name="password" type="password" className="form-control form-control-lg mb-3" placeholder="Password" value={password} onChange={this.handleChange} required />
+          <input name="password" type="password" className="form-control form-control-lg mb-3" placeholder="Password" value={password} onChange={this.handleChange}  minlength="8" maxlength="15" required />
           <button type="submit" className="btn btn-login btn-block btn-lg">Sign up</button>
           {error && <p className="text-danger mt-2">{error}</p>}
         </form>

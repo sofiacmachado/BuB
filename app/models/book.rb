@@ -13,10 +13,10 @@ class Book < ApplicationRecord
   validates :title, presence: true, length: { maximum: 70 }
   validates :author, presence: true, length: { maximum: 70 }
   validates :genre, presence: true
-  validates :rating, presence: true, numericality: { less_than: 6 }
+  validates :rating, numericality: { less_than: 6 }
   validates :summary, presence: true, length: { maximum: 2000 }
   validates :condition, presence: true
-  validates :description, presence: true, length: { maximum: 800 }
+  validates :description, length: { maximum: 800 }
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 99_999 } # in EUR
   validates :user, presence: true
 end

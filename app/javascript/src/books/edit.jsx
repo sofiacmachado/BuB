@@ -231,105 +231,111 @@ class Edit extends React.Component {
                 <div className="form-group d-grid col-md-6">
                     <label className="label-text" htmlFor="inputTitle">Title</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="inputTitle"
-                        placeholder={book.title}
-                        value={this.state.title}
-                        onChange={this.handleTitleChange}
-                        maxLength="70"
+                      required
+                      type="text"
+                      className="form-control"
+                      id="inputTitle"
+                      placeholder={book.title}
+                      value={this.state.title}
+                      onChange={this.handleTitleChange}
+                      maxLength="70"
                     />
 
                     <label className="label-text" htmlFor="inputAuthor">Author</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="inputAuthor"
-                        placeholder={book.author}
-                        onChange={this.handleAuthorChange}
-                        value={this.state.author}
-                        maxLength="70"
+                      required
+                      type="text"
+                      className="form-control"
+                      id="inputAuthor"
+                      placeholder={book.author}
+                      onChange={this.handleAuthorChange}
+                      value={this.state.author}
+                      maxLength="70"
                     />
 
                     <label className="label-text" htmlFor="inputGenre">Genre</label>
-                    <select id="inputGenre" onChange={this.handleGenreChange}
-                        value={this.state.genre} className="form-control">
-                        <option hidden className='light'>Select an Option</option> 
-                        <option>Classic</option>
-                        <option>Fantasy</option>
-                        <option>Fiction</option>
-                        <option>Poetry</option>
-                        <option>Non-Fiction</option>
+                    <select id="inputGenre"
+                      required
+                      onChange={this.handleGenreChange}
+                      value={this.state.genre}
+                      className="form-control">
+                      <option hidden className='light'>Select an Option</option> 
+                      <option>Classic</option>
+                      <option>Fantasy</option>
+                      <option>Fiction</option>
+                      <option>Poetry</option>
+                      <option>Non-Fiction</option>
                     </select>
 
                     <label className="label-text" htmlFor="inputIsbn">ISBN</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="inputIsbn"
-                        placeholder={book.isbn}
-                        onChange={this.handleIsbnChange}
-                        value={this.state.isbn}
-                        maxLength="200"
+                      type="text"
+                      className="form-control"
+                      id="inputIsbn"
+                      placeholder={book.isbn}
+                      onChange={this.handleIsbnChange}
+                      value={this.state.isbn}
+                      maxLength="200"
                     />
 
                     <label className="mb-1" htmlFor="inputSummary">Summary</label>
                     <textarea
-                        type="text"
-                        className="form-control"
-                        rows="10"
-                        id="inputSummary"
-                        placeholder={book.summary}
-                        onChange={this.handleSummaryChange}
-                        value={this.state.summary}
-                        maxLength="2000"
+                      required
+                      type="text"
+                      className="form-control"
+                      rows="10"
+                      id="inputSummary"
+                      placeholder={book.summary}
+                      onChange={this.handleSummaryChange}
+                      value={this.state.summary}
+                      maxLength="2000"
                     />
-                  
                 </div>
 
                 <div className="form-group d-grid col-md-6">
-
                     <label className="mb-1" htmlFor="inputPrice">Price</label>
                     <input
-                        type="number"
-                        className="form-control"
-                        id="inputPrice"
-                        placeholder={`$${book.price}`}
-                        onChange={this.handlePriceChange}
-                        value={this.state.price}
-                        maxLength="200"
+                      required
+                      type="number"
+                      className="form-control"
+                      id="inputPrice"
+                      placeholder={`$${book.price}`}
+                      onChange={this.handlePriceChange}
+                      value={this.state.price}
+                      maxLength="200"
                     />
 
                     <label className="mb-1" htmlFor="inputCondition">
                         Book Condition
                     </label>
                     <select
-                        id="inputCondition"
-                        className="form-control"
-                        onChange={this.handleConditionChange}
-                        value={this.state.condition}
+                      required
+                      id="inputCondition"
+                      className="form-control"
+                      onChange={this.handleConditionChange}
+                      value={this.state.condition}
                     >
-                         <option>New</option>
+                      <option>New</option>
                       <option>Used (like new)</option>
                       <option>Used (good)</option>
                       <option>Used (fair)</option>
                       <option>Refurbished</option>
                     </select>
 
-                    <label className="label-text" htmlFor="inputDescription">Description</label>
+                    <label className="label-text" htmlFor="inputDescription">Detailed Condition</label>
                     <textarea
-                        type="text"
-                        className="form-control"
-                        rows="8"
-                        id="inputDescription"
-                        placeholder={book.description}
-                        onChange={this.handleDescriptionChange}
-                        value={this.state.description}
-                        maxLength="800"
+                      type="text"
+                      className="form-control"
+                      rows="8"
+                      id="inputDescription"
+                      placeholder={book.description}
+                      onChange={this.handleDescriptionChange}
+                      value={this.state.description}
+                      maxLength="800"
                     />
                     
                     <label className="addPhoto mt-3 mb-2" htmlFor="addPhoto">
-                      { (image_url == "" || image_url == null) ?
+                      {(image_url == "" || image_url == null) ?
                         (<a className="addPhotoText" >
                             Change Image
                           <AddToPhotosIcon />
