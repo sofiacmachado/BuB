@@ -1,1 +1,1 @@
-import '../src/order';
+import '../src/order/success';
