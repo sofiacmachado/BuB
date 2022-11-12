@@ -3,7 +3,9 @@ class CreateSessions < ActiveRecord::Migration[6.1]
     create_table :sessions do |t|
       t.string :token
       t.belongs_to :user, index: true, foreign_key: true
-      
+
+      t.integer :success_order_id, null: true
+
       t.timestamps
     end
   end

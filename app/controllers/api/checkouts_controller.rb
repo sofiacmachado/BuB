@@ -123,12 +123,13 @@ module Api
       # Replace the checkout with an actual order
       order = checkout.user.orders.create({ books: checkout.books })
 
-      # Empty the user's cart
+      # Empty the user's cart and store order id
       user_id = session.metadata['user_id'].to_i
       session_id = session.metadata['session_id'].to_i
       user_session = Session.find(session_id)
       unless user_session.nil? or user_session.user_id != user_id
         user_session.cart.books.delete_all
+        user_session.update({success_order_id: order.id})
       end
       return head :ok
     end
