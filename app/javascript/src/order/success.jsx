@@ -4,7 +4,7 @@ import { Layout } from "../layout";
 import CheckIcon from '@mui/icons-material/Check';
 import "./success.scss";
 import { handleErrors, safeCredentials } from '../utils/fetchHelper';
-import { getSessionAndCart } from "../cart_api.js";
+import { emptyCart, getSessionAndCart } from "../cart_api.js";
 
 
 class Success extends React.Component {
@@ -16,51 +16,28 @@ class Success extends React.Component {
   };
 
   componentDidMount() {
-    fetch('/api/orders/success')
+    fetch('/api/checkout/success')
     .then(handleErrors)
-    .then(data => {
-      this.setState({
-        order: data.order,
-        loading: false,
-      });
+    .then(orderData => {
+      return emptyCart()
+        .then(cartData => {
+          this.setState({
+            authenticated: true,
+            cart: cartData,
+            order: orderData.order,
+            loading: false,
+          });
+        });
     })
     .catch(error => {
-      console.log(error);
-      alert(`Server: ${error.error}`);
-      window.location = '/orders';
-    });
-
-    getSessionAndCart()
-    .then(data => {
-      this.setState({
-        authenticated: data.authenticated,
-        cart: data.cart,
-      });
+      alert(`Server: ${error.message}`);
+      if (error.message == 'Unauthorized') {
+        window.location = '/';
+      } else {
+        window.location = '/orders';
+      }
     });
   }
-
-  initiateStripeCheckout = (e, order_id) => {
-    e.preventDefault();
-    return fetch(
-      `/api/charges?order_id=${order_id}&cancel_url=${window.location.pathname}`,
-      safeCredentials({
-        method: "POST",
-      })
-    )
-      .then(handleErrors)
-      .then((response) => {
-        const stripe = Stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
-
-        stripe
-          .redirectToCheckout({
-            sessionId: response.charge.checkout_session_id,
-          })
-          .then((result) => {});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   render() {
     const { loading, order, authenticated, cart } = this.state;
@@ -69,7 +46,8 @@ class Success extends React.Component {
       return <p>Loading...</p>;
     }
 
-    const total_price = order.books.reduce((previous, book) => { previous + book.price }, 0);
+    const total_price = order.books.reduce((previous, book) => previous + book.price, 0);
+    const timestamp = new Date(order.timestamp).toLocaleString();
 
     console.log(order);
 
@@ -78,21 +56,22 @@ class Success extends React.Component {
         <div className="container mybooks-container">
           <div className="row">
             <div className="col-4 mybooks-title">
-              <h4 className="mb-1">Your order #{order.id} is confirmed!</h4>
+              <h4 className="mb-1">Your order is confirmed!</h4>
+              Order #{order.id}
             </div>
           </div>
           <div className="row mt-4 mb-4">
             {
               order.books.map(book => {
                 return (
-                  <div className="col-2 col-lg-4 mb-4 d-grid justify-content-center">
-                    <div className="">
+                  <div className="col-2 col-lg-4 mb-4 d-grid justify-content-center" key={`book-${book.id}`}>
+                    <div>
                       <div
                         className="book-image mb-3"
                         style={{ backgroundImage: `url(${book.image_url})` }}
                       />
                     </div>
-                    <div className="">
+                    <div>
                       <h6 className="mb-2 text-uppercase">"{book.title}"</h6>
                       <p className="text-uppercase mb-1 text-secondary">
                         <small>
@@ -118,15 +97,12 @@ class Success extends React.Component {
           <div className="row mt-4 mb-4">
             <div className="col-2 col-lg-4 mb-4 for-sale-container">
               <div className="for-sale rounded">
-                <p className="text-uppercase d-flex justify-content-center mt-4">
-                  Amount:  
+                <p className="text-uppercase text-center mt-4">
+                  Amount: <span className='price-tag'>{total_price}$</span>
                 </p>
-                <span className='price-tag d-flex justify-content-center mb-4'>
-                  {total_price}$
-                </span>
-                <span className="mb-4 text-success d-flex justify-content-center">
-                  Paid on {order.timestamp} <CheckIcon/>
-                </span>
+                <p className="mb-4 text-success d-flex justify-content-center">
+                  Paid on {timestamp} <CheckIcon/>
+                </p>
               </div>
             </div>
           </div>
