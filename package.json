@@ -5,7 +5,14 @@
     "node": "~16.14"
   },
   "scripts": {
-    "heroku-prebuild": "npm install --dev --legacy-peer-deps"
+    "build": "next build",
+    "start": "next start",
+    "export": "rm -rf _site && mkdir _site && npm run build && next export . -o _site",
+    "lint": " eslint {*.js,**/*.js}",
+    "test": "cypress run",
+    "ci": "npm run lint && npm run ci:test",
+    "ci:test": "start-server-and-test ci:start http://localhost:3000 test",
+    "ci:start": "npm run build && npm run start"
   },
   "dependencies": {
     "@babel/preset-react": "^7.18.6",
