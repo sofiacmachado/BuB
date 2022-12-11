@@ -25,7 +25,7 @@ The project was created with the following:
 
 - Rails 6.1.5
 
-- Node.js ~16.14
+- Node.js ~16.18
 
 - React ^18.2.0
 

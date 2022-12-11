@@ -2,7 +2,7 @@
   "name": "before-used-books",
   "private": true,
   "engines": {
-    "node": "~16.14"
+    "node": "~16.18"
   },
   "scripts": {
     "heroku-prebuild": "npm install --dev --legacy-peer-deps"
