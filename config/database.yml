@@ -25,4 +25,4 @@ test:
 production:
   <<: *default
   adapter: postgresql
-  database: production.sqlite3
+  database: production
